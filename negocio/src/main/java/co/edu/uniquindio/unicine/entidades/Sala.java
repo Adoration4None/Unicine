@@ -32,9 +32,11 @@ public class Sala implements Serializable {
 
     // Relaciones ----------------------------------------------------------------
     @OneToMany(mappedBy = "sala")
+    @ToString.Exclude
     private List<Funcion> funciones;
 
     @OneToMany(mappedBy = "sala")
+    @ToString.Exclude
     private List<Silla> sillas;
 
     @ManyToOne

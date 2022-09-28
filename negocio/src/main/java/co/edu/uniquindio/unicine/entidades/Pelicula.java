@@ -40,5 +40,6 @@ public class Pelicula implements Serializable {
     private List<Genero> generos;
 
     @OneToMany(mappedBy = "pelicula")
+    @ToString.Exclude
     private List<Funcion> funciones;
 }

@@ -6,11 +6,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class AdministradorTeatro extends Persona implements Serializable {
     // Relacion -----------------------------------------------------------------------------------------
     @OneToOne(mappedBy = "administrador")
