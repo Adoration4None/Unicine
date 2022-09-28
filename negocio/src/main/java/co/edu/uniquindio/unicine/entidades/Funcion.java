@@ -4,27 +4,20 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Funcion implements Serializable {
+    // Atributos -----------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
-
-    @Column(nullable = false)
-    private LocalDate fecha;
-
-    @Column(nullable = false)
-    private LocalTime hora;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
@@ -36,4 +29,17 @@ public class Funcion implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     private EstadoFuncion estado;
+
+    // Relaciones -----------------------------------------------------------------
+    @OneToMany(mappedBy = "funcion")
+    private List<Compra> compras;
+
+    @ManyToOne
+    private Pelicula pelicula;
+
+    @ManyToOne
+    private Sala sala;
+
+    @ManyToOne
+    private Horario horario;
 }

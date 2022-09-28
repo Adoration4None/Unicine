@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -11,17 +12,17 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Genero {
-    // Atributos ---------------------------------------------------------
+public class Ciudad implements Serializable {
+    // Atributos ----------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(length = 20, nullable = false, unique = true)
     private String nombre;
 
-    // Relacion ----------------------------------------------------------
-    @ManyToMany(mappedBy = "generos")
-    private List<Pelicula> peliculas;
+    // Relacion ------------------------------------------------------------
+    @OneToMany(mappedBy = "ciudad")
+    private List<Teatro> teatros;
 }

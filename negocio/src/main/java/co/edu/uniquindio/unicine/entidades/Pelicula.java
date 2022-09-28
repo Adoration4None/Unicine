@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pelicula implements Serializable {
+    // Atributos ---------------------------------------------------------
     @Id
     @EqualsAndHashCode.Include
     @Column(length = 50)
@@ -35,8 +35,10 @@ public class Pelicula implements Serializable {
     @Column(length = 20, nullable = false)
     private EstadoPelicula estado;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection
-    @Column(length = 20, nullable = false)
+    // Relaciones -------------------------------------------------------
+    @ManyToMany
     private List<Genero> generos;
+
+    @OneToMany(mappedBy = "pelicula")
+    private List<Funcion> funciones;
 }
