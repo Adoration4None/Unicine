@@ -1,6 +1,5 @@
 package co.edu.uniquindio.unicine.test;
 
-import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.junit.jupiter.api.Assertions;
@@ -8,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,7 @@ public class ClienteTest {
     private ClienteRepo clienteRepo;
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void crear() {
         Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
 
@@ -35,31 +36,25 @@ public class ClienteTest {
     }
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void eliminar() {
-        Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
+        Cliente guardado = clienteRepo.findById("9876").orElse(null);
 
-        cliente.agregarTelefono("Celular", "322455");
-        cliente.agregarTelefono("Fijo", "78890");
-
-        Cliente guardado = clienteRepo.save(cliente);
-
+        assert guardado != null;
         clienteRepo.delete(guardado);
 
-        Optional<Cliente> borrado = clienteRepo.findById("1223");
+        Optional<Cliente> borrado = clienteRepo.findById("9876");
 
         // Verificacion
         Assertions.assertNull( borrado.orElse(null) );
     }
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void actualizar () {
-        Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
+        Cliente guardado = clienteRepo.findById("1223").orElse(null);
 
-        cliente.agregarTelefono("Celular", "322455");
-        cliente.agregarTelefono("Fijo", "78890");
-
-        Cliente guardado = clienteRepo.save(cliente);
-
+        assert guardado != null;
         guardado.setNombreCompleto("Pedro Jimenez");
 
         Cliente nuevo = clienteRepo.save(guardado);
@@ -69,32 +64,42 @@ public class ClienteTest {
     }
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void obtener() {
-        Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
+        // Cliente buscado: Ivor Randolph
+        Optional<Cliente> buscado = clienteRepo.findById("2345");
 
-        cliente.agregarTelefono("Celular", "322455");
-        cliente.agregarTelefono("Fijo", "78890");
-
-        clienteRepo.save(cliente);
-
-        Optional<Cliente> buscado = clienteRepo.findById("1223");
-
+        Assertions.assertNotNull( buscado.orElse(null) );
         System.out.println( buscado.orElse(null) );
     }
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void listar() {
-        Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
-        cliente.agregarTelefono("Celular", "322455");
-        cliente.agregarTelefono("Fijo", "78890");
-
-        Cliente cliente2 = new Cliente("544", "Maria Ramirez", "maria@mail.es", "hola");
-
-        clienteRepo.save(cliente);
-        clienteRepo.save(cliente2);
-
         List<Cliente> clientes = clienteRepo.findAll();
+        System.out.println("");
+        clientes.forEach(System.out::println);
+        System.out.println("");
+    }
 
-        System.out.println(clientes);
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerPorCorreo() {
+        Cliente cliente = clienteRepo.obtener("nisi@icloud.ca");
+        Cliente cliente2 = clienteRepo.findByEmail("nisi@icloud.ca");
+
+        Assertions.assertEquals( "2345", cliente.getCedula() );
+        Assertions.assertEquals( "2345", cliente2.getCedula() );
+        System.out.println(cliente);
+        System.out.println(cliente2);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void comprobarInicioSesion() {
+        Cliente cliente = clienteRepo.findByEmailAndContrasena("curabitur@google.couk", "e123");
+
+        Assertions.assertNotNull(cliente);
+        System.out.println(cliente);
     }
 }
