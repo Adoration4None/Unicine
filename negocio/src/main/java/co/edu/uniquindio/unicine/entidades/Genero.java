@@ -1,12 +1,14 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Normalized;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -19,6 +21,7 @@ public class Genero {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NonNull
     private String nombre;
 
     // Relacion ----------------------------------------------------------

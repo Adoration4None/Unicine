@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -41,4 +42,34 @@ public class Sala implements Serializable {
 
     @ManyToOne
     private Teatro teatro;
+
+    // Constructor ----------------------------------------------------------------
+    public Sala(Integer cantidadSillas, TipoSala tipo, Teatro teatro) {
+        this.cantidadSillas = cantidadSillas;
+        this.tipo = tipo;
+        this.teatro = teatro;
+
+        this.estado = EstadoSala.DISPONIBLE;
+        this.sillas = crearSillasSala(cantidadSillas, sillas, 0);
+    }
+
+    /**
+     *
+     * @param cantidadSillas
+     * @param sillas
+     * @param i
+     * @return
+     */
+    private List<Silla> crearSillasSala(Integer cantidadSillas, List<Silla> sillas, int i) {
+        Silla nueva;
+
+        if(i < cantidadSillas) {
+            nueva = new Silla(this);
+            sillas.add(nueva);
+
+            return crearSillasSala(cantidadSillas, sillas, ++i);
+        }
+
+        return sillas;
+    }
 }

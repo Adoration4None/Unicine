@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
@@ -25,5 +23,6 @@ public class Silla implements Serializable {
     private List<Compra> compras;
 
     @ManyToOne
+    @NonNull
     private Sala sala;
 }

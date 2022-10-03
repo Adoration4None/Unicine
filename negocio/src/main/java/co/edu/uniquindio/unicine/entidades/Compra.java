@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -21,17 +22,21 @@ public class Compra implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
+    @NonNull
     private LocalDateTime fechaCompra;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @NonNull
     private MetodoPago metodoPago;
 
     @Column(nullable = false)
+    @NonNull
     private Float valorTotal;
 
     // Relaciones ------------------------------------------------------
     @ManyToOne
+    @NonNull
     private Cliente cliente;
 
     @ManyToMany
@@ -41,8 +46,11 @@ public class Compra implements Serializable {
     private Cupon cupon;
 
     @ManyToOne
+    @NonNull
     private Funcion funcion;
 
     @ManyToMany
+    @NonNull
     private List<Silla> sillas;
+
 }

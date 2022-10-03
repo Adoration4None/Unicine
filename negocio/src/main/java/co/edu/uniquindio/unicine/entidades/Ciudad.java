@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -20,6 +21,7 @@ public class Ciudad implements Serializable {
     private Integer id;
 
     @Column(length = 20, nullable = false, unique = true)
+    @NonNull
     private String nombre;
 
     // Relacion ------------------------------------------------------------
