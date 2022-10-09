@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
+import co.edu.uniquindio.unicine.entidades.Cupon;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,14 @@ public class ClienteTest {
     @Autowired
     private ClienteRepo clienteRepo;
 
+    // CRUD ------------------------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
     public void crear() {
         Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
 
-        cliente.agregarTelefono("Celular", "322455");
-        cliente.agregarTelefono("Fijo", "78890");
+        cliente.agregarTelefono("322455", "Celular");
+        cliente.agregarTelefono("78890", "Fijo");
 
         Cliente guardado = clienteRepo.save(cliente);
 
@@ -73,6 +75,8 @@ public class ClienteTest {
         System.out.println( buscado.orElse(null) );
     }
 
+    // Otras consultas -----------------------------------------------------------------------------------------
+
     @Test
     @Sql("classpath:dataset.sql")
     public void listar() {
@@ -101,5 +105,14 @@ public class ClienteTest {
 
         Assertions.assertNotNull(cliente);
         System.out.println(cliente);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCupones() {
+        List<Cupon> cupones = clienteRepo.obtenerCupones("dictum.phasellus@aol.org");
+
+        Assertions.assertNotNull(cupones);
+        cupones.forEach(System.out::println);
     }
 }

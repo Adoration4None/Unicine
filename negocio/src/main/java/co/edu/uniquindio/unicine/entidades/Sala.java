@@ -1,6 +1,8 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import co.edu.uniquindio.unicine.repo.SillaRepo;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;

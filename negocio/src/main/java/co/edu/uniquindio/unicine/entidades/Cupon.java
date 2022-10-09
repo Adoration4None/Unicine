@@ -31,10 +31,12 @@ public class Cupon implements Serializable {
     @Column(nullable = false)
     private String descripcion;
 
-    @Column(nullable = false)
-    private String criterio;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private CriterioCupon criterio;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
     private EstadoCupon estado;
 
     // Relaciones -------------------------------------------------------
@@ -46,7 +48,7 @@ public class Cupon implements Serializable {
 
     // Constructor -------------------------------------------------------
     public Cupon(String nombre, Float valorDescuento, LocalDate fechaVencimiento, String descripcion,
-                 String criterio) {
+                 CriterioCupon criterio) {
         this.nombre = nombre;
         this.valorDescuento = valorDescuento;
         this.fechaVencimiento = fechaVencimiento;

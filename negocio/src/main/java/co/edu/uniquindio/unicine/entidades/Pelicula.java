@@ -43,6 +43,7 @@ public class Pelicula implements Serializable {
     private EstadoPelicula estado;
 
     // Relaciones -------------------------------------------------------
+
     @ManyToMany
     private List<Genero> generos;
 

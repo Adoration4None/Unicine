@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class AdministradorTeatro extends Persona implements Serializable {
     // Relacion -----------------------------------------------------------------------------------------
     @OneToOne(mappedBy = "administrador")
+    @ToString.Exclude
     private Teatro teatro;
 
     // Constructor --------------------------------------------------------------------------------------
