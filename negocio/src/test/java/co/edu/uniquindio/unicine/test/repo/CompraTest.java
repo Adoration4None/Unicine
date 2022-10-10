@@ -1,6 +1,6 @@
-package co.edu.uniquindio.unicine.test;
+package co.edu.uniquindio.unicine.test.repo;
 
-import co.edu.uniquindio.unicine.repo.CuponRepo;
+import co.edu.uniquindio.unicine.repo.CompraRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,12 +9,12 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CuponTest {
+public class CompraTest {
 
     @Autowired
-    private CuponRepo cuponRepo;
+    private CompraRepo compraRepo;
 
-    // CRUD -----------------------------------------------------------------------------------------------------
+    // CRUD -----------------------------------------------------------------------------------------------
 
     @Test
     @Sql("classpath:dataset.sql")
@@ -39,4 +39,6 @@ public class CuponTest {
     public void obtener() {
 
     }
+
+
 }

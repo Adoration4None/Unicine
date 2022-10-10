@@ -1,18 +1,22 @@
-package co.edu.uniquindio.unicine.test;
+package co.edu.uniquindio.unicine.test.repo;
 
-import co.edu.uniquindio.unicine.repo.ConfiteriaRepo;
+import co.edu.uniquindio.unicine.dto.FuncionDTO;
+import co.edu.uniquindio.unicine.repo.PeliculaRepo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.List;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ConfiteriaTest {
+public class PeliculaTest {
 
     @Autowired
-    private ConfiteriaRepo confiteriaRepo;
+    private PeliculaRepo peliculaRepo;
 
     // CRUD -----------------------------------------------------------------------------------------------------
 
@@ -40,5 +44,13 @@ public class ConfiteriaTest {
 
     }
 
+    // Otras consultas -------------------------------------------------------------------------------------
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerFunciones() {
+        List<FuncionDTO> funciones = peliculaRepo.obtenerFunciones("One Piece Film: Red");
 
+        Assertions.assertNotNull(funciones);
+        funciones.forEach(System.out::println);
+    }
 }

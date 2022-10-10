@@ -1,42 +1,46 @@
-package co.edu.uniquindio.unicine.test;
+package co.edu.uniquindio.unicine.test.repo;
 
-import co.edu.uniquindio.unicine.repo.PeliculaRepo;
+import co.edu.uniquindio.unicine.entidades.Teatro;
+import co.edu.uniquindio.unicine.repo.TeatroRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.List;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PeliculaTest {
+public class TeatroTest {
 
     @Autowired
-    private PeliculaRepo peliculaRepo;
+    private TeatroRepo teatroRepo;
 
     // CRUD -----------------------------------------------------------------------------------------------------
-
-    @Test
-    @Sql("classpath:dataset.sql")
     public void crear() {
 
     }
 
-    @Test
-    @Sql("classpath:dataset.sql")
     public void eliminar() {
 
     }
 
-    @Test
-    @Sql("classpath:dataset.sql")
     public void actualizar() {
 
     }
 
-    @Test
-    @Sql("classpath:dataset.sql")
     public void obtener() {
 
+    }
+
+    // Otras consultas ------------------------------------------------------------------------------------------
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerTeatrosCiudad() {
+        List<Teatro> teatrosArmenia = teatroRepo.obtenerTeatrosCiudad("Armenia");
+
+        teatrosArmenia.forEach(System.out::println);
+        System.out.println(teatrosArmenia.size());
     }
 }

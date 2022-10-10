@@ -22,6 +22,7 @@ public class Cliente extends Persona implements Serializable {
     private List<Cupon> cupones;
 
     // Constructor --------------------------------------------------------------------------------------
+    @Builder
     public Cliente(String cedula, String nombreCompleto, String email, String contrasena) {
         super(cedula, nombreCompleto, email, contrasena);
     }

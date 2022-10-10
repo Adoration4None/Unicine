@@ -1,4 +1,4 @@
-package co.edu.uniquindio.unicine.test;
+package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
 import co.edu.uniquindio.unicine.repo.AdministradorRepo;
