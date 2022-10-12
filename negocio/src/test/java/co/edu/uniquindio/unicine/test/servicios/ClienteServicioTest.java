@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.test.servicios;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
+import co.edu.uniquindio.unicine.servicios.EmailServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ClienteServicioTest {
 
     @Autowired
     private ClienteServicio clienteServicio;
+
+    @Autowired
+    private EmailServicio emailServicio;
 
     public void iniciarSesion() {
 
@@ -87,5 +91,10 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void redimirCupon() {
 
+    }
+
+    @Test
+    public void enviarEmailTest() {
+        emailServicio.enviarEmail("Primera prueba", "Esto es un mensaje de prueba", "samuel.echeverrib@uqvirtual.edu.co");
     }
 }
