@@ -5,12 +5,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     // https://mvnrepository.com/artifact/com.google.zxing/core
-    implementation 'com.google.zxing:core'
+    implementation 'com.google.zxing:core:3.5.0'
     // https://mvnrepository.com/artifact/com.google.zxing/javase
-    implementation 'com.google.zxing:javase'
+    implementation 'com.google.zxing:javase:3.5.0'
     // https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44
     implementation 'com.cloudinary:cloudinary-http44:1.33.0'
-
 }
 test {
     useJUnitPlatform()

@@ -1,7 +1,7 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
-import co.edu.uniquindio.unicine.repo.AdministradorRepo;
+import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 public class AdministradorTest {
 
     @Autowired
-    private AdministradorRepo administradorRepo;
+    private AdministradorTeatroRepo administradorTeatroRepo;
 
     // CRUD ---------------------------------------------------------------------------------------------------
     @Test
@@ -25,7 +25,7 @@ public class AdministradorTest {
         administrador.agregarTelefono("3445566", "Celular");
         administrador.agregarTelefono("79998", "Fijo");
 
-        AdministradorTeatro guardado = administradorRepo.save(administrador);
+        AdministradorTeatro guardado = administradorTeatroRepo.save(administrador);
 
         Assertions.assertNotNull(guardado);
         Assertions.assertEquals( administrador.getNombreCompleto(), guardado.getNombreCompleto() );
