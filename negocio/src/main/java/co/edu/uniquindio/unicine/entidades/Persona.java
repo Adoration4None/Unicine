@@ -51,6 +51,7 @@ public abstract class Persona implements Serializable {
         this.contrasena = contrasena;
 
         this.estado = EstadoPersona.INACTIVO;
+        this.telefonos = new HashMap<>();
     }
 
     public void agregarTelefono(String telefono, String nombre) {
