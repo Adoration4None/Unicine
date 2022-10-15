@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -20,18 +21,23 @@ public class Teatro implements Serializable {
     private Integer id;
 
     @Column(length = 20, nullable = false)
+    @NonNull
     private String nombre;
 
     @Column(length = 20, nullable = false)
+    @NonNull
     private String direccion;
 
     // Relaciones -------------------------------------------------------------------
     @ManyToOne
+    @NonNull
     private Ciudad ciudad;
 
     @OneToOne
+    @NonNull
     private AdministradorTeatro administrador;
 
     @OneToMany(mappedBy = "teatro")
+    @ToString.Exclude
     private List<Sala> salas;
 }

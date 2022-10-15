@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -21,25 +22,33 @@ public class Funcion implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
+    @NonNull
     private TipoFuncion tipo;
 
     @Column(nullable = false)
+    @NonNull
     private Float precio;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
+    @NonNull
     private EstadoFuncion estado;
 
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
+    @ToString.Exclude
     private List<Compra> compras;
 
     @ManyToOne
+    @NonNull
     private Pelicula pelicula;
 
     @ManyToOne
+    @NonNull
     private Sala sala;
 
     @ManyToOne
+    @NonNull
     private Horario horario;
+
 }

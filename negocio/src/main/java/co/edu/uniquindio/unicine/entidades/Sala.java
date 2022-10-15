@@ -1,6 +1,8 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import co.edu.uniquindio.unicine.repo.SillaRepo;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,11 +34,43 @@ public class Sala implements Serializable {
 
     // Relaciones ----------------------------------------------------------------
     @OneToMany(mappedBy = "sala")
+    @ToString.Exclude
     private List<Funcion> funciones;
 
     @OneToMany(mappedBy = "sala")
+    @ToString.Exclude
     private List<Silla> sillas;
 
     @ManyToOne
     private Teatro teatro;
+
+    // Constructor ----------------------------------------------------------------
+    public Sala(Integer cantidadSillas, TipoSala tipo, Teatro teatro) {
+        this.cantidadSillas = cantidadSillas;
+        this.tipo = tipo;
+        this.teatro = teatro;
+
+        this.estado = EstadoSala.DISPONIBLE;
+        this.sillas = crearSillasSala(cantidadSillas, sillas, 0);
+    }
+
+    /**
+     *
+     * @param cantidadSillas
+     * @param sillas
+     * @param i
+     * @return
+     */
+    private List<Silla> crearSillasSala(Integer cantidadSillas, List<Silla> sillas, int i) {
+        Silla nueva;
+
+        if(i < cantidadSillas) {
+            nueva = new Silla(this);
+            sillas.add(nueva);
+
+            return crearSillasSala(cantidadSillas, sillas, ++i);
+        }
+
+        return sillas;
+    }
 }

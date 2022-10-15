@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -19,10 +20,12 @@ public class Ciudad implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(length = 20, nullable = false, unique = true)
+    @Column(length = 20, nullable = false)
+    @NonNull
     private String nombre;
 
     // Relacion ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
+    @ToString.Exclude
     private List<Teatro> teatros;
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -17,28 +18,36 @@ public class Pelicula implements Serializable {
     @Id
     @EqualsAndHashCode.Include
     @Column(length = 50)
+    @NonNull
     private String nombre;
 
     @Column(nullable = false)
+    @NonNull
     private String imagen;
 
     @Column(nullable = false)
+    @NonNull
     private String trailer;
 
     @Column(nullable = false)
+    @NonNull
     private String sinopsis;
 
     @Column(nullable = false)
+    @NonNull
     private String reparto;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
+    @NonNull
     private EstadoPelicula estado;
 
     // Relaciones -------------------------------------------------------
+
     @ManyToMany
     private List<Genero> generos;
 
     @OneToMany(mappedBy = "pelicula")
+    @ToString.Exclude
     private List<Funcion> funciones;
 }

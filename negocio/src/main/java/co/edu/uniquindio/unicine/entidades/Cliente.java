@@ -10,16 +10,19 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class Cliente extends Persona implements Serializable {
     // Relaciones ---------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "cliente")
+    @ToString.Exclude
     private List<Compra> compras;
 
     @OneToMany(mappedBy = "cliente")
+    @ToString.Exclude
     private List<Cupon> cupones;
 
     // Constructor --------------------------------------------------------------------------------------
+    @Builder
     public Cliente(String cedula, String nombreCompleto, String email, String contrasena) {
         super(cedula, nombreCompleto, email, contrasena);
     }

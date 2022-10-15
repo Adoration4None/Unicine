@@ -41,4 +41,15 @@ public class Confiteria implements Serializable {
     // Relacion -------------------------------------------------------------
     @ManyToMany(mappedBy = "confiteria")
     private List<Compra> compras;
+
+    // Constructor ----------------------------------------------------------
+    public Confiteria(String nombre, String imagen, Integer unidades, Float precio, String descripcion) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.unidades = unidades;
+        this.precio = precio;
+        this.descripcion = descripcion;
+
+        this.estado = EstadoConfiteria.DISPONIBLE;
+    }
 }

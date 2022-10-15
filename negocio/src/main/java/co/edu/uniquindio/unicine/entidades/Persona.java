@@ -51,11 +51,10 @@ public abstract class Persona implements Serializable {
         this.email = email;
         this.contrasena = contrasena;
 
-        this.telefonos = new HashMap<>();
         this.estado = EstadoPersona.INACTIVO;
     }
 
-    public void agregarTelefono(String nombre, String telefono) {
-        telefonos.put(nombre, telefono);
+    public void agregarTelefono(String telefono, String nombre) {
+        telefonos.put(telefono, nombre);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,12 +23,16 @@ public class Horario implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
+    @NonNull
     private LocalDate fecha;
 
     @Column(nullable = false)
+    @NonNull
     private LocalTime hora;
 
     // Relacion -----------------------------------------------------------------
     @OneToMany(mappedBy = "horario")
+    @ToString.Exclude
     private List<Funcion> funciones;
+
 }

@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -26,15 +26,17 @@ public class Cupon implements Serializable {
     private Float valorDescuento;
 
     @Column(nullable = false)
-    private LocalDateTime fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(nullable = false)
     private String descripcion;
 
-    @Column(nullable = false)
-    private String criterio;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private CriterioCupon criterio;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
     private EstadoCupon estado;
 
     // Relaciones -------------------------------------------------------
@@ -43,4 +45,17 @@ public class Cupon implements Serializable {
 
     @OneToOne(mappedBy = "cupon")
     private Compra compra;
+
+    // Constructor -------------------------------------------------------
+    public Cupon(String nombre, Float valorDescuento, LocalDate fechaVencimiento, String descripcion,
+                 CriterioCupon criterio) {
+        this.nombre = nombre;
+        this.valorDescuento = valorDescuento;
+        this.fechaVencimiento = fechaVencimiento;
+        this.descripcion = descripcion;
+        this.criterio = criterio;
+
+        this.estado = EstadoCupon.DISPONIBLE;
+    }
+
 }
