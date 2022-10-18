@@ -19,6 +19,9 @@ public class TeatroTest {
 
     // CRUD -----------------------------------------------------------------------------------------------------
     public void crear() {
+        Teatro teatro = new Teatro(1234, "Teatro Unicine", "Cra 15 Cl 23-12", null, null, null);
+
+        teatro.agreg
 
     }
 

@@ -24,7 +24,7 @@ public class ClienteTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crear() {
-        Cliente cliente = new Cliente("1223", "Juan Perez", "juanp@mail.com", "a123");
+        Cliente cliente = new Cliente("4223", "Juan Perez", "juanp@mail.com", "a123");
 
         cliente.agregarTelefono("322455", "Celular");
         cliente.agregarTelefono("78890", "Fijo");
