@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -20,14 +21,12 @@ public class Sala implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
+    @NonNull
     private Integer cantidadSillas;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private EstadoSala estado;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @NonNull
     private TipoSala tipo;
 
     // Relaciones ----------------------------------------------------------------
@@ -40,15 +39,7 @@ public class Sala implements Serializable {
     private List<Entrada> entradas;
 
     @ManyToOne
+    @NonNull
     private Teatro teatro;
-
-    // Constructor ----------------------------------------------------------------
-    public Sala(Integer cantidadSillas, TipoSala tipo, Teatro teatro) {
-        this.cantidadSillas = cantidadSillas;
-        this.tipo = tipo;
-        this.teatro = teatro;
-
-        this.estado = EstadoSala.DISPONIBLE;
-    }
 
 }

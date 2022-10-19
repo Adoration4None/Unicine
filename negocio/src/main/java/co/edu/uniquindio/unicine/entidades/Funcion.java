@@ -54,7 +54,7 @@ public class Funcion implements Serializable {
         this.horario = horario;
 
         this.precio += completarPrecioSegunTipo();
-        this.estadoSala = this.sala.getEstado();
+        this.estadoSala = EstadoSala.DISPONIBLE;
     }
 
     private Float completarPrecioSegunTipo() {

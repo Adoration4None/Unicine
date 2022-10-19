@@ -29,11 +29,11 @@ INSERT INTO teatro VALUES
                        (2, "Carrera 22 #33-12", "Cineplaza", "3346", 2);
 
 INSERT INTO sala VALUES
-                       (1, 70, "DISPONIBLE", "2D", 1),
-                       (2, 80, "DISPONIBLE", "3D", 1),
-                       (3, 65, "DISPONIBLE", "XD", 2),
-                       (4, 60, "NO_DISPONIBLE", "2D", 2),
-                       (5, 90, "NO_DISPONIBLE", "XD", 1);
+                       (1, 70, "2D", 1),
+                       (2, 80, "3D", 1),
+                       (3, 65, "XD", 2),
+                       (4, 60, "2D", 2),
+                       (5, 90, "XD", 1);
 
 /**
   PENDIENTE:
@@ -75,7 +75,7 @@ INSERT INTO horario VALUES
 INSERT INTO funcion VALUES
                         (1, "DISPONIBLE", 15000, "3D", 2, "One Piece Film: Red", 2),
                         (2, "DISPONIBLE", 17000, "2D", 8, "Taxi Driver", 4),
-                        (3, "NO_DISPONIBLE", 20000, "XD", 6, "Fast & Furious 10", 3);
+                        (3, "COMPLETA", 20000, "XD", 6, "Fast & Furious 10", 3);
 
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA", "Cupon de bienvenida", "USADO", "2022-10-05", "Hola Mundo", 5000, "1223"),
