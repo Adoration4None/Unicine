@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Confiteria implements Serializable {
     private String imagen;
 
     @Column(nullable = false)
+    @PositiveOrZero
     private Integer unidades;
 
     @Column(nullable = false)
@@ -39,8 +41,8 @@ public class Confiteria implements Serializable {
     private EstadoConfiteria estado;
 
     // Relacion -------------------------------------------------------------
-    @ManyToMany(mappedBy = "confiteria")
-    private List<Compra> compras;
+    @OneToMany(mappedBy = "comestible")
+    private List<CompraConfiteria> comprasConfiteria;
 
     // Constructor ----------------------------------------------------------
     public Confiteria(String nombre, String imagen, Integer unidades, Float precio, String descripcion) {
