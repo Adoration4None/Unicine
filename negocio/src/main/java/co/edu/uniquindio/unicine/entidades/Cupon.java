@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -40,8 +41,8 @@ public class Cupon implements Serializable {
     private EstadoCupon estado;
 
     // Relaciones -------------------------------------------------------
-    @ManyToOne
-    private Cliente cliente;
+    @ManyToMany
+    private List<Cliente> clientes;
 
     @OneToOne(mappedBy = "cupon")
     private Compra compra;

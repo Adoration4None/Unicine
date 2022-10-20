@@ -1,8 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
-import co.edu.uniquindio.unicine.repo.SillaRepo;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,14 +21,12 @@ public class Sala implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
+    @NonNull
     private Integer cantidadSillas;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private EstadoSala estado;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @NonNull
     private TipoSala tipo;
 
     // Relaciones ----------------------------------------------------------------
@@ -39,38 +36,10 @@ public class Sala implements Serializable {
 
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
-    private List<Silla> sillas;
+    private List<Entrada> entradas;
 
     @ManyToOne
+    @NonNull
     private Teatro teatro;
 
-    // Constructor ----------------------------------------------------------------
-    public Sala(Integer cantidadSillas, TipoSala tipo, Teatro teatro) {
-        this.cantidadSillas = cantidadSillas;
-        this.tipo = tipo;
-        this.teatro = teatro;
-
-        this.estado = EstadoSala.DISPONIBLE;
-        this.sillas = crearSillasSala(cantidadSillas, sillas, 0);
-    }
-
-    /**
-     *
-     * @param cantidadSillas
-     * @param sillas
-     * @param i
-     * @return
-     */
-    private List<Silla> crearSillasSala(Integer cantidadSillas, List<Silla> sillas, int i) {
-        Silla nueva;
-
-        if(i < cantidadSillas) {
-            nueva = new Silla(this);
-            sillas.add(nueva);
-
-            return crearSillasSala(cantidadSillas, sillas, ++i);
-        }
-
-        return sillas;
-    }
 }

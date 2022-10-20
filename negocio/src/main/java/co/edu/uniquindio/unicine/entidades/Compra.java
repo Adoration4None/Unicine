@@ -39,8 +39,8 @@ public class Compra implements Serializable {
     @NonNull
     private Cliente cliente;
 
-    @ManyToMany
-    private List<Confiteria> confiteria;
+    @OneToMany(mappedBy = "compra")
+    private List<CompraConfiteria> comprasConfiteria;
 
     @OneToOne
     private Cupon cupon;
@@ -49,8 +49,8 @@ public class Compra implements Serializable {
     @NonNull
     private Funcion funcion;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "compra")
     @NonNull
-    private List<Silla> sillas;
+    private List<Entrada> entradas;
 
 }
