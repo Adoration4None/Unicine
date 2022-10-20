@@ -30,8 +30,6 @@ public class Compra implements Serializable {
     @NonNull
     private MetodoPago metodoPago;
 
-    @Column(nullable = false)
-    @NonNull
     private Float valorTotal;
 
     // Relaciones ------------------------------------------------------
@@ -52,5 +50,28 @@ public class Compra implements Serializable {
     @OneToMany(mappedBy = "compra")
     @NonNull
     private List<Entrada> entradas;
+
+    // Metodos ---------------------------------------------------------
+
+    public Float calcularValorTotal() throws Exception {
+        float total = 0f;
+
+        if(this.entradas == null || this.funcion == null)
+            throw new Exception("No se puede calcular el valor de la compra");
+
+        total += this.funcion.getPrecio() * entradas.size();
+
+        if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
+        if(this.cupon != null) total -= this.cupon.getValorDescuento();
+
+        this.valorTotal = total;
+        return this.valorTotal;
+    }
+
+    public float obtenerTotalConfiteria() {
+        float total = 0f;
+        for (CompraConfiteria c : this.comprasConfiteria) total += c.getPrecio();
+        return total;
+    }
 
 }

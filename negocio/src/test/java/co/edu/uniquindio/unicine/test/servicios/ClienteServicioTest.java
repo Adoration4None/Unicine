@@ -1,8 +1,14 @@
 package co.edu.uniquindio.unicine.test.servicios;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
+import co.edu.uniquindio.unicine.entidades.Compra;
+import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.MetodoPago;
+import co.edu.uniquindio.unicine.repo.CompraRepo;
+import co.edu.uniquindio.unicine.repo.CuponRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.EmailServicio;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,12 @@ public class ClienteServicioTest {
 
     @Autowired
     private EmailServicio emailServicio;
+
+    @Autowired
+    private CompraRepo compraRepo;
+
+    @Autowired
+    private CuponRepo cuponRepo;
 
     public void iniciarSesion() {
 
@@ -87,10 +99,38 @@ public class ClienteServicioTest {
 
     }
 
+    // ¿COMO PROBAR ESTO?
     @Test
     @Sql("classpath:dataset.sql")
     public void redimirCupon() {
+        Compra compraInicial = new Compra();
 
+        Compra compra = new Compra();
+
+        if(compraInicial != null) {
+            try {
+                compra = clienteServicio.redimirCupon(1, compraInicial);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        Assertions.assertEquals(1, compra.getCupon().getId());
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void cambiarContrasena() {
+        boolean resultado = false;
+
+        try {
+            resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertTrue(resultado);
     }
 
     @Test

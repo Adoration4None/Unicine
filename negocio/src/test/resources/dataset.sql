@@ -35,11 +35,6 @@ INSERT INTO sala VALUES
                        (4, 60, "2D", 2),
                        (5, 90, "XD", 1);
 
-/**
-  PENDIENTE:
-  INSERT INTO silla VALUES
- */
-
  INSERT INTO genero VALUES
                         (1, "Terror"),
                         (2, "Romance"),
@@ -78,8 +73,28 @@ INSERT INTO funcion VALUES
                         (3, "COMPLETA", 20000, "XD", 6, "Fast & Furious 10", 3);
 
 INSERT INTO cupon VALUES
-                      (1, "BIENVENIDA", "Cupon de bienvenida", "USADO", "2022-10-05", "Hola Mundo", 5000, "1223"),
-                      (2, "CUMPLEANOS", "Cupon de regalo de cumpleaños", "DISPONIBLE", "2023-01-03", "H-Bday", 10000, "1223");
+                      (1, "BIENVENIDA", "Cupon de bienvenida", "USADO", "2022-10-05", "Hola Mundo", 5000),
+                      (2, "CUMPLEANOS", "Cupon de regalo de cumpleaños", "DISPONIBLE", "2023-01-03", "H-Bday", 10000);
+
+INSERT INTO cupon_clientes VALUES
+                       (1, "1235"),
+                       (1, "2345"),
+                       (2, "9876");
+
+INSERT INTO compra VALUES
+                       (1, "2022-10-05 14:37:12", "NEQUI",           0.0, "1235", 1, 2),
+                       (2, "2022-10-05 18:54:30", "TARJETA_CREDITO", 0.0, "2345", null, 1),
+                       (3, "2022-10-03 09:18:06", "TARJETA_DEBITO",  0.0, "9876", 2, 2),
+                       (4, "2022-10-04 16:20:06", "DAVIPLATA",       0.0, "1235", null, 3),
+                       (5, "2022-10-05 11:05:17", "EFECTY",          0.0, "2345", 1, 1);
+
+INSERT INTO entrada VALUES
+                        (1, 3, 4, 1, 2),
+                        (2, 4, 4, 1, 2),
+                        (3, 10, 7, 2, 1),
+                        (4, 9, 7, 2, 1),
+                        (5, 6, 5, 4, 5);
+
 
 
 
