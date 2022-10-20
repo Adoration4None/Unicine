@@ -31,7 +31,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Cliente iniciarSesion(String email, String contrasena) throws Exception {
         Cliente clienteEncontrado = clienteRepo.findByEmailAndContrasena(email, contrasena);
 
-        if(clienteEncontrado == null) {
+        if (clienteEncontrado == null) {
             throw new Exception("Datos de autenticacion incorrectos");
         }
 
@@ -41,7 +41,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public Cliente registrar(Cliente cliente) throws Exception {
 
-        if( emailExiste(cliente.getEmail()) ) {
+        if (emailExiste(cliente.getEmail())) {
             throw new Exception("El correo que intenta registrar ya existe");
         }
 
@@ -56,7 +56,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Cliente actualizar(Cliente cliente) throws Exception {
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cliente.getCedula());
 
-        if( clienteGuardado.isEmpty() ) throw new Exception("El cliente no existe");
+        if (clienteGuardado.isEmpty()) throw new Exception("El cliente no existe");
 
         return clienteRepo.save(cliente);
     }
@@ -65,7 +65,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     public void eliminar(String cedulaCliente) throws Exception {
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cedulaCliente);
 
-        if( clienteGuardado.isEmpty() ) throw new Exception("El cliente no existe");
+        if (clienteGuardado.isEmpty()) throw new Exception("El cliente no existe");
 
         clienteRepo.delete(clienteGuardado.get());
     }
@@ -74,13 +74,13 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Cliente obtener(String cedulaCliente) throws Exception {
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cedulaCliente);
 
-        if( clienteGuardado.isEmpty() ) throw new Exception("El cliente no existe");
+        if (clienteGuardado.isEmpty()) throw new Exception("El cliente no existe");
 
         return clienteGuardado.get();
     }
 
     @Override
-    public List<Cliente> listarClientes()  {
+    public List<Cliente> listarClientes() {
         return clienteRepo.findAll();
     }
 
@@ -92,12 +92,12 @@ public class ClienteServicioImpl implements ClienteServicio {
     //redimir cupón qué es
     @Override
     public boolean redimirCupon(Integer idCupon, Integer idCompra) throws Exception {
-        if(cuponRepo.validarCupon(idCupon)){
+        if (cuponRepo.validarCupon(idCupon)) {
             //AQUÍ SERÍA SOLO MIRAR LA COMPRA DEL CLIENTE Y REDIMIR EL CUPON CON UNA FUNCION PERO NO SE
-        }
-        else{
+        } else {
             throw new Exception("El cupon no se puede redimir");
         }
+        return false;
     }
 
     @Override
@@ -109,17 +109,18 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Compra realizarCompra(Compra compra, String cedulaCliente) throws Exception {
         Optional<Cliente> cliente = clienteRepo.findById(cedulaCliente);
         //cliente.addCompra();
+        return null;
     }
 
     @Override
     public boolean cambiarContrasena(String contrasenaAnterior, String nuevaContrasena, String cedulaCliente) throws Exception {
-        boolean flag = clienteRepo.validarContrasena(contrasenaAnterior).get();
-        if(clienteRepo.validarContrasena(contrasenaAnterior)){
-            Optional<Cliente> cliente = clienteRepo.findById(cedulaCliente);
-            //cliente.actualizarContrasena(nuevaContrasena)
+        Cliente cliente = clienteRepo.findByContrasenaAndCedula(contrasenaAnterior,cedulaCliente);
+        if(cliente != null){
+        cliente.setContrasena(nuevaContrasena);
         }
         else{
-            throw new Exception("Contraseña anterior incorrecta");
+             throw new Exception("Contraseña anterior incorrecta");
         }
+        return false;
     }
 }

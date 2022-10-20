@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.dto.FuncionDTO;
+import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.repo.PeliculaRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -53,4 +54,14 @@ public class PeliculaTest {
         Assertions.assertNotNull(funciones);
         funciones.forEach(System.out::println);
     }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPelicula() {
+        List<Pelicula> peliculas = peliculaRepo.buscarPelicula("A");
+
+        Assertions.assertNotNull(peliculas);
+        peliculas.forEach(System.out::println);
+    }
+
 }

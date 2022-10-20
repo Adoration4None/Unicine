@@ -25,6 +25,7 @@ public class Genero {
     private String nombre;
 
     // Relacion ----------------------------------------------------------
+    @ToString.Exclude
     @ManyToMany(mappedBy = "generos")
     private List<Pelicula> peliculas;
 }

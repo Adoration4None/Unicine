@@ -23,8 +23,9 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
     @Query("select c from Cliente c where c.email = :email")
     Cliente findByEmail(String email);
 
-    //@Query("select c from Cliente c where c.email and c.contrasena = :email and :contrasena")
     Cliente findByEmailAndContrasena(String email, String contrasena);
+
+    Cliente findByContrasenaAndCedula(String contrasena, String cedula);
 
     @Query("select cup from Cliente cli, in (cli.cupones) cup where cli.email  = :email")
     List<Cupon> obtenerCupones(String email);
@@ -34,8 +35,8 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
     @Query("select comp from Cliente c, in (c.compras) comp where c.cedula = :cedulaCliente")
     List<Compra> obtenerCompras(String cedulaCliente);
 
-    //@Query("select c, case when (count(c.contrasena) > 0) then true else false end from Cliente c where c.contrasena and c.cedula = :contrasena and :cedulaCliente")
-    List<Object[]> validarContrasena(String contrasena, String cedulaCliente);
+    @Query("select c from Cliente c where c.contrasena = :contrasena and c.cedula = :cedulaCliente")
+    Cliente validarContrasena(String contrasena, String cedulaCliente);
 
     //@Query("select case when (count(cup) > 0) then true else false end from Cupon cup where cup.id = :id")
 }

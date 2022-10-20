@@ -22,11 +22,11 @@ public interface ClienteServicio {
 
     List<Compra> listarCompras(String cedulaCliente) throws Exception;
 
-    boolean redimirCupon(Integer idCupon) throws Exception;
+    boolean redimirCupon(Integer idCupon, Integer idCompra) throws Exception;
 
     List<Pelicula> buscarPeliculas(String busqueda) throws Exception;
 
-    Compra realizarCompra(Compra compra) throws Exception;
+    Compra realizarCompra(Compra compra, String cedulaCliente) throws Exception;
 
-    boolean cambiarContrasena(String contrasenaAnterior, String nuevaContrasena) throws Exception;
+    boolean cambiarContrasena(String contrasenaAnterior, String nuevaContrasena, String cedulaCliente) throws Exception;
 }

@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.test.repo;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Cupon;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
+import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,4 +117,5 @@ public class ClienteTest {
         Assertions.assertNotNull(cupones);
         cupones.forEach(System.out::println);
     }
+
 }
