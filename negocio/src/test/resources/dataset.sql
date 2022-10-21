@@ -54,11 +54,11 @@ INSERT INTO sala VALUES
                         (8, "Comedia");
 
 INSERT INTO pelicula VALUES
-                         ("One Piece Film: Red", "ESTRENO", "ruta imagen", "Actores de voz", "Piratas", "ruta trailer"),
-                         ("Fast & Furious 10", "PROXIMA", "ruta imagen", "Actores", "Carros y bala", "ruta trailer"),
-                         ("Taxi Driver", "NO_DISPONIBLE", "ruta imagen", "Actores", "Taxi, accion", "ruta trailer"),
-                         ("The Batman", "ULTIMAS_FUNCIONES", "ruta imagen", "Actores", "Otra de Batman", "ruta trailer" ),
-                         ("The Truman Show", "PROXIMA", "ruta imagen", "actores de voice", "Comedia Dramatica", "ruta trailer");
+                         ("One Piece Film: Red", "ESTRENO", "ruta imagen 1", "Actores de voz", "Piratas", "ruta trailer"),
+                         ("Fast & Furious 10", "PROXIMA", "ruta imagen 2", "Actores", "Carros y bala", "ruta trailer"),
+                         ("Taxi Driver", "NO_DISPONIBLE", "ruta imagen 3", "Actores", "Taxi, accion", "ruta trailer"),
+                         ("The Batman", "ULTIMAS_FUNCIONES", "ruta imagen 4", "Actores", "Otra de Batman", "ruta trailer" ),
+                         ("The Truman Show", "PROXIMA", "ruta imagen 5", "actores de voice", "Comedia Dramatica", "ruta trailer");
 
 
 INSERT INTO pelicula_generos VALUES
@@ -90,7 +90,7 @@ INSERT INTO cupon VALUES
                       (2, "CUMPLEANOS", "Cupon de regalo de cumpleaños", "DISPONIBLE", "2023-01-03", "H-Bday", 10000),
                       (3, "BIENVENIDA", "Cupon de bienvenida al mes de agosto", "USADO", "2022-12-06", "Agosto venteado", 50000),
                       (4, "HALLOWEEN", "Cupon de celebracion halloween", "DISPONIBLE", "2023-02-25", "Halo", 20000),
-                      (4, "NAVIDAD", "Cupon para la familia uniciner en Navidad", "USADO", "2022-12-12", "Mry X-Mas", 1000);
+                      (5, "NAVIDAD", "Cupon para la familia uniciner en Navidad", "USADO", "2022-12-12", "Mry X-Mas", 1000);
 
 
 INSERT INTO cupon_clientes VALUES
@@ -113,6 +113,13 @@ INSERT INTO entrada VALUES
                         (3, 10, 7, 2, 1),
                         (4, 9, 7, 2, 1),
                         (5, 6, 5, 4, 5);
+
+INSERT INTO confiteria VALUES
+                        (1, "", "", "", "", 50000, 3),
+                        (2, "", "", "", "", 6000, 6),
+                        (3, "", "", "", "", 5000, 47),
+                        (4, "", "", "", "", 30000, 12),
+                        (5, "", "", "", "Hamburguesa", 10000, 15);
 
 
 

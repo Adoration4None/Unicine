@@ -37,13 +37,28 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearTeatro(Teatro teatro) throws Exception {
+        Teatro teatroCrear = new Teatro(2, "Hola", "Hi", null, null, null);
 
+        try{
+            Teatro nuevo = adminTeatroServicio.crearTeatro(teatroCrear);
+            Assertions.assertNotNull(nuevo);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarTeatro(Teatro teatro) throws Exception {
+        try {
+            Teatro teatroActualizar = adminTeatroServicio.obtenerTeatro(teatro.getId());
+            teatroActualizar.setNombre("Actualizaoooo");
 
+            Teatro teatroActualizado = adminTeatroServicio.actualizarTeatro(teatroActualizar);
+            Assertions.assertEquals("Actualizaoooo", teatroActualizado.getNombre());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -84,13 +99,28 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearSala(Sala sala) throws Exception {
+        Sala salaCrear = new Sala(2, TipoSala.SALA_XD, null);
 
+        try{
+            Sala nueva = adminTeatroServicio.crearSala(salaCrear);
+            Assertions.assertNotNull(nueva);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarSala(Sala sala) throws Exception {
+        try {
+            Sala salaActualizar = adminTeatroServicio.obtenerSala(sala.getId());
+            salaActualizar.setCantidadSillas(6);
 
+            Sala salaActualizada = adminTeatroServicio.actualizarSala(salaActualizar);
+            Assertions.assertEquals(6, salaActualizada.getCantidadSillas());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -130,13 +160,29 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearFuncion(Funcion funcion) throws Exception {
+        Funcion funcionCrear = new Funcion(TipoFuncion.FUNCION_XD, 34F, null, null, null);
 
+        try{
+            Funcion nueva = adminTeatroServicio.crearFuncion(funcionCrear);
+            Assertions.assertNotNull(nueva);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
+    //no entiendo bien como funciona
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarFuncion(Funcion funcion) throws Exception {
+        try {
+            Funcion funcionActualizar = adminTeatroServicio.obtenerFuncion(funcion.getId());
+            funcionActualizar.setPrecio(50000F);
 
+            Funcion funcionActualizada = adminTeatroServicio.actualizarFuncion(funcionActualizar);
+            Assertions.assertEquals(50000F, funcionActualizada.getPrecio());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
