@@ -12,16 +12,10 @@ import javax.transaction.Transactional;
 @SpringBootTest
 @Transactional
 public class AdministradorServicioTest {
-
-    @Autowired
     private AdministradorServicio administradorServicio;
 
     @Test
     public void iniciarSesion() {
 
     }
-
-
-
-
 }

@@ -1,14 +1,13 @@
 package co.edu.uniquindio.unicine.servicios;
 
-import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
-import co.edu.uniquindio.unicine.entidades.Funcion;
-import co.edu.uniquindio.unicine.entidades.Sala;
-import co.edu.uniquindio.unicine.entidades.Teatro;
+import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import co.edu.uniquindio.unicine.repo.FuncionRepo;
 import co.edu.uniquindio.unicine.repo.SalaRepo;
 import co.edu.uniquindio.unicine.repo.TeatroRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     // Repositorios sobre los cuales se haran las consultas
@@ -16,94 +15,142 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     private final SalaRepo salaRepo;
     private final FuncionRepo funcionRepo;
 
-    public AdminTeatroServicioImpl(TeatroRepo teatroRepo, SalaRepo salaRepo, FuncionRepo funcionRepo) {
+    private final AdministradorTeatroRepo adminTeatroRepo;
+
+    public AdminTeatroServicioImpl(TeatroRepo teatroRepo, SalaRepo salaRepo, FuncionRepo funcionRepo, AdministradorTeatroRepo adminTeatroRepo) {
         this.teatroRepo = teatroRepo;
         this.salaRepo = salaRepo;
         this.funcionRepo = funcionRepo;
+        this.adminTeatroRepo = adminTeatroRepo;
     }
 
     @Override
     public AdministradorTeatro iniciarSesion(String email, String contrasena) throws Exception {
-        return null;
+        AdministradorTeatro administradorTeatroEncontrado = adminTeatroRepo.findByEmailAndContrasena(email, contrasena);
+
+        if(administradorTeatroEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
+
+        return administradorTeatroEncontrado;
     }
 
     // Gestionar teatros --------------------------------------------------------------------------------------
     @Override
     public Teatro crearTeatro(Teatro teatro) throws Exception {
-        return null;
+        Integer teatroId = teatro.getId();
+
+        if(teatroRepo.findById(teatroId) != null) throw new Exception("El teatro con el id " + teatroId + "ya existe");
+
+        return teatroRepo.save(teatro);
     }
 
     @Override
     public Teatro actualizarTeatro(Teatro teatro) throws Exception {
-        return null;
+        Optional<Teatro> teatroGuardado = teatroRepo.findById(teatro.getId());
+
+        if(teatroGuardado.isEmpty()) throw new Exception("El teatro no existe");
+
+        return teatroRepo.save(teatro);
     }
 
     @Override
     public void eliminarTeatro(Integer idTeatro) throws Exception {
+        Optional<Teatro> teatroGuardado = teatroRepo.findById(idTeatro);
 
+        if(teatroGuardado.isEmpty()) throw new Exception("El teatro no existe");
+
+        teatroRepo.delete(teatroGuardado.get());
     }
 
     @Override
     public Teatro obtenerTeatro(Integer idTeatro) throws Exception {
-        return null;
+        Optional<Teatro> teatroGuardado = teatroRepo.findById(idTeatro);
+        return teatroGuardado.orElse(null);
     }
 
     @Override
     public List<Teatro> listarTeatros() {
-        return null;
+        List<Teatro> teatros = teatroRepo.findAll();
+        return teatros;
     }
 
 
     // Gestionar salas ----------------------------------------------------------------------------------------
     @Override
     public Sala crearSala(Sala sala) throws Exception {
-        return null;
+        Integer salaId = sala.getId();
+
+        if(salaRepo.findById(salaId) != null) throw new Exception("La sala con el id" + salaId + " ya existe");
+
+        return salaRepo.save(sala);
     }
 
     @Override
     public Sala actualizarSala(Sala sala) throws Exception {
-        return null;
+        Optional<Sala> salaGuardada = salaRepo.findById(sala.getId());
+
+        if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
+
+        return salaRepo.save(sala);
     }
 
     @Override
     public void eliminarSala(Integer idSala) throws Exception {
+        Optional<Sala> salaGuardada = salaRepo.findById(idSala);
 
+        if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
+
+        salaRepo.delete(salaGuardada.get());
     }
 
     @Override
     public Sala obtenerSala(Integer idSala) throws Exception {
-        return null;
+        Optional<Sala> salaGuardada = salaRepo.findById(idSala);
+        return salaGuardada.orElse(null);
     }
 
     @Override
     public List<Sala> listarSalas() {
-        return null;
+        List<Sala> salas = salaRepo.findAll();
+        return salas;
     }
-
 
     // Gestionar funciones ------------------------------------------------------------------------------------
     @Override
     public Funcion crearFuncion(Funcion funcion) throws Exception {
-        return null;
+        Integer funcionId = funcion.getId();
+
+        if(funcionRepo.findById(funcionId) != null) throw new Exception("La funcion con el id " + funcionId + "ya existe");
+
+        return funcionRepo.save(funcion);
     }
 
     @Override
     public Funcion actualizarFuncion(Funcion funcion) throws Exception {
-        return null;
+        Optional<Funcion> funcionGuardada = funcionRepo.findById(funcion.getId());
+
+        if(funcionGuardada.isEmpty()) throw new Exception("La función no existe");
+
+        return funcionRepo.save(funcion);
     }
 
     @Override
     public void eliminarFuncion(Integer idFuncion) throws Exception {
+        Optional<Funcion> funcionGuardada = funcionRepo.findById(idFuncion);
 
+        if(funcionGuardada.isEmpty()) throw new Exception("La funcion no existe");
+
+        funcionRepo.delete(funcionGuardada.get());
     }
 
     @Override
     public Funcion obtenerFuncion(Integer idFuncion) throws Exception {
-        return null;
+         Optional<Funcion> funcionGuardada = funcionRepo.findById(idFuncion);
+         return funcionGuardada.orElse(null);
     }
 
     @Override
     public List<Funcion> listarFunciones() {
-        return null;
+        List<Funcion> funciones = funcionRepo.findAll();
+        return funciones;
     }
 }
