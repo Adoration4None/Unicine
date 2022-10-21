@@ -133,6 +133,8 @@ public class ClienteServicioTest {
     public void buscarPeliculas() {
         try {
             List<Pelicula> peliculasEncontradas = clienteServicio.buscarPeliculas("a");
+            Assertions.assertNotNull(peliculasEncontradas);
+            peliculasEncontradas.forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
