@@ -5,10 +5,12 @@ import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import co.edu.uniquindio.unicine.repo.FuncionRepo;
 import co.edu.uniquindio.unicine.repo.SalaRepo;
 import co.edu.uniquindio.unicine.repo.TeatroRepo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     // Repositorios sobre los cuales se haran las consultas
     private final TeatroRepo teatroRepo;

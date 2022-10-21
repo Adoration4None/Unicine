@@ -23,7 +23,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public AdministradorTeatro iniciarSesion(String email, String contrasena) throws Exception {
+    public void iniciarSesion(String email, String contrasena) throws Exception {
         try{
             AdministradorTeatro adminTeatroLogeado = adminTeatroServicio.iniciarSesion("virginiaingram@outlook.couk", "QWL22XGI4SX");
             Assertions.assertEquals("Virginia Ingram", adminTeatroLogeado.getNombreCompleto());
@@ -36,13 +36,13 @@ public class AdminTeatroServicioTest {
     // Gestionar teatros --------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public Teatro crearTeatro(Teatro teatro) throws Exception {
+    public void crearTeatro(Teatro teatro) throws Exception {
 
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Teatro actualizarTeatro(Teatro teatro) throws Exception {
+    public void actualizarTeatro(Teatro teatro) throws Exception {
 
     }
 
@@ -61,33 +61,35 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Teatro obtenerTeatro(Integer idTeatro) throws Exception {
-
+    public void obtenerTeatro(Integer idTeatro) throws Exception {
+        try {
+            Teatro teatroEncontrado = adminTeatroServicio.obtenerTeatro(4);
+            Assertions.assertEquals("Arboleda Theaters", teatroEncontrado.getNombre());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public List<Teatro> listarTeatros() {
+    public void listarTeatros() {
         List<Teatro> teatros = adminTeatroServicio.listarTeatros();
 
-        Assertions.assertEquals();
-        List<Cliente> clientes = clienteServicio.listarClientes();
-
-        Assertions.assertEquals(5, clientes.size() );
-        clientes.forEach(System.out::println);
+        Assertions.assertEquals(5, teatros.size());
+        teatros.forEach(System.out::println);
     }
 
 
     // Gestionar salas ----------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public Sala crearSala(Sala sala) throws Exception {
+    public void crearSala(Sala sala) throws Exception {
 
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Sala actualizarSala(Sala sala) throws Exception {
+    public void actualizarSala(Sala sala) throws Exception {
 
     }
 
@@ -106,26 +108,34 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Sala obtenerSala(Integer idSala) throws Exception {
-
+    public void obtenerSala(Integer idSala) throws Exception {
+        try {
+            Sala salaEncontrada = adminTeatroServicio.obtenerSala(3);
+            Assertions.assertEquals("SALA_XD", salaEncontrada.getTipo());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public List<Sala> listarSalas() {
+    public void listarSalas() {
+        List<Sala> salas = adminTeatroServicio.listarSalas();
 
+        Assertions.assertEquals(5, salas.size());
+        salas.forEach(System.out::println);
     }
 
     // Gestionar funciones ------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public Funcion crearFuncion(Funcion funcion) throws Exception {
+    public void crearFuncion(Funcion funcion) throws Exception {
 
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Funcion actualizarFuncion(Funcion funcion) throws Exception {
+    public void actualizarFuncion(Funcion funcion) throws Exception {
 
     }
 
@@ -140,13 +150,21 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public Funcion obtenerFuncion(Integer idFuncion) throws Exception {
-
+    public void obtenerFuncion(Integer idFuncion) throws Exception {
+        try {
+            Funcion funcionEncontrada = adminTeatroServicio.obtenerFuncion(4);
+            Assertions.assertEquals("The Truman Show", funcionEncontrada.getPelicula().getNombre()); //no estoy seguro de que funcione bien
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public List<Funcion> listarFunciones() {
+    public void listarFunciones() {
+        List<Funcion> funciones = adminTeatroServicio.listarFunciones();
 
+        Assertions.assertEquals(5, funciones.size());
+        funciones.forEach(System.out::println);
     }
 }
