@@ -130,6 +130,16 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
+    public void buscarPeliculas() {
+        try {
+            List<Pelicula> peliculasEncontradas = clienteServicio.buscarPeliculas("a");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
     public void cambiarContrasena() {
         try {
             boolean resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");

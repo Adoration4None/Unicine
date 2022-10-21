@@ -105,10 +105,10 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("El cupon no se puede redimir. Por favor revise si aun se encuentra disponible");
         }
 
-        // Actualizar estado del cupon
         Cupon cuponRedimido = cuponRepo.findById(idCupon).orElse(null);
 
         if (cuponRedimido != null) {
+            // Actualizar estado del cupon
             cuponRedimido.setEstado(EstadoCupon.USADO);
             cuponRepo.save(cuponRedimido);
 
