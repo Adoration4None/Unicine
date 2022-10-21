@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,35 +21,60 @@ public class Compra implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
-    @NonNull
     private LocalDateTime fechaCompra;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NonNull
     private MetodoPago metodoPago;
 
-    @Column(nullable = false)
-    @NonNull
     private Float valorTotal;
 
     // Relaciones ------------------------------------------------------
     @ManyToOne
-    @NonNull
     private Cliente cliente;
 
-    @ManyToMany
-    private List<Confiteria> confiteria;
+    @OneToMany(mappedBy = "compra")
+    private List<CompraConfiteria> comprasConfiteria;
 
-    @OneToOne
+    @ManyToOne
     private Cupon cupon;
 
     @ManyToOne
-    @NonNull
     private Funcion funcion;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "compra")
     @NonNull
-    private List<Silla> sillas;
+    private List<Entrada> entradas;
+
+    // Constructor --------------------------------------------------------------------------------------
+   @Builder
+    public Compra(LocalDateTime fechaCompra, MetodoPago metodoPago, Cliente cliente, Funcion funcion, List<Entrada> entradas) {
+        this.fechaCompra = fechaCompra;
+        this.metodoPago = metodoPago;
+        this.cliente = cliente;
+        this.funcion = funcion;
+        this.entradas = entradas;
+    }
+
+    public Float calcularValorTotal() throws Exception {
+        float total = 0f;
+
+        if(this.entradas == null || this.funcion == null)
+            throw new Exception("No se puede calcular el valor de la compra");
+
+        total += this.funcion.getPrecio() * entradas.size();
+
+        if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
+        if(this.cupon != null) total -= this.cupon.getValorDescuento();
+
+        this.valorTotal = total;
+        return this.valorTotal;
+    }
+
+    public float obtenerTotalConfiteria() {
+        float total = 0f;
+        for (CompraConfiteria c : this.comprasConfiteria) total += c.getPrecio();
+        return total;
+    }
 
 }

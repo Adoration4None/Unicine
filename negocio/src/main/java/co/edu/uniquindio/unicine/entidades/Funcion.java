@@ -4,11 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,17 +22,14 @@ public class Funcion implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
-    @NonNull
     private TipoFuncion tipo;
 
     @Column(nullable = false)
-    @NonNull
     private Float precio;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    @NonNull
-    private EstadoFuncion estado;
+    private EstadoSala estadoSala;
 
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
@@ -40,15 +37,30 @@ public class Funcion implements Serializable {
     private List<Compra> compras;
 
     @ManyToOne
-    @NonNull
     private Pelicula pelicula;
 
     @ManyToOne
-    @NonNull
     private Sala sala;
 
     @ManyToOne
-    @NonNull
     private Horario horario;
+
+    // Constructor -----------------------------------------------------------------
+    public Funcion(TipoFuncion tipo, Float precioBase, Pelicula pelicula, Sala sala, Horario horario) {
+        this.tipo = tipo;
+        this.precio = precioBase;
+        this.pelicula = pelicula;
+        this.sala = sala;
+        this.horario = horario;
+
+        this.precio += completarPrecioSegunTipo();
+        this.estadoSala = EstadoSala.DISPONIBLE;
+    }
+
+    private Float completarPrecioSegunTipo() {
+        if(this.tipo == TipoFuncion.FUNCION_2D) return 0f;
+        if(this.tipo == TipoFuncion.FUNCION_3D) return this.precio * 0.25f;
+        return this.precio * 0.5f;
+    }
 
 }

@@ -2,8 +2,12 @@ package co.edu.uniquindio.unicine.test.servicios;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
+import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.repo.CompraRepo;
+import co.edu.uniquindio.unicine.repo.CuponRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.EmailServicio;
+//import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +28,26 @@ public class ClienteServicioTest {
     @Autowired
     private EmailServicio emailServicio;
 
-    public void iniciarSesion() {
+    @Autowired
+    private CompraRepo compraRepo;
 
+    @Autowired
+    private CuponRepo cuponRepo;
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void iniciarSesion() {
+        try {
+            Cliente clienteLogeado = clienteServicio.iniciarSesion("curabitur@google.couk", "e123");
+            Assertions.assertEquals("Reagan Romero", clienteLogeado.getNombreCompleto());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void registrar() {
-
         Cliente cliente = Cliente.builder().cedula("99775").nombreCompleto("Fernando Perez").email("fer.perez@mail.com").contrasena("0987654321").build();
 
         try {
@@ -45,7 +61,6 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminar() {
-
         try {
             clienteServicio.eliminar("2345");
 
@@ -54,13 +69,11 @@ public class ClienteServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizar() {
-
         try {
             Cliente cliente = clienteServicio.obtener("9876");
             cliente.setNombreCompleto("Camila Rodriguez");
@@ -70,7 +83,17 @@ public class ClienteServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtener() {
+        try {
+            Cliente clienteEncontrado = clienteServicio.obtener("1235");
+            Assertions.assertEquals("Ian Horn", clienteEncontrado.getNombreCompleto());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -91,12 +114,49 @@ public class ClienteServicioTest {
 
         Assertions.assertEquals(5, clientes.size() );
         clientes.forEach(System.out::println);
+        try {
+            List<Compra> comprasCliente = clienteServicio.listarCompras("1235");
+            Assertions.assertEquals(2, comprasCliente.size());
+            comprasCliente.forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void redimirCupon() {
+        Compra compraInicial = new Compra();
 
+        try {
+            Compra compra = clienteServicio.redimirCupon(2, compraInicial);
+            Assertions.assertEquals(2, compra.getCupon().getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void buscarPeliculas() {
+        try {
+            List<Pelicula> peliculasEncontradas = clienteServicio.buscarPeliculas("a");
+            Assertions.assertNotNull(peliculasEncontradas);
+            peliculasEncontradas.forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void cambiarContrasena() {
+        try {
+            boolean resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");
+            Assertions.assertTrue(resultado);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
