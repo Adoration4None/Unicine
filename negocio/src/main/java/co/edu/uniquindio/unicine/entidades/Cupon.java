@@ -49,6 +49,7 @@ public class Cupon implements Serializable {
     private Compra compra;
 
     // Constructor -------------------------------------------------------
+    @Builder
     public Cupon(String nombre, Float valorDescuento, LocalDateTime fechaVencimiento, String descripcion,
                  CriterioCupon criterio) {
         this.nombre = nombre;

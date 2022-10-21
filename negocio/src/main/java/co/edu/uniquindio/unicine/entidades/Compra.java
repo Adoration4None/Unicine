@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,19 +21,16 @@ public class Compra implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
-    @NonNull
     private LocalDateTime fechaCompra;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NonNull
     private MetodoPago metodoPago;
 
     private Float valorTotal;
 
     // Relaciones ------------------------------------------------------
     @ManyToOne
-    @NonNull
     private Cliente cliente;
 
     @OneToMany(mappedBy = "compra")
@@ -44,14 +40,21 @@ public class Compra implements Serializable {
     private Cupon cupon;
 
     @ManyToOne
-    @NonNull
     private Funcion funcion;
 
     @OneToMany(mappedBy = "compra")
     @NonNull
     private List<Entrada> entradas;
 
-    // Metodos ---------------------------------------------------------
+    // Constructor --------------------------------------------------------------------------------------
+   @Builder
+    public Compra(LocalDateTime fechaCompra, MetodoPago metodoPago, Cliente cliente, Funcion funcion, List<Entrada> entradas) {
+        this.fechaCompra = fechaCompra;
+        this.metodoPago = metodoPago;
+        this.cliente = cliente;
+        this.funcion = funcion;
+        this.entradas = entradas;
+    }
 
     public Float calcularValorTotal() throws Exception {
         float total = 0f;

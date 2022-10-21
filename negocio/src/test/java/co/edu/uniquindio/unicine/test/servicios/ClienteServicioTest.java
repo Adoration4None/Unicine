@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.test.servicios;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.Cupon;
-import co.edu.uniquindio.unicine.entidades.MetodoPago;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.CompraRepo;
 import co.edu.uniquindio.unicine.repo.CuponRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
@@ -99,23 +96,19 @@ public class ClienteServicioTest {
 
     }
 
-    // ¿COMO PROBAR ESTO?
     @Test
     @Sql("classpath:dataset.sql")
     public void redimirCupon() {
         Compra compraInicial = new Compra();
+        Compra compra;
 
-        Compra compra = new Compra();
-
-        if(compraInicial != null) {
-            try {
-                compra = clienteServicio.redimirCupon(1, compraInicial);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            compra = clienteServicio.redimirCupon(2, compraInicial);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        Assertions.assertEquals(1, compra.getCupon().getId());
+        Assertions.assertEquals(2, compra.getCupon().getId());
 
     }
 
