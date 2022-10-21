@@ -43,10 +43,12 @@ public class Cupon implements Serializable {
 
     // Relaciones -------------------------------------------------------
     @ManyToMany
+    @ToString.Exclude
     private List<Cliente> clientes;
 
-    @OneToOne(mappedBy = "cupon")
-    private Compra compra;
+    @OneToMany(mappedBy = "cupon")
+    @ToString.Exclude
+    private List<Compra> compras;
 
     // Constructor -------------------------------------------------------
     @Builder

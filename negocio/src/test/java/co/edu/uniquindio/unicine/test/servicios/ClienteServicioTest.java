@@ -32,14 +32,20 @@ public class ClienteServicioTest {
     @Autowired
     private CuponRepo cuponRepo;
 
+    @Test
+    @Sql("classpath:dataset.sql")
     public void iniciarSesion() {
-
+        try {
+            Cliente clienteLogeado = clienteServicio.iniciarSesion("curabitur@google.couk", "e123");
+            Assertions.assertEquals("Reagan Romero", clienteLogeado.getNombreCompleto());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void registrar() {
-
         Cliente cliente = Cliente.builder().cedula("99775").nombreCompleto("Fernando Perez").email("fer.perez@mail.com").contrasena("0987654321").build();
 
         try {
@@ -53,7 +59,6 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminar() {
-
         try {
             clienteServicio.eliminar("2345");
 
@@ -62,13 +67,11 @@ public class ClienteServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizar() {
-
         try {
             Cliente cliente = clienteServicio.obtener("9876");
             cliente.setNombreCompleto("Camila Rodriguez");
@@ -78,7 +81,17 @@ public class ClienteServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtener() {
+        try {
+            Cliente clienteEncontrado = clienteServicio.obtener("1235");
+            Assertions.assertEquals("Ian Horn", clienteEncontrado.getNombreCompleto());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -93,37 +106,37 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCompras() {
-
+        try {
+            List<Compra> comprasCliente = clienteServicio.listarCompras("1235");
+            Assertions.assertEquals(2, comprasCliente.size());
+            comprasCliente.forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void redimirCupon() {
         Compra compraInicial = new Compra();
-        Compra compra;
 
         try {
-            compra = clienteServicio.redimirCupon(2, compraInicial);
+            Compra compra = clienteServicio.redimirCupon(2, compraInicial);
+            Assertions.assertEquals(2, compra.getCupon().getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        Assertions.assertEquals(2, compra.getCupon().getId());
-
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void cambiarContrasena() {
-        boolean resultado = false;
-
         try {
-            resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");
+            boolean resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");
+            Assertions.assertTrue(resultado);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        Assertions.assertTrue(resultado);
     }
 
     @Test

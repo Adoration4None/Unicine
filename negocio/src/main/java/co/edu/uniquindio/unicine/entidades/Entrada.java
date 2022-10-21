@@ -32,8 +32,10 @@ public class Entrada implements Serializable {
 
     // Relaciones -------------------------------------------------------------------------------------------
     @ManyToOne
+    @ToString.Exclude
     private Sala sala;
 
     @ManyToOne
+    @ToString.Exclude
     private Compra compra;
 }

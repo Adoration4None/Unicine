@@ -102,7 +102,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Compra redimirCupon(Integer idCupon, Compra compra) throws Exception {
 
         if( !cuponRepo.validarCupon(idCupon) ) {
-            throw new Exception("El cupon no se puede redimir. Por favor revise si aun no se encuentra vencido");
+            throw new Exception("El cupon no se puede redimir. Por favor revise si aun se encuentra disponible");
         }
 
         // Actualizar estado del cupon
@@ -121,7 +121,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public List<Pelicula> buscarPeliculas(String busqueda) throws Exception {
-        return peliculaRepo.buscarPelicula(busqueda);
+        if(busqueda != null && !busqueda.equals("")) return peliculaRepo.buscarPelicula(busqueda);
+        else throw new Exception("Busqueda vacia");
     }
 
     @Override

@@ -7,9 +7,9 @@ INSERT INTO cliente VALUES
 
 INSERT INTO cliente_telefonos VALUES
                         ("1223", "3223344", "Celular"),
-                        ("1223", "78898", "Fijo"),
+                        ("1223", "78898",   "Fijo"),
                         ("2345", "3245677", "Celular"),
-                        ("2345", "78423", "Fijo");
+                        ("2345", "78423",   "Fijo");
 
 INSERT INTO ciudad VALUES
                        (1, "Armenia"),
@@ -25,8 +25,8 @@ INSERT INTO administrador_teatro VALUES
                         ("9503", "BRQ58RPZ6FC", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley");
 
 INSERT INTO teatro VALUES
-                       (1, "Calle 3 #5", "Multiplex Unicentro", "2454", 1),
-                       (2, "Carrera 22 #33-12", "Cineplaza", "3346", 2);
+                       (1, "Calle 3 #5",        "Multiplex Unicentro", "2454", 1),
+                       (2, "Carrera 22 #33-12", "Cineplaza",           "3346", 2);
 
 INSERT INTO sala VALUES
                        (1, 70, "SALA_2D", 1),
@@ -82,11 +82,11 @@ INSERT INTO cupon_clientes VALUES
                        (2, "9876");
 
 INSERT INTO compra VALUES
-                       (1, "2022-10-05 14:37:12", "NEQUI",           0.0, "1235", 1, 2),
+                       (1, "2022-10-05 14:37:12", "NEQUI",           0.0, "1235", 1,    2),
                        (2, "2022-10-05 18:54:30", "TARJETA_CREDITO", 0.0, "2345", null, 1),
-                       (3, "2022-10-03 09:18:06", "TARJETA_DEBITO",  0.0, "9876", 2, 2),
+                       (3, "2022-10-03 09:18:06", "TARJETA_DEBITO",  0.0, "9876", 2,    2),
                        (4, "2022-10-04 16:20:06", "DAVIPLATA",       0.0, "1235", null, 3),
-                       (5, "2022-10-05 11:05:17", "EFECTY",          0.0, "2345", 1, 1);
+                       (5, "2022-10-05 11:05:17", "EFECTY",          0.0, "2345", 1,    1);
 
 INSERT INTO entrada VALUES
                         (1, 3, 4, 1, 2),
