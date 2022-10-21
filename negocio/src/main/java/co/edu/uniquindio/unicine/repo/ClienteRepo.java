@@ -25,14 +25,11 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
     Cliente findByEmailAndContrasena(String email, String contrasena);
 
-    Cliente findByContrasenaAndCedula(String contrasena, String cedula);
-
     @Query("select cup from Cliente cli, in (cli.cupones) cup where cli.email  = :email")
     List<Cupon> obtenerCupones(String email);
 
 
-    //@Query("select c.compras from Cliente c where c.email = :email")
-    @Query("select comp from Cliente c, in (c.compras) comp where c.cedula = :cedulaCliente")
+    @Query("select comp from Compra comp where comp.cliente.cedula = :cedulaCliente")
     List<Compra> obtenerCompras(String cedulaCliente);
 
     @Query("select c from Cliente c where c.contrasena = :contrasena and c.cedula = :cedulaCliente")

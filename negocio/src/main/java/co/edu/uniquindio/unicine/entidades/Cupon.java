@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class Cupon implements Serializable {
     private Float valorDescuento;
 
     @Column(nullable = false)
-    private LocalDate fechaVencimiento;
+    private LocalDateTime fechaVencimiento;
 
     @Column(nullable = false)
     private String descripcion;
@@ -42,13 +43,16 @@ public class Cupon implements Serializable {
 
     // Relaciones -------------------------------------------------------
     @ManyToMany
+    @ToString.Exclude
     private List<Cliente> clientes;
 
-    @OneToOne(mappedBy = "cupon")
-    private Compra compra;
+    @OneToMany(mappedBy = "cupon")
+    @ToString.Exclude
+    private List<Compra> compras;
 
     // Constructor -------------------------------------------------------
-    public Cupon(String nombre, Float valorDescuento, LocalDate fechaVencimiento, String descripcion,
+    @Builder
+    public Cupon(String nombre, Float valorDescuento, LocalDateTime fechaVencimiento, String descripcion,
                  CriterioCupon criterio) {
         this.nombre = nombre;
         this.valorDescuento = valorDescuento;
