@@ -85,7 +85,7 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCompras() {
-        //List<Compra> compras = clienteServicio.listarCompras();
+        List<Compra> compras = clienteServicio.listarCompras();
         //Assertions.assertEquals(5, compras.size());
         List<Cliente> clientes = clienteServicio.listarClientes();
 
