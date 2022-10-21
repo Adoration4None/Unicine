@@ -108,12 +108,6 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCompras() {
-        //List<Compra> compras = clienteServicio.listarCompras();
-        //Assertions.assertEquals(5, compras.size());
-        List<Cliente> clientes = clienteServicio.listarClientes();
-
-        Assertions.assertEquals(5, clientes.size() );
-        clientes.forEach(System.out::println);
         try {
             List<Compra> comprasCliente = clienteServicio.listarCompras("1235");
             Assertions.assertEquals(2, comprasCliente.size());

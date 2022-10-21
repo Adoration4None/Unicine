@@ -9,7 +9,8 @@ INSERT INTO cliente_telefonos VALUES
                         ("1223", "3223344", "Celular"),
                         ("1223", "78898",   "Fijo"),
                         ("2345", "3245677", "Celular"),
-                        ("2345", "78423",   "Fijo");
+                        ("2345", "78423",   "Fijo"),
+                        ("7564", "313337", "Celular");
 
 INSERT INTO ciudad VALUES
                        (1, "Armenia"),
@@ -22,11 +23,18 @@ INSERT INTO ciudad VALUES
 INSERT INTO administrador_teatro VALUES
                         ("2454", "QWL22XGI4SX", "virginiaingram@outlook.couk", "ACTIVO",   "ruta foto 1", "Virginia Ingram"),
                         ("3346", "JFV33PHQ0HH", "lewisgood@outlook.ca",        "ACTIVO",   "ruta foto 2", "Lewis Good"),
-                        ("9503", "BRQ58RPZ6FC", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley");
+                        ("9503", "BRQ58RPZ6FC", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley"),
+                        ("4508", "GFHTR5YU9IJ", "samu@edmodo.edu.co", "ACTIVO", "ruta foto 4", "Samuel García"),
+                        ("7621", "DTR8UY6IS32", "feli@ensq.edu.co", "INACTIVO", "ruta foto 5", "Felipe Sanchez");
+
 
 INSERT INTO teatro VALUES
                        (1, "Calle 3 #5",        "Multiplex Unicentro", "2454", 1),
-                       (2, "Carrera 22 #33-12", "Cineplaza",           "3346", 2);
+                       (2, "Carrera 22 #33-12", "Cineplaza",           "3346", 2),
+                       (3, "Carrera 23 - 12", "Multicines AstorPlaza", "7621", 3),
+                       (4, "Al lado del Ara de Las Acacias", "Portal del Circaso", "9503", 5),
+                       (5, "Sidney, Bogotá Cr 15 - 19", "Arboleda Theaters", "4508", 4);
+
 
 INSERT INTO sala VALUES
                        (1, 70, "SALA_2D", 1),
@@ -49,13 +57,16 @@ INSERT INTO pelicula VALUES
                          ("One Piece Film: Red", "ESTRENO", "ruta imagen", "Actores de voz", "Piratas", "ruta trailer"),
                          ("Fast & Furious 10", "PROXIMA", "ruta imagen", "Actores", "Carros y bala", "ruta trailer"),
                          ("Taxi Driver", "NO_DISPONIBLE", "ruta imagen", "Actores", "Taxi, accion", "ruta trailer"),
-                         ("The Batman", "ULTIMAS_FUNCIONES", "ruta imagen", "Actores", "Otra de Batman", "ruta trailer" );
+                         ("The Batman", "ULTIMAS_FUNCIONES", "ruta imagen", "Actores", "Otra de Batman", "ruta trailer" ),
+                         ("The Truman Show", "PROXIMA", "ruta imagen", "actores de voice", "Comedia Dramatica", "ruta trailer");
+
 
 INSERT INTO pelicula_generos VALUES
                          ("One Piece Film: Red", 5),
                          ("Fast & Furious 10", 3),
                          ("Taxi Driver", 3),
-                         ("The Batman", 3);
+                         ("The Batman", 3),
+                         ("The Truman Show", 8);
 
 INSERT INTO horario VALUES
                         (1, "2022-10-06", "14:00"),
@@ -70,16 +81,24 @@ INSERT INTO horario VALUES
 INSERT INTO funcion VALUES
                         (1, "DISPONIBLE", 15000, "FUNCION_3D", 2, "One Piece Film: Red", 2),
                         (2, "DISPONIBLE", 17000, "FUNCION_2D", 8, "Taxi Driver", 4),
-                        (3, "COMPLETA",   20000, "FUNCION_XD", 6, "Fast & Furious 10", 3);
+                        (3, "COMPLETA",   20000, "FUNCION_XD", 6, "Fast & Furious 10", 3),
+                        (4, "COMPLETA", 12500, "FUNCION_3D", 7, "The Truman Show", 5),
+                        (5, "DISPONIBLE", 6000, "FUNCION_XD", 1, "The Batman", 1);
 
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA", "Cupon de bienvenida", "USADO", "2022-10-05", "Hola Mundo", 5000),
-                      (2, "CUMPLEANOS", "Cupon de regalo de cumpleaños", "DISPONIBLE", "2023-01-03", "H-Bday", 10000);
+                      (2, "CUMPLEANOS", "Cupon de regalo de cumpleaños", "DISPONIBLE", "2023-01-03", "H-Bday", 10000),
+                      (3, "BIENVENIDA", "Cupon de bienvenida al mes de agosto", "USADO", "2022-12-06", "Agosto venteado", 50000),
+                      (4, "HALLOWEEN", "Cupon de celebracion halloween", "DISPONIBLE", "2023-02-25", "Halo", 20000),
+                      (4, "NAVIDAD", "Cupon para la familia uniciner en Navidad", "USADO", "2022-12-12", "Mry X-Mas", 1000);
+
 
 INSERT INTO cupon_clientes VALUES
                        (1, "1235"),
                        (1, "2345"),
-                       (2, "9876");
+                       (2, "9876"),
+                       (3, "3344"),
+                       (4, "1223");
 
 INSERT INTO compra VALUES
                        (1, "2022-10-05 14:37:12", "NEQUI",           0.0, "1235", 1,    2),
