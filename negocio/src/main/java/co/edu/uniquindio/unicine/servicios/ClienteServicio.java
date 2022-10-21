@@ -1,17 +1,18 @@
 package co.edu.uniquindio.unicine.servicios;
 
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.Compra;
-import co.edu.uniquindio.unicine.entidades.Cupon;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface ClienteServicio {
 
     Cliente iniciarSesion(String email, String contrasena) throws Exception;
 
     Cliente registrar(Cliente cliente) throws Exception;
+
+    Cliente activarCuenta(Cliente cliente);
 
     Cliente actualizar(Cliente cliente) throws Exception;
 
@@ -27,7 +28,15 @@ public interface ClienteServicio {
 
     List<Pelicula> buscarPeliculas(String busqueda) throws Exception;
 
-    Compra realizarCompra(Compra compra, Cliente cliente) throws Exception;
+    Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception;
+
+    Compra asignarAsientosCompra(Compra compra, List<Entrada> entradas) throws Exception;
+
+    Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception;
+
+    Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception;
+
+    Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception;
 
     boolean cambiarContrasena(String emailCliente) throws Exception;
 

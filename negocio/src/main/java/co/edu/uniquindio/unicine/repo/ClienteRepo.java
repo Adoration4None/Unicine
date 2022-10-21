@@ -3,6 +3,7 @@ package co.edu.uniquindio.unicine.repo;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.EstadoPersona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -32,8 +33,7 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
     @Query("select comp from Compra comp where comp.cliente.cedula = :cedulaCliente")
     List<Compra> obtenerCompras(String cedulaCliente);
 
-    @Query("select c from Cliente c where c.contrasena = :contrasena and c.cedula = :cedulaCliente")
-    Cliente validarContrasena(String contrasena, String cedulaCliente);
+    @Query("select c.estado from Cliente c where c.cedula = :cedulaCliente")
+    EstadoPersona obtenerEstadoCliente(String cedulaCliente);
 
-    //@Query("select case when (count(cup) > 0) then true else false end from Cupon cup where cup.id = :id")
 }

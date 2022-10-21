@@ -12,4 +12,5 @@ public interface CuponRepo extends JpaRepository<Cupon, Integer> {
     @Query("select case when (count(cup) > 0) then true else false end from Cupon cup where cup.id = :id and cup.estado = 'DISPONIBLE'")
     boolean validarCupon(Integer id);
 
+    Cupon findByNombre(String nombre);
 }

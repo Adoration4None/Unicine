@@ -25,7 +25,7 @@ public class Cupon implements Serializable {
     private String nombre;
 
     @Column(nullable = false)
-    private Float valorDescuento;
+    private Float porcentajeDescuento;
 
     @Column(nullable = false)
     private LocalDateTime fechaVencimiento;
@@ -52,10 +52,10 @@ public class Cupon implements Serializable {
 
     // Constructor -------------------------------------------------------
     @Builder
-    public Cupon(String nombre, Float valorDescuento, LocalDateTime fechaVencimiento, String descripcion,
+    public Cupon(String nombre, Float porcentajeDescuento, LocalDateTime fechaVencimiento, String descripcion,
                  CriterioCupon criterio) {
         this.nombre = nombre;
-        this.valorDescuento = valorDescuento;
+        this.porcentajeDescuento = porcentajeDescuento;
         this.fechaVencimiento = fechaVencimiento;
         this.descripcion = descripcion;
         this.criterio = criterio;

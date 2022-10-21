@@ -6,5 +6,6 @@ public enum CriterioCupon {
     ANIVERSARIO,
     NAVIDAD,
     HALLOWEEN,
-    SAN_VALENTIN
+    SAN_VALENTIN,
+    PRIMERA_COMPRA
 }

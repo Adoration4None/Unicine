@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.EstadoPersona;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
@@ -116,6 +117,14 @@ public class ClienteTest {
 
         Assertions.assertNotNull(cupones);
         cupones.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerEstadoCliente() {
+        EstadoPersona estadoCliente = clienteRepo.obtenerEstadoCliente("9876");
+
+        Assertions.assertEquals(EstadoPersona.INACTIVO, estadoCliente);
     }
 
 }

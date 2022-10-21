@@ -62,10 +62,10 @@ public class Compra implements Serializable {
         if(this.entradas == null || this.funcion == null)
             throw new Exception("No se puede calcular el valor de la compra");
 
-        total += this.funcion.getPrecio() * entradas.size();
+        total += obtenerTotalEntradas();
 
         if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
-        if(this.cupon != null) total -= this.cupon.getValorDescuento();
+        if(this.cupon != null) total -= (total * this.cupon.getPorcentajeDescuento());
 
         this.valorTotal = total;
         return this.valorTotal;
@@ -77,4 +77,7 @@ public class Compra implements Serializable {
         return total;
     }
 
+    public float obtenerTotalEntradas() {
+        return this.funcion.getPrecio() * entradas.size();
+    }
 }

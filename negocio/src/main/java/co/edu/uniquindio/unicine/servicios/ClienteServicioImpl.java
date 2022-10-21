@@ -8,6 +8,8 @@ import co.edu.uniquindio.unicine.repo.PeliculaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +51,39 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("El correo que intenta registrar ya existe");
         }
 
+        enviarConfirmacion(cliente);
+        enviarCuponBienvenida(cliente);
+
         return clienteRepo.save(cliente);
     }
 
     private boolean emailExiste(String email) {
         return clienteRepo.findByEmail(email) != null;
+    }
+
+    private void enviarConfirmacion(Cliente cliente) {
+        String mensaje = "Hola, " + cliente.getNombreCompleto() + "! Acaba de crear su cuenta en Unicine. " +
+                "Antes de hacer uso de nuestros, por favor confirme su correo electronico a traves del siguiente enlace: " +
+                "https://bit.ly/3s7ETPZ";
+
+        emailServicio.enviarEmail("Confirmacion E-mail Unicine", mensaje, cliente.getEmail());
+    }
+
+    private void enviarCuponBienvenida(Cliente cliente) {
+        String mensaje = "Disfruta ahora mismo un cupon de bienvenida totalmente gratis " +
+                "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
+                "Recibelo a traves del siguiente enlace: " +
+                "https://bit.ly/3s7ETPZ";
+
+        emailServicio.enviarEmail("Cupon de Bienvenida - 15% Descuento", mensaje, cliente.getEmail());
+    }
+
+    @Override
+    public Cliente activarCuenta(Cliente cliente) {
+        cliente.setEstado(EstadoPersona.ACTIVO);
+        clienteRepo.save(cliente);
+
+        return cliente;
     }
 
     @Override
@@ -125,11 +155,99 @@ public class ClienteServicioImpl implements ClienteServicio {
         else throw new Exception("Busqueda vacia");
     }
 
+    public Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception {
+
+        if( clienteInactivo(cliente.getCedula()) )
+            throw new Exception("El cliente debe activar su cuenta para poder comprar");
+
+        Compra compraNueva = Compra.builder().cliente(cliente).funcion(funcion).build();
+        compraRepo.save(compraNueva);
+
+        return compraNueva;
+    }
+
     @Override
-    public Compra realizarCompra(Compra compra, Cliente cliente) throws Exception {
-        Optional<Cliente> clienteGuardado = clienteRepo.findById(cliente.getCedula());
-        //cliente.addCompra();
-        return null;
+    public Compra asignarAsientosCompra(Compra compra, List<Entrada> entradas) throws Exception {
+
+        if(entradas == null || entradas.size() < 1)
+            throw new Exception("No se han seleccionado entradas para comprar");
+
+        if( compraNoExiste(compra.getId()) ) throw new Exception("No hay compra a la cual asignar asientos");
+
+        compra.setEntradas(entradas);
+        compraRepo.save(compra);
+
+        return compra;
+    }
+
+    private boolean compraNoExiste(Integer id) { return compraRepo.findById(id).isEmpty(); }
+
+    @Override
+    public Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception {
+
+        if(confiteria == null || confiteria.size() < 1)
+            throw new Exception("No se ha seleccionado confiteria para comprar");
+
+        if( compraNoExiste(compra.getId()) ) throw new Exception("No hay compra a la cual asignar confiteria");
+
+        compra.setComprasConfiteria(confiteria);
+        compraRepo.save(compra);
+
+        return compra;
+    }
+
+    @Override
+    public Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception {
+
+        if( metodoPago == null ) throw new Exception("No se ha seleccionado metodo de pago");
+        if( compraNoExiste(compra.getId()) ) throw new Exception("No hay compra a la cual asignar metodo de pago");
+
+        compra.setMetodoPago(metodoPago);
+        compraRepo.save(compra);
+
+        return compra;
+    }
+
+    @Override
+    public Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception {
+        if( fechaCompra == null ) throw new Exception("No se ha brindado una fecha de compra");
+        if( compraNoExiste(compra.getId()) ) throw new Exception("No hay compra para registrar");
+
+        compra.setFechaCompra(fechaCompra);
+        compra.calcularValorTotal();
+        compraRepo.save(compra);
+
+        if( primeraCompra(compra.getCliente()) ) enviarCuponPrimeraCompra(compra.getCliente());
+
+        enviarConfirmacionCompra(compra.getCliente(), compra);
+
+        return compra;
+    }
+
+    private boolean primeraCompra(Cliente cliente) {
+        return clienteRepo.obtenerCompras(cliente.getCedula()).size() <= 1;
+    }
+
+    private void enviarCuponPrimeraCompra(Cliente cliente) {
+        String mensaje = "Felicidades por tu primera compra! Para conmemorar este momento, te hemos enviado un cupon de regalo " +
+                "con el que puedes obtener un 10% de descuento del valor total de cualquier compra! " +
+                "Recibelo a traves del siguiente enlace: " +
+                "https://bit.ly/3s7ETPZ";
+
+        emailServicio.enviarEmail("Cupon de Regalo - 10% Descuento", mensaje, cliente.getEmail());
+    }
+
+    private void enviarConfirmacionCompra(Cliente cliente, Compra compra) {
+        String mensaje = "Has realizado una compra exitosa! Detalles: " +
+                        compra.toString() + " \n " +
+                        "Subtotal confiteria: " + compra.obtenerTotalConfiteria() + "\n" +
+                        "Subtotal entradas: " + compra.obtenerTotalEntradas();
+
+        emailServicio.enviarEmail("Confirmacion Compra", mensaje, cliente.getEmail());
+    }
+
+    private boolean clienteInactivo(String cedulaCliente) {
+        return clienteRepo.obtenerEstadoCliente(cedulaCliente).equals(EstadoPersona.INACTIVO);
     }
 
     @Override
@@ -147,7 +265,27 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public Cupon agregarCupon(String nombreCupon, Cliente cliente) throws Exception {
-        return null;
+        Cupon cupon;
+
+        if(nombreCupon == null || nombreCupon.equals("")) throw new Exception("Nombre de cupon vacio");
+
+        if( nombreCuponValido(nombreCupon) ) {
+            cupon = cuponRepo.findByNombre(nombreCupon);
+            cupon.getClientes().add(cliente);
+            cliente.getCupones().add(cupon);
+
+            cuponRepo.save(cupon);
+            clienteRepo.save(cliente);
+        }
+        else {
+            throw new Exception("Cupon no valido");
+        }
+
+        return cupon;
+    }
+
+    private boolean nombreCuponValido(String nombreCupon) {
+        return cuponRepo.findByNombre(nombreCupon) != null;
     }
 
 
