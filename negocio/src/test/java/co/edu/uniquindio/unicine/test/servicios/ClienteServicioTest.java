@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.servicios;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
+import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.EmailServicio;
 import org.junit.jupiter.api.Assertions;
@@ -84,7 +85,12 @@ public class ClienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCompras() {
+        //List<Compra> compras = clienteServicio.listarCompras();
+        //Assertions.assertEquals(5, compras.size());
+        List<Cliente> clientes = clienteServicio.listarClientes();
 
+        Assertions.assertEquals(5, clientes.size() );
+        clientes.forEach(System.out::println);
     }
 
     @Test
