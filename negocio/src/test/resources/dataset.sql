@@ -121,6 +121,20 @@ INSERT INTO confiteria VALUES
                         (4, "", "", "", "", 30000, 12),
                         (5, "", "", "", "Hamburguesa", 10000, 15);
 
+INSERT INTO compra_confiteria VALUES
+                        (1, 5000F, 4, 3, 1),
+                        (2, 7500F, 12, 3, 5),
+                        (3, 10000F, 7, 2, 3),
+                        (4, 3000F, 6, 4, 4),
+                        (5, 21000F, 2, 5, 1);
+
+INSERT INTO administrador_teatro_telefonos VALUES
+                        ("2454", "3223344", "Celular"),
+                        ("3346", "78898",   "Fijo"),
+                        ("9503", "3245677", "Celular"),
+                        ("4508", "78423",   "Fijo"),
+                        ("7621", "313337", "Celular"));
+
 
 
 
