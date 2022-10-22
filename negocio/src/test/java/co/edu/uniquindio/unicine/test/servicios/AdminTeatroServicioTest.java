@@ -20,23 +20,21 @@ public class AdminTeatroServicioTest {
     @Autowired
     private AdminTeatroServicio adminTeatroServicio;
 
-
     @Test
     @Sql("classpath:dataset.sql")
-    public void iniciarSesion(String email, String contrasena) throws Exception {
+    public void iniciarSesion() throws Exception {
         try{
             AdministradorTeatro adminTeatroLogeado = adminTeatroServicio.iniciarSesion("virginiaingram@outlook.couk", "QWL22XGI4SX");
             Assertions.assertEquals("Virginia Ingram", adminTeatroLogeado.getNombreCompleto());
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 
     // Gestionar teatros --------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearTeatro(Teatro teatro) throws Exception {
+    public void crearTeatro() throws Exception {
         Teatro teatroCrear = new Teatro(2, "Hola", "Hi", null, null, null);
 
         try{
@@ -49,9 +47,9 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarTeatro(Teatro teatro) throws Exception {
+    public void actualizarTeatro() throws Exception {
         try {
-            Teatro teatroActualizar = adminTeatroServicio.obtenerTeatro(teatro.getId());
+            Teatro teatroActualizar = adminTeatroServicio.obtenerTeatro(4);
             teatroActualizar.setNombre("Actualizaoooo");
 
             Teatro teatroActualizado = adminTeatroServicio.actualizarTeatro(teatroActualizar);
@@ -63,7 +61,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarTeatro(Integer idTeatro) throws Exception {
+    public void eliminarTeatro() throws Exception {
         try{
             adminTeatroServicio.eliminarTeatro(1);
 
@@ -76,7 +74,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerTeatro(Integer idTeatro) throws Exception {
+    public void obtenerTeatro() throws Exception {
         try {
             Teatro teatroEncontrado = adminTeatroServicio.obtenerTeatro(4);
             Assertions.assertEquals("Arboleda Theaters", teatroEncontrado.getNombre());
@@ -98,7 +96,7 @@ public class AdminTeatroServicioTest {
     // Gestionar salas ----------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearSala(Sala sala) throws Exception {
+    public void crearSala() throws Exception {
         Sala salaCrear = new Sala(2, TipoSala.SALA_XD, null);
 
         try{
@@ -111,9 +109,9 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarSala(Sala sala) throws Exception {
+    public void actualizarSala() throws Exception {
         try {
-            Sala salaActualizar = adminTeatroServicio.obtenerSala(sala.getId());
+            Sala salaActualizar = adminTeatroServicio.obtenerSala(4);
             salaActualizar.setCantidadSillas(6);
 
             Sala salaActualizada = adminTeatroServicio.actualizarSala(salaActualizar);
@@ -125,7 +123,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarSala(Integer idSala) throws Exception {
+    public void eliminarSala() throws Exception {
         try{
             adminTeatroServicio.eliminarSala(3);
 
@@ -138,7 +136,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerSala(Integer idSala) throws Exception {
+    public void obtenerSala() throws Exception {
         try {
             Sala salaEncontrada = adminTeatroServicio.obtenerSala(3);
             Assertions.assertEquals("SALA_XD", salaEncontrada.getTipo());
@@ -159,7 +157,7 @@ public class AdminTeatroServicioTest {
     // Gestionar funciones ------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearFuncion(Funcion funcion) throws Exception {
+    public void crearFuncion() throws Exception {
         Funcion funcionCrear = new Funcion(TipoFuncion.FUNCION_XD, 34F, null, null, null);
 
         try{
@@ -173,9 +171,9 @@ public class AdminTeatroServicioTest {
     //no entiendo bien como funciona
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarFuncion(Funcion funcion) throws Exception {
+    public void actualizarFuncion() throws Exception {
         try {
-            Funcion funcionActualizar = adminTeatroServicio.obtenerFuncion(funcion.getId());
+            Funcion funcionActualizar = adminTeatroServicio.obtenerFuncion(3);
             funcionActualizar.setPrecio(50000F);
 
             Funcion funcionActualizada = adminTeatroServicio.actualizarFuncion(funcionActualizar);
@@ -187,7 +185,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarFuncion(Integer idFuncion) throws Exception {
+    public void eliminarFuncion() throws Exception {
         adminTeatroServicio.eliminarFuncion(2);
 
         Funcion funcionPrueba = adminTeatroServicio.obtenerFuncion(2);
@@ -196,7 +194,7 @@ public class AdminTeatroServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerFuncion(Integer idFuncion) throws Exception {
+    public void obtenerFuncion() throws Exception {
         try {
             Funcion funcionEncontrada = adminTeatroServicio.obtenerFuncion(4);
             Assertions.assertEquals("The Truman Show", funcionEncontrada.getPelicula().getNombre()); //no estoy seguro de que funcione bien

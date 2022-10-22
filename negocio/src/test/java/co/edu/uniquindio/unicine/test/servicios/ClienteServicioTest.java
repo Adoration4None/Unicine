@@ -7,7 +7,6 @@ import co.edu.uniquindio.unicine.repo.CompraRepo;
 import co.edu.uniquindio.unicine.repo.CuponRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import co.edu.uniquindio.unicine.servicios.EmailServicio;
-//import javafx.util.converter.LocalDateTimeStringConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
