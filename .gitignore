@@ -3,4 +3,3 @@
 *.class
 /.gradle/
 /src/
-/negocio/src/main/resources/application.properties
