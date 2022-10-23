@@ -11,7 +11,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString()
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CompraConfiteria implements Serializable {
     // Atributos -----------------------------------------------------------------------------------------
