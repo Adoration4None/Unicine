@@ -4,6 +4,7 @@ import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Sala;
 import co.edu.uniquindio.unicine.entidades.Teatro;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

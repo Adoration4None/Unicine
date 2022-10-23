@@ -5,10 +5,12 @@ import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import co.edu.uniquindio.unicine.repo.ConfiteriaRepo;
 import co.edu.uniquindio.unicine.repo.CuponRepo;
 import co.edu.uniquindio.unicine.repo.PeliculaRepo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AdministradorServicioImpl implements AdministradorServicio {
     // Repositorios sobre los cuales se haran las consultas
     private final AdministradorTeatroRepo administradorTeatroRepo;
@@ -41,7 +43,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public AdministradorTeatro crearAdministrador(AdministradorTeatro administradorTeatro) throws Exception {
         String administradorTeatroId = administradorTeatro.getCedula();
 
-        if(administradorTeatroRepo.findById(administradorTeatroId) != null) throw new Exception("El administrador de teatro con el id" + administradorTeatroId + " ya existe");
+        if(administradorTeatroRepo.findById(administradorTeatroId).isPresent())
+            throw new Exception("El administrador de teatro con el id" + administradorTeatroId + " ya existe");
 
         return administradorTeatroRepo.save(administradorTeatro);
     }
@@ -67,7 +70,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     @Override
     public AdministradorTeatro obtenerAdministrador(String cedulaAdministrador) throws Exception {
         Optional<AdministradorTeatro> administradorTeatroGuardado = administradorTeatroRepo.findById(cedulaAdministrador);
-        return administradorTeatroGuardado.orElse(null);
+
+        if(administradorTeatroGuardado.isEmpty()) throw new Exception("El administrador de teatro no existe");
+
+        return administradorTeatroGuardado.get();
     }
 
     @Override

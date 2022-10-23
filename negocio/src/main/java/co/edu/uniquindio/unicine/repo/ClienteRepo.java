@@ -14,8 +14,6 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
-    //@Query( "select c.nombre, c.urlfoto from Cliente c where correo = ?1")
-    // Consulta manual
     @Query("select c from Cliente c where c.email = ?1")
     Cliente obtener(String email);
 
