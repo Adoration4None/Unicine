@@ -91,8 +91,8 @@ public class AdministradorServicioTest {
     // Gestionar peliculas ---------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearPelicula() throws Exception {
-        Pelicula peliculaCrear = new Pelicula("Bocadillo", "ruta imagen 21321", "ruta trailer 23123123", null, null, null);
+    public void crearPelicula() {
+        Pelicula peliculaCrear = new Pelicula("Bocadillo", "ruta imagen 21321", "ruta trailer 23123123", "", "", EstadoPelicula.ESTRENO);
         try{
             Pelicula nueva = administradorServicio.crearPelicula(peliculaCrear);
             Assertions.assertNotNull(nueva);
@@ -103,7 +103,7 @@ public class AdministradorServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarPelicula() throws Exception {
+    public void actualizarPelicula() {
         try {
             Pelicula peliculaActualizar = administradorServicio.obtenerPelicula("The Batman");
             peliculaActualizar.setImagen("ruta imagen 56");
@@ -117,19 +117,23 @@ public class AdministradorServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarPelicula() throws Exception {
-        administradorServicio.eliminarPelicula("One Piece Film: Red");
-        Pelicula peliculaPrueba = administradorServicio.obtenerPelicula("One Piece Film: Red");
+    public void eliminarPelicula() {
 
-        Assertions.assertNull(peliculaPrueba);
+        try {
+            administradorServicio.eliminarPelicula("One Piece Film: Red");
+            Pelicula peliculaPrueba = administradorServicio.obtenerPelicula("One Piece Film: Red");
+            Assertions.assertNull(peliculaPrueba);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerPelicula() throws Exception {
+    public void obtenerPelicula() {
         try {
             Pelicula peliculaEncontrada = administradorServicio.obtenerPelicula("The Truman Show");
-            Assertions.assertEquals("ruta imagen 5", peliculaEncontrada.getImagen()); //no estoy seguro de que funcione bien
+            Assertions.assertEquals("ruta imagen", peliculaEncontrada.getImagen());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -146,8 +150,9 @@ public class AdministradorServicioTest {
     // Gestionar confiteria --------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearComestible() throws Exception {
-        Confiteria comestibleCrear = new Confiteria("Bianchi barra", "Ruta imagen 34234", 4, null, null);
+    public void crearComestible()  {
+        Confiteria comestibleCrear = new Confiteria("Bianchi barra", "Ruta imagen 34234", 4, 0f, "");
+
         try{
             Confiteria nueva = administradorServicio.crearComestible(comestibleCrear);
             Assertions.assertNotNull(nueva);
@@ -156,9 +161,10 @@ public class AdministradorServicioTest {
         }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarComestible() throws Exception {
+    public void actualizarComestible() {
         try {
             Confiteria comestibleActualizar = administradorServicio.obtenerComestible(4);
             comestibleActualizar.setNombre("Cerveza");
@@ -170,18 +176,25 @@ public class AdministradorServicioTest {
         }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarComestible() throws Exception {
-        administradorServicio.eliminarComestible(4);
-        Confiteria comestiblePrueba = administradorServicio.obtenerComestible(4);
+    public void eliminarComestible() {
+        try {
+            administradorServicio.eliminarComestible(4);
+            Confiteria comestiblePrueba = administradorServicio.obtenerComestible(4);
 
-        Assertions.assertNull(comestiblePrueba);
+            Assertions.assertNull(comestiblePrueba);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerComestible() throws Exception {
+    public void obtenerComestible() {
         try {
             Confiteria comestibleEncontrado = administradorServicio.obtenerComestible(5);
             Assertions.assertEquals("Hamburguesa", comestibleEncontrado.getNombre()); //no estoy seguro de que funcione bien
@@ -190,18 +203,18 @@ public class AdministradorServicioTest {
         }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
     public void listarConfiteria() {
         List<Confiteria> comestibles = administradorServicio.listarConfiteria();
         Assertions.assertEquals(5, comestibles.size());
-        comestibles.forEach(System.out::println);
     }
 
     // Gestionar cupones -----------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
-    public void crearCupon() throws Exception {
+    public void crearCupon() {
         Cupon cuponCrear = new Cupon("Cupon magico", 5000F, null, null, null);
         try{
             Cupon nuevo = administradorServicio.crearCupon(cuponCrear);
@@ -211,9 +224,10 @@ public class AdministradorServicioTest {
         }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void actualizarCupon() throws Exception {
+    public void actualizarCupon() {
         try {
             Cupon cuponActualizar = administradorServicio.obtenerCupon(4);
             cuponActualizar.setNombre("Miau");
@@ -225,18 +239,24 @@ public class AdministradorServicioTest {
         }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminarCupon() throws Exception {
-        administradorServicio.eliminarCupon(3);
+    public void eliminarCupon() {
+        try {
+            administradorServicio.eliminarCupon(3);
 
-        Cupon cuponPrueba = administradorServicio.obtenerCupon(3);
-        Assertions.assertNull(cuponPrueba);
+            Cupon cuponPrueba = administradorServicio.obtenerCupon(3);
+            Assertions.assertNull(cuponPrueba);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerCupon() throws Exception {
+    public void obtenerCupon() {
         try {
             Cupon cuponEncontrado = administradorServicio.obtenerCupon(3);
             Assertions.assertEquals("Agosto venteado", cuponEncontrado.getNombre()); //no estoy seguro de que funcione bien
@@ -245,12 +265,11 @@ public class AdministradorServicioTest {
         }
     }
 
-    //CLEANÂ´T
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCupones() {
         List<Cupon> cupones = administradorServicio.listarCupones();
         Assertions.assertEquals(5, cupones.size());
-        cupones.forEach(System.out::println);
     }
 }

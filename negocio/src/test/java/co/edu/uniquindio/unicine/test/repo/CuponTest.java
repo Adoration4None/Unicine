@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.repo.CuponRepo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,29 +15,10 @@ public class CuponTest {
     @Autowired
     private CuponRepo cuponRepo;
 
-    // CRUD -----------------------------------------------------------------------------------------------------
-
     @Test
     @Sql("classpath:dataset.sql")
-    public void crear() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void eliminar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener() {
-
+    public void validarCupon(){
+        boolean flag = cuponRepo.validarCupon(2);
+        Assertions.assertTrue(flag);
     }
 }

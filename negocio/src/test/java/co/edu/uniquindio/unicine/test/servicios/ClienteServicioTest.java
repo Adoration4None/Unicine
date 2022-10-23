@@ -43,6 +43,9 @@ public class ClienteServicioTest {
     @Autowired
     private ConfiteriaRepo confiteriaRepo;
 
+    @Autowired
+    private CiudadRepo ciudadRepo;
+
     @Test
     @Sql("classpath:dataset.sql")
     public void iniciarSesion() {
@@ -284,6 +287,22 @@ public class ClienteServicioTest {
             Assertions.assertTrue(cliente.getCupones().contains(cupon));
             cliente.getCupones().forEach(System.out::println);
             cupon.getClientes().forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //CLEAN
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerPeliculasCiudad() throws Exception {
+        Ciudad ciudad = ciudadRepo.findById(1).orElse(null);
+        try {
+            if(ciudad != null){
+                List<Pelicula> peliculas = clienteServicio.filtrarPeliculasCiudad(ciudad.getId());
+                Assertions.assertEquals(3, peliculas.size());
+                peliculas.forEach(System.out::println);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

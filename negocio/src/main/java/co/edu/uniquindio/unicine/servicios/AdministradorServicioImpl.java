@@ -87,7 +87,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public Pelicula crearPelicula(Pelicula pelicula) throws Exception {
         String peliculaId = pelicula.getNombre();
 
-        if(peliculaRepo.findById(peliculaId) != null) throw new Exception("La pelicula con el id" + peliculaId + " ya existe");
+        if(peliculaRepo.findById(peliculaId).isPresent())
+            throw new Exception("La pelicula con el id" + peliculaId + " ya existe");
 
         return peliculaRepo.save(pelicula);
     }
@@ -125,9 +126,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     // Gestionar confiteria --------------------------------------------------------------------------------------
     @Override
     public Confiteria crearComestible(Confiteria comestible) throws Exception {
-        Integer comestibleId = comestible.getId();
+        if(comestible == null) throw new Exception("No hay datos del comestible");
 
-        if(confiteriaRepo.findById(comestibleId) != null) throw new Exception("El comestible con el id" + comestibleId + " ya existe");
+        if(confiteriaRepo.findByNombre(comestible.getNombre()) != null)
+            throw new Exception("El comestible ya existe");
 
         return confiteriaRepo.save(comestible);
     }

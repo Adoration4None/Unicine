@@ -20,7 +20,7 @@ public class Confiteria implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String nombre;
 
     @Column(nullable = false)

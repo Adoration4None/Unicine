@@ -41,4 +41,6 @@ public interface ClienteServicio {
     boolean cambiarContrasena(String emailCliente) throws Exception;
 
     Cupon agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
+
+    public List<Pelicula> filtrarPeliculasCiudad(Integer idCiudad) throws Exception;
 }

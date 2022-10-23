@@ -55,6 +55,8 @@ public class Compra implements Serializable {
         this.cliente = cliente;
         this.funcion = funcion;
         this.entradas = entradas;
+
+       System.out.println(id);
     }
 
     public Float calcularValorTotal() throws Exception {

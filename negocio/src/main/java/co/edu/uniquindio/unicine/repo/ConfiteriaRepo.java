@@ -10,4 +10,6 @@ public interface ConfiteriaRepo extends JpaRepository<Confiteria, Integer> {
 
     @Query("select c.unidades from Confiteria c where c.id = :idConfiteria")
     Integer obtenerUnidadesDisponibles(Integer idConfiteria);
+
+    Confiteria findByNombre(String nombreConfiteria);
 }

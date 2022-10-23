@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -19,18 +20,23 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final CuponRepo cuponRepo;
     private final CompraRepo compraRepo;
     private final EntradaRepo entradaRepo;
+    private final CiudadRepo ciudadRepo;
+    private final SalaRepo salaRepo;
 
     // Servicio de email
     private final EmailServicio emailServicio;
 
     public ClienteServicioImpl(ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, CuponRepo cuponRepo,
-                               CompraRepo compraRepo, EmailServicio emailServicio, EntradaRepo entradaRepo) {
+                               CompraRepo compraRepo, EmailServicio emailServicio, EntradaRepo entradaRepo,
+                               CiudadRepo ciudadRepo, SalaRepo salaRepo) {
         this.clienteRepo = clienteRepo;
         this.peliculaRepo = peliculaRepo;
         this.cuponRepo = cuponRepo;
         this.compraRepo = compraRepo;
         this.emailServicio = emailServicio;
         this.entradaRepo = entradaRepo;
+        this.ciudadRepo = ciudadRepo;
+        this.salaRepo = salaRepo;
     }
 
     @Override
@@ -323,5 +329,20 @@ public class ClienteServicioImpl implements ClienteServicio {
         return cuponRepo.findByNombre(nombreCupon) != null;
     }
 
+    @Override
+    public List<Pelicula> filtrarPeliculasCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad.equals(null) || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
 
+        List<Sala> salas = ciudadRepo.obtenerSalasCiudad(idCiudad);
+
+        if(salas.isEmpty()) throw new Exception("La ciudad no tiene salas de cine");
+
+        List<Pelicula> peliculas = new ArrayList<>();
+
+        for (Sala s: salas) {
+            peliculas.addAll(salaRepo.obtenerPeliculasSala(s.getId()));
+        }
+
+        return peliculas;
+    }
 }
