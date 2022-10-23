@@ -167,9 +167,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     // Gestionar cupones -----------------------------------------------------------------------------------------
     @Override
     public Cupon crearCupon(Cupon cupon) throws Exception {
-        Integer cuponId = cupon.getId();
 
-        if(cuponRepo.findById(cuponId) != null) throw new Exception("El cupon con el id" + cuponId + " ya existe");
+        if(cuponRepo.findByNombre(cupon.getNombre()) != null)
+            throw new Exception("El cupon ya existe");
 
         return cuponRepo.save(cupon);
     }

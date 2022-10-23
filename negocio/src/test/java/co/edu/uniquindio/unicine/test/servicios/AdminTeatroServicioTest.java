@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.repo.*;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +20,21 @@ public class AdminTeatroServicioTest {
     @Autowired
     private AdminTeatroServicio adminTeatroServicio;
 
+    @Autowired
+    private CiudadRepo ciudadRepo;
+
+    @Autowired
+    private TeatroRepo teatroRepo;
+
+    @Autowired
+    private PeliculaRepo peliculaRepo;
+
+    @Autowired
+    private SalaRepo salaRepo;
+
+    @Autowired
+    private HorarioRepo horarioRepo;
+
     //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
@@ -35,13 +51,17 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearTeatro() {
-        Teatro teatroCrear = new Teatro(2, "Hola", "Hi", null, null, null);
+        Ciudad ciudad = ciudadRepo.findById(2).orElse(null);
 
-        try{
-            Teatro nuevo = adminTeatroServicio.crearTeatro(teatroCrear);
-            Assertions.assertNotNull(nuevo);
-        } catch (Exception e){
-            throw new RuntimeException(e);
+        if(ciudad != null) {
+            Teatro teatroCrear = new Teatro(2, "Hola", "Hi", ciudad, new AdministradorTeatro(), null);
+
+            try{
+                Teatro nuevo = adminTeatroServicio.crearTeatro(teatroCrear);
+                Assertions.assertNotNull(nuevo);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -100,13 +120,17 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearSala() throws Exception {
-        Sala salaCrear = new Sala(2, TipoSala.SALA_XD, null);
+        Teatro teatro = teatroRepo.findById(3).orElse(null);
 
-        try{
-            Sala nueva = adminTeatroServicio.crearSala(salaCrear);
-            Assertions.assertNotNull(nueva);
-        } catch (Exception e){
-            throw new RuntimeException(e);
+        if(teatro != null) {
+            Sala salaCrear = new Sala(2, TipoSala.SALA_XD, teatro);
+
+            try{
+                Sala nueva = adminTeatroServicio.crearSala(salaCrear);
+                Assertions.assertNotNull(nueva);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -165,7 +189,11 @@ public class AdminTeatroServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearFuncion() {
-        Funcion funcionCrear = new Funcion(TipoFuncion.FUNCION_XD, 34F, null, null, null);
+        Pelicula pelicula = peliculaRepo.findById("Taxi Driver").orElse(null);
+        Sala sala = salaRepo.findById(1).orElse(null);
+        Horario horario = horarioRepo.findById(1).orElse(null);
+
+        Funcion funcionCrear = new Funcion(TipoFuncion.FUNCION_XD, 34F, pelicula, sala, horario);
 
         try{
             Funcion nueva = adminTeatroServicio.crearFuncion(funcionCrear);

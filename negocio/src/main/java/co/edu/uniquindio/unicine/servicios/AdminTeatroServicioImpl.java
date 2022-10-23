@@ -38,9 +38,11 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     // Gestionar teatros --------------------------------------------------------------------------------------
     @Override
     public Teatro crearTeatro(Teatro teatro) throws Exception {
-        Integer teatroId = teatro.getId();
 
-        if(teatroRepo.findById(teatroId) != null) throw new Exception("El teatro con el id " + teatroId + "ya existe");
+        if(teatro == null) throw new Exception("No hay datos del teatro a crear");
+
+        if(teatroRepo.findByNombreAndDireccionAndCiudad(teatro.getNombre(), teatro.getDireccion(), teatro.getCiudad()) != null)
+            throw new Exception("El teatro ya existe");
 
         return teatroRepo.save(teatro);
     }
@@ -81,7 +83,7 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     public Sala crearSala(Sala sala) throws Exception {
         Integer salaId = sala.getId();
 
-        if(salaRepo.findById(salaId) != null) throw new Exception("La sala con el id" + salaId + " ya existe");
+        if(salaRepo.findById(salaId).isPresent()) throw new Exception("La sala con el id" + salaId + " ya existe");
 
         return salaRepo.save(sala);
     }
@@ -121,7 +123,8 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     public Funcion crearFuncion(Funcion funcion) throws Exception {
         Integer funcionId = funcion.getId();
 
-        if(funcionRepo.findById(funcionId) != null) throw new Exception("La funcion con el id " + funcionId + "ya existe");
+        if( funcionRepo.findByPeliculaAndSalaAndHorario(funcion.getPelicula(), funcion.getSala(), funcion.getHorario()) != null)
+            throw new Exception("La funcion ya existe");
 
         return funcionRepo.save(funcion);
     }
