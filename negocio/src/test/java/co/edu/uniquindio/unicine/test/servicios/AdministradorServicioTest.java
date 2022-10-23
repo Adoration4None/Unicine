@@ -22,8 +22,9 @@ public class AdministradorServicioTest {
     //este no tiene ninguna tabla con la cual comparar, entonces no s si hacerle el test
     @Test
     @Sql("classpath:dataset.sql")
-    public void iniciarSesion(String email, String contrasena) {
-
+    public void iniciarSesion(String email, String contrasena) throws Exception {
+        boolean comprobacion = administradorServicio.iniciarSesion("administradorunicine@gmail.com", "samuelyfelipe");
+        Assertions.assertTrue(comprobacion);
     }
 
     // Gestionar administradores de teatros ----------------------------------------------------------------------
