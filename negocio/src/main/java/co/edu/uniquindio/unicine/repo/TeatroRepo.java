@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TeatroRepo extends JpaRepository<Teatro, Integer> {
-
     @Query("select t from Teatro t where t.ciudad.nombre = :nombreCiudad")
     public List<Teatro> obtenerTeatrosCiudad(String nombreCiudad);
 }

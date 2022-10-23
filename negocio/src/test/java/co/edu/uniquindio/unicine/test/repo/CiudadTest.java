@@ -18,34 +18,6 @@ public class CiudadTest {
     @Autowired
     private CiudadRepo ciudadRepo;
 
-    // CRUD -----------------------------------------------------------------------------------------------
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crear() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void eliminar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener() {
-
-    }
-
-    // Otras consultas ----------------------------------------------------------------------------------------
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerTeatros() {
@@ -54,10 +26,10 @@ public class CiudadTest {
         List<Teatro> teatrosPereira = ciudadRepo.obtenerTeatros("Pereira");
         List<Teatro> teatrosManizales = ciudadRepo.obtenerTeatros("Manizales");
 
-        Assertions.assertNotNull(teatrosArmenia);
-        Assertions.assertNotNull(teatrosPereira);
-        Assertions.assertNotNull(teatrosManizales);
+        Assertions.assertNotNull(teatrosArmenia); //tiene que dar 2
+        Assertions.assertNotNull(teatrosPereira); //tiene que dar 1
+        Assertions.assertNotNull(teatrosManizales); //tiene que dar 1
 
-        teatrosArmenia.forEach(System.out::println);
+        teatrosPereira.forEach(System.out::println);
     }
 }

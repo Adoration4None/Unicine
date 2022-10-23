@@ -14,30 +14,6 @@ public class FuncionTest {
 
     @Autowired
     private FuncionRepo funcionRepo;
-
-    // CRUD ---------------------------------------------------------------------------------------------------
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crear() {
-
-    }
-
-    public void eliminar() {
-
-    }
-
-    public void actualizar() {
-
-    }
-
-    public void obtener() {
-
-    }
-
-    public void listar() {
-
-    }
-
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerPeliculaFuncion() {

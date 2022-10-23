@@ -1,7 +1,9 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.entidades.Cliente;
+import co.edu.uniquindio.unicine.entidades.Compra;
 import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.EstadoPersona;
 import co.edu.uniquindio.unicine.repo.ClienteRepo;
 import co.edu.uniquindio.unicine.servicios.ClienteServicioImpl;
 import org.junit.jupiter.api.Assertions;
@@ -81,32 +83,19 @@ public class ClienteTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void listar() {
-        List<Cliente> clientes = clienteRepo.findAll();
-        System.out.println("");
-        clientes.forEach(System.out::println);
-        System.out.println("");
+    public void obtenerClientePorEmail() {
+        Cliente cliente = clienteRepo.obtener("dignissim@google.edu");
+        Cliente cliente2 = clienteRepo.findByEmail("curabitur@google.couk");
+
+        Assertions.assertEquals("Kirsten Reese", cliente.getNombreCompleto());
+        Assertions.assertEquals("Reagan Romero", cliente2.getNombreCompleto());
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerPorCorreo() {
-        Cliente cliente = clienteRepo.obtener("nisi@icloud.ca");
-        Cliente cliente2 = clienteRepo.findByEmail("nisi@icloud.ca");
-
-        Assertions.assertEquals( "2345", cliente.getCedula() );
-        Assertions.assertEquals( "2345", cliente2.getCedula() );
-        System.out.println(cliente);
-        System.out.println(cliente2);
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void comprobarInicioSesion() {
-        Cliente cliente = clienteRepo.findByEmailAndContrasena("curabitur@google.couk", "e123");
-
-        Assertions.assertNotNull(cliente);
-        System.out.println(cliente);
+    public void obtenerClientePorEmailYContrasena() {
+        Cliente cliente = clienteRepo.findByEmailAndContrasena("diam.proin@google.couk", "b123");
+        Assertions.assertEquals(EstadoPersona.ACTIVO, cliente.getEstado());
     }
 
     @Test
@@ -114,8 +103,18 @@ public class ClienteTest {
     public void obtenerCupones() {
         List<Cupon> cupones = clienteRepo.obtenerCupones("dictum.phasellus@aol.org");
 
-        Assertions.assertNotNull(cupones);
+        Assertions.assertEquals(1, cupones.size());
         cupones.forEach(System.out::println);
     }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCompras() {
+        List<Compra> compras = clienteRepo.obtenerCompras("1235");
+
+        Assertions.assertEquals(2, compras.size());
+        compras.forEach(System.out::println);
+    }
+
 
 }

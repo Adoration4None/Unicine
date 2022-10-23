@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
+import co.edu.uniquindio.unicine.entidades.EstadoPersona;
 import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,18 +17,11 @@ public class AdministradorTest {
     @Autowired
     private AdministradorTeatroRepo administradorTeatroRepo;
 
-    // CRUD ---------------------------------------------------------------------------------------------------
+    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void crear() {
-        AdministradorTeatro administrador = new AdministradorTeatro("009988", "Javier Salinas", "ja.s@mail,com", "admin123");
-
-        administrador.agregarTelefono("3445566", "Celular");
-        administrador.agregarTelefono("79998", "Fijo");
-
-        AdministradorTeatro guardado = administradorTeatroRepo.save(administrador);
-
-        Assertions.assertNotNull(guardado);
-        Assertions.assertEquals( administrador.getNombreCompleto(), guardado.getNombreCompleto() );
+    public void findByEmailAndContrasena() {
+        AdministradorTeatro adminTeatro = administradorTeatroRepo.findByEmailAndContrasena("daceystanley@hotmail.net", "BRQ58RPZ6FC");
+        Assertions.assertEquals(EstadoPersona.INACTIVO, adminTeatro.getEstado());
     }
 }

@@ -13,8 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
-
-    //@Query( "select c.nombre, c.urlfoto from Cliente c where correo = ?1")
     // Consulta manual
     @Query("select c from Cliente c where c.email = ?1")
     Cliente obtener(String email);
@@ -31,9 +29,4 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
     @Query("select comp from Compra comp where comp.cliente.cedula = :cedulaCliente")
     List<Compra> obtenerCompras(String cedulaCliente);
-
-    @Query("select c from Cliente c where c.contrasena = :contrasena and c.cedula = :cedulaCliente")
-    Cliente validarContrasena(String contrasena, String cedulaCliente);
-
-    //@Query("select case when (count(cup) > 0) then true else false end from Cupon cup where cup.id = :id")
 }

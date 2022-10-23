@@ -19,32 +19,6 @@ public class PeliculaTest {
     @Autowired
     private PeliculaRepo peliculaRepo;
 
-    // CRUD -----------------------------------------------------------------------------------------------------
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crear() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void eliminar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener() {
-
-    }
-
     // Otras consultas -------------------------------------------------------------------------------------
     @Test
     @Sql("classpath:dataset.sql")
@@ -53,6 +27,7 @@ public class PeliculaTest {
 
         Assertions.assertNotNull(funciones);
         funciones.forEach(System.out::println);
+        Assertions.assertEquals(1, funciones.size());
     }
 
     @Test
@@ -62,6 +37,8 @@ public class PeliculaTest {
 
         Assertions.assertNotNull(peliculas);
         peliculas.forEach(System.out::println);
+
+        Assertions.assertEquals(4, peliculas.size());
     }
 
 }
