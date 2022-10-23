@@ -12,7 +12,7 @@ public interface ClienteServicio {
 
     Cliente registrar(Cliente cliente) throws Exception;
 
-    Cliente activarCuenta(Cliente cliente);
+    Cliente activarCuenta(Cliente cliente) throws Exception;
 
     Cliente actualizar(Cliente cliente) throws Exception;
 
@@ -34,9 +34,9 @@ public interface ClienteServicio {
 
     Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception;
 
-    Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception;
-
     Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception;
+
+    Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception;
 
     boolean cambiarContrasena(String emailCliente) throws Exception;
 

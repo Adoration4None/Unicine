@@ -15,5 +15,5 @@ public interface PeliculaRepo extends JpaRepository<Pelicula, String> {
     @Query("select new co.edu.uniquindio.unicine.dto.FuncionDTO(f.pelicula.nombre, f.pelicula.estado, f.pelicula.imagen, f.sala.id, f.sala.teatro.direccion, f.sala.teatro.ciudad.nombre, f.horario) from Funcion f where f.pelicula.nombre = :nombrePelicula")
     List<FuncionDTO> obtenerFunciones(String nombrePelicula);
     @Query("select p from Pelicula p where LOWER(p.nombre) like concat('%', :busqueda, '%') ")
-    List<Pelicula> buscarPelicula(String busqueda);
+    List<Pelicula> buscarPeliculas(String busqueda);
 }

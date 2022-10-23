@@ -14,13 +14,11 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
-
     //@Query( "select c.nombre, c.urlfoto from Cliente c where correo = ?1")
     // Consulta manual
     @Query("select c from Cliente c where c.email = ?1")
     Cliente obtener(String email);
 
-    // Consulta por inferencia
     @Query("select c from Cliente c where c.email = :email")
     Cliente findByEmail(String email);
 
@@ -28,7 +26,6 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
     @Query("select cup from Cliente cli, in (cli.cupones) cup where cli.email  = :email")
     List<Cupon> obtenerCupones(String email);
-
 
     @Query("select comp from Compra comp where comp.cliente.cedula = :cedulaCliente")
     List<Compra> obtenerCompras(String cedulaCliente);

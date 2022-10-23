@@ -58,7 +58,7 @@ public class PeliculaTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void buscarPelicula() {
-        List<Pelicula> peliculas = peliculaRepo.buscarPelicula("A");
+        List<Pelicula> peliculas = peliculaRepo.buscarPeliculas("A");
 
         Assertions.assertNotNull(peliculas);
         peliculas.forEach(System.out::println);

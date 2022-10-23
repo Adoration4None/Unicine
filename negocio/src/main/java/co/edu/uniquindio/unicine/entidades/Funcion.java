@@ -46,6 +46,7 @@ public class Funcion implements Serializable {
     private Horario horario;
 
     // Constructor -----------------------------------------------------------------
+    @Builder
     public Funcion(TipoFuncion tipo, Float precioBase, Pelicula pelicula, Sala sala, Horario horario) {
         this.tipo = tipo;
         this.precio = precioBase;

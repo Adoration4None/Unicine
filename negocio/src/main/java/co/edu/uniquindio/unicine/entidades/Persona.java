@@ -22,7 +22,7 @@ public abstract class Persona implements Serializable {
     @Column(length = 10)
     private String cedula;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 60, nullable = false)
     private String nombreCompleto;
 
     @Email

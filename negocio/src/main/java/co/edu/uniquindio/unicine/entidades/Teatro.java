@@ -21,11 +21,11 @@ public class Teatro implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     @NonNull
     private String nombre;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     @NonNull
     private String direccion;
 

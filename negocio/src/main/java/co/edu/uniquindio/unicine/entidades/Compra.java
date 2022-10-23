@@ -20,11 +20,9 @@ public class Compra implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(nullable = false)
     private LocalDateTime fechaCompra;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private MetodoPago metodoPago;
 
     private Float valorTotal;
@@ -34,9 +32,11 @@ public class Compra implements Serializable {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "compra")
+    @ToString.Exclude
     private List<CompraConfiteria> comprasConfiteria;
 
     @ManyToOne
+    @ToString.Exclude
     private Cupon cupon;
 
     @ManyToOne
@@ -44,6 +44,7 @@ public class Compra implements Serializable {
 
     @OneToMany(mappedBy = "compra")
     @NonNull
+    @ToString.Exclude
     private List<Entrada> entradas;
 
     // Constructor --------------------------------------------------------------------------------------
