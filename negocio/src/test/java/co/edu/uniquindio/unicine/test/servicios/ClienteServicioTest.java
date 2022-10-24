@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -311,5 +312,17 @@ public class ClienteServicioTest {
     @Test
     public void enviarEmailTest() {
         emailServicio.enviarEmail("Primera prueba", "Esto es un mensaje de prueba", "samuel.echeverrib@uqvirtual.edu.co");
+    }
+
+    @Test
+    public void cumpleaniosTest() {
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate cumpleanios = LocalDate.parse("2003-10-24");
+
+        boolean flag = fechaActual.getMonth() == cumpleanios.getMonth() &&
+                       fechaActual.getDayOfMonth() == cumpleanios.getDayOfMonth();
+
+        Assertions.assertTrue(flag);
+
     }
 }

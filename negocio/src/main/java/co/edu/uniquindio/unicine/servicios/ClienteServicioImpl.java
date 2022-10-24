@@ -6,6 +6,7 @@ import jdk.jshell.spi.ExecutionControlProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +50,26 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         if (clienteEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
 
+        if( hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
+
         return clienteEncontrado;
+    }
+
+    private void enviarCuponCumpleanios(Cliente cliente) {
+        String mensaje = "¡Unicine te desea un feliz cumpleaños! Disfrutalo con un cupon de regalo " +
+                "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
+                "Recibelo a traves del siguiente enlace: " +
+                "https://bit.ly/3s7ETPZ";
+
+        emailServicio.enviarEmail("Cupon de Cumpleaños - 15% Descuento", mensaje, cliente.getEmail());
+    }
+
+    private boolean hoyCumpleAnios(Cliente cliente) {
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaNacimientoCliente = cliente.getFechaNacimiento();
+
+        return fechaActual.getMonth()      == fechaNacimientoCliente.getMonth() &&
+               fechaActual.getDayOfMonth() == fechaNacimientoCliente.getDayOfMonth();
     }
 
     @Override
@@ -106,7 +126,9 @@ public class ClienteServicioImpl implements ClienteServicio {
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cliente.getCedula());
 
         if (clienteGuardado.isEmpty()) throw new Exception("Cliente no encontrado");
-        if( emailExiste(cliente.getEmail()) ) throw new Exception("El correo que intenta actualizar ya existe");
+
+        if( !cliente.getEmail().equals(clienteGuardado.get().getEmail() ) && emailExiste(cliente.getEmail()) )
+            throw new Exception("El correo que intenta actualizar ya existe");
 
         return clienteRepo.save(cliente);
     }

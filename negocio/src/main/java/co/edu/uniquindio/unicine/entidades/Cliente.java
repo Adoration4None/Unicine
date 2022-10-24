@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,9 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public class Cliente extends Persona implements Serializable {
+    // Atributo extra
+    private LocalDate fechaNacimiento;
+
     // Relaciones ---------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
