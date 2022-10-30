@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,5 +28,5 @@ public class Ciudad implements Serializable {
     // Relacion ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude
-    private List<Teatro> teatros;
+    private List<Teatro> teatros = new ArrayList<>();
 }

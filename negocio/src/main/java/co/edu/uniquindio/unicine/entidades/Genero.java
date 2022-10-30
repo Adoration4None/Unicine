@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Normalized;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,5 +28,5 @@ public class Genero {
     // Relacion ----------------------------------------------------------
     @ToString.Exclude
     @ManyToMany(mappedBy = "generos")
-    private List<Pelicula> peliculas;
+    private List<Pelicula> peliculas = new ArrayList<>();
 }

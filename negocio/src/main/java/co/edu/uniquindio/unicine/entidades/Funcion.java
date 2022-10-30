@@ -34,7 +34,7 @@ public class Funcion implements Serializable {
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
-    private List<Compra> compras;
+    private List<Compra> compras = new ArrayList<>();
 
     @ManyToOne
     private Pelicula pelicula;

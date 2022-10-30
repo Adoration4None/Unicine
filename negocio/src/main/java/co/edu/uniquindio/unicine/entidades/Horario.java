@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,6 @@ public class Horario implements Serializable {
     // Relacion -----------------------------------------------------------------
     @OneToMany(mappedBy = "horario")
     @ToString.Exclude
-    private List<Funcion> funciones;
+    private List<Funcion> funciones = new ArrayList<>();
 
 }

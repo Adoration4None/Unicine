@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Unicine | Registrarse</title>
+</h:head>
+
+<h:body>
+    <h1>Completa el formulario de registro</h1>
+
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="nombre_cliente" value="Nombres:" />
+            <p:inputText id="nombre_cliente" value="#{registroClienteBean.nombresCliente}" required="true" />
+            <p:message for="nombre_cliente" />
+
+            <p:outputLabel for="apellido_cliente" value="Apellidos:" />
+            <p:inputText id="apellido_cliente" value="#{registroClienteBean.apellidosCliente}" required="true" />
+
+            <p:outputLabel for="cedula_cliente" value="Numero de documento:" />
+            <p:inputText id="cedula_cliente" value="#{registroClienteBean.cliente.cedula}" required="true" />
+
+            <p:outputLabel for="celular_cliente" value="Telefono celular:" />
+            <p:inputText id="celular_cliente" value="#{registroClienteBean.cliente.telefonoCelular}" />
+
+            <p:outputLabel for="fijo_cliente" value="Telefono fijo:" />
+            <p:inputText id="fijo_cliente" value="#{registroClienteBean.cliente.telefonoFijo}" />
+
+            <p:outputLabel for="email_cliente" value="Correo electronico:" />
+            <p:inputText id="email_cliente" value="#{registroClienteBean.cliente.email}" required="true"/>
+
+            <p:outputLabel for="contrasena_cliente" value="Contraseña:" />
+            <p:inputText id="contrasena_cliente" value="#{registroClienteBean.cliente.contrasena}" required="true"/>
+
+            <p:outputLabel for="confirmacion_contrasena_cliente" value="Confirmar contraseña:" />
+            <p:inputText id="confirmacion_contrasena_cliente" value="#{registroClienteBean.confirmacionContrasena}" required="true"/>
+
+            <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
+            <p:datePicker id="fecha_nacimiento_cliente" value="#{registroClienteBean.cliente.fechaNacimiento}" />
+        </h:panelGrid>
+
+        <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" update="@form" />
+        <p:growl for="mensaje_bean" showDetail="true"/>
+    </h:form>
+</h:body>
+</html>

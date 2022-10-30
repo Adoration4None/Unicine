@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,11 +33,11 @@ public class Sala implements Serializable {
     // Relaciones ----------------------------------------------------------------
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
-    private List<Funcion> funciones;
+    private List<Funcion> funciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
-    private List<Entrada> entradas;
+    private List<Entrada> entradas = new ArrayList<>();
 
     @ManyToOne
     @NonNull

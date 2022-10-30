@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,7 +43,7 @@ public class Confiteria implements Serializable {
 
     // Relacion -------------------------------------------------------------
     @OneToMany(mappedBy = "comestible")
-    private List<CompraConfiteria> comprasConfiteria;
+    private List<CompraConfiteria> comprasConfiteria = new ArrayList<>();
 
     // Constructor ----------------------------------------------------------
     public Confiteria(String nombre, String imagen, Integer unidades, Float precio, String descripcion) {

@@ -1,11 +1,14 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -15,16 +18,19 @@ import java.util.Map;
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class Persona implements Serializable {
+public class Persona implements Serializable {
     // Atributos -----------------------------------------------------------------------------------------
     @Id
     @EqualsAndHashCode.Include
+    @Length(max = 10)
     @Column(length = 10)
     private String cedula;
 
+    @Length(max = 60)
     @Column(length = 60, nullable = false)
     private String nombreCompleto;
 
+    @Length(max = 50)
     @Email
     @Column(length = 50, nullable = false, unique = true)
     private String email;
@@ -35,14 +41,9 @@ public abstract class Persona implements Serializable {
 
     private String imagenPerfil;
 
-    @ElementCollection
-    @Column(length = 10)
-    private Map<String, String> telefonos;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private EstadoPersona estado;
-
+    private EstadoPersona estado = EstadoPersona.INACTIVO;
 
     // Constructor ------------------------------------------------------------------------------------
     public Persona(String cedula, String nombreCompleto, String email, String contrasena) {
@@ -50,12 +51,6 @@ public abstract class Persona implements Serializable {
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.contrasena = contrasena;
-
-        this.estado = EstadoPersona.INACTIVO;
-        this.telefonos = new HashMap<>();
     }
 
-    public void agregarTelefono(String telefono, String nombre) {
-        telefonos.put(telefono, nombre);
-    }
 }

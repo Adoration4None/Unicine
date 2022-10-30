@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class Compra implements Serializable {
 
     @OneToMany(mappedBy = "compra")
     @ToString.Exclude
-    private List<CompraConfiteria> comprasConfiteria;
+    private List<CompraConfiteria> comprasConfiteria = new ArrayList<>();
 
     @ManyToOne
     @ToString.Exclude
@@ -45,7 +46,7 @@ public class Compra implements Serializable {
     @OneToMany(mappedBy = "compra")
     @NonNull
     @ToString.Exclude
-    private List<Entrada> entradas;
+    private List<Entrada> entradas = new ArrayList<>();
 
     // Constructor --------------------------------------------------------------------------------------
    @Builder

@@ -41,6 +41,6 @@ public class CompraConfiteria implements Serializable {
     // Metodos ---------------------------------------------------------------------------------------------
 
     public void actualizarUnidades() {
-
+        comestible.setUnidades(comestible.getUnidades() - unidadesCompradas);
     }
 }

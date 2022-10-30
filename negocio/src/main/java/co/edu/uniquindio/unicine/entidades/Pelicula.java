@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,9 +46,9 @@ public class Pelicula implements Serializable {
     // Relaciones -------------------------------------------------------
 
     @ManyToMany
-    private List<Genero> generos;
+    private List<Genero> generos = new ArrayList<>();
 
     @OneToMany(mappedBy = "pelicula")
     @ToString.Exclude
-    private List<Funcion> funciones;
+    private List<Funcion> funciones = new ArrayList<>();
 }

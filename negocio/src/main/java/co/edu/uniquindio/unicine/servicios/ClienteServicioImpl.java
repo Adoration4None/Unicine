@@ -92,9 +92,9 @@ public class ClienteServicioImpl implements ClienteServicio {
         return clienteRepo.findByEmail(email) != null;
     }
 
-    private void enviarConfirmacion(Cliente cliente) throws Exception {
+    private void enviarConfirmacion(Cliente cliente) {
         String mensaje = "Hola, " + cliente.getNombreCompleto() + "! Acaba de crear su cuenta en Unicine. " +
-                "Antes de hacer uso de nuestros, por favor confirme su correo electronico a traves del siguiente enlace: " +
+                "Antes de hacer uso de nuestros servicios, por favor confirme su correo electronico a traves del siguiente enlace: " +
                 "https://bit.ly/3s7ETPZ";
 
         emailServicio.enviarEmail("Confirmacion E-mail Unicine", mensaje, cliente.getEmail());
