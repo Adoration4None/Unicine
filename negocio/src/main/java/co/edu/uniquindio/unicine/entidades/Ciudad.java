@@ -25,6 +25,10 @@ public class Ciudad implements Serializable {
     @NonNull
     private String nombre;
 
+    @Column(length = 20, nullable = false)
+    @NonNull
+    private String departamento;
+
     // Relacion ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude

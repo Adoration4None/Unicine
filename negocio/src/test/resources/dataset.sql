@@ -1,24 +1,18 @@
 INSERT INTO cliente VALUES
-                        ("1223", "a123", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram", null),
-                        ("1235", "b123", "diam.proin@google.couk",   "ACTIVO",   "ruta foto 2", "Ian Horn", null),
-                        ("2345", "c123", "nisi@icloud.ca",           "INACTIVO", "ruta foto 3", "Ivor Randolph", null),
-                        ("9876", "d123", "dignissim@google.edu",     "INACTIVO", "ruta foto 4", "Kirsten Reese", "1980-02-28"),
-                        ("3344", "e123", "curabitur@google.couk",    "ACTIVO",   "ruta foto 5", "Reagan Romero", "1991-06-27");
-
-INSERT INTO cliente_telefonos VALUES
-                        ("1223", "3223344", "Celular"), --Oren Ingram
-                        ("1223", "78898",   "Fijo"),    --Oren Ingram
-                        ("2345", "3245677", "Celular"), --Ivor Randolph
-                        ("2345", "78423",   "Fijo"),    --Ivor Randolph
-                        ("9876", "313337",  "Celular"); --Kirsten Reese
+                        ("1223", "a123", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram",   null,        "344990", null),
+                        ("1235", "b123", "diam.proin@google.couk",   "ACTIVO",   "ruta foto 2", "Ian Horn",      null,        null,     "7556"),
+                        ("2345", "c123", "nisi@icloud.ca",           "INACTIVO", "ruta foto 3", "Ivor Randolph", null,        "33322",  "7665"),
+                        ("9876", "d123", "dignissim@google.edu",     "INACTIVO", "ruta foto 4", "Kirsten Reese", "1980-02-28", null,    null),
+                        ("3344", "e123", "curabitur@google.couk",    "ACTIVO",   "ruta foto 5", "Reagan Romero", "1991-06-27", null,    null);
 
 INSERT INTO ciudad VALUES
-                       (1, "Armenia"),
-                       (2, "Pereira"),
-                       (3, "Manizales"),
-                       (4, "Bogota"),
-                       (5, "Medellin"),
-                       (6, "Cali");
+                       (1, "Quindio", "Armenia"),
+                       (2, "Risaralda", "Pereira"),
+                       (3, "Caldas", "Manizales"),
+                       (4, "Cundinamarca", "Bogota"),
+                       (5, "Antioquia", "Medellin"),
+                       (6, "Valle del Cauca", "Cali"),
+                       (7, "Antioquia", "Armenia");
 
 INSERT INTO administrador_teatro VALUES
                         ("2454", "QWL22XGI4SX", "virginiaingram@outlook.couk", "ACTIVO",   "ruta foto 1", "Virginia Ingram"),
@@ -28,19 +22,19 @@ INSERT INTO administrador_teatro VALUES
                         ("7621", "DTR8UY6IS32", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez");
 
 INSERT INTO teatro VALUES
-                       (1, "Calle 3 #5",                     "Multiplex Unicentro",   "2454", 1), --Armenia
-                       (2, "Carrera 22 #33-12",              "Cineplaza",             "3346", 2), --Pereira
-                       (3, "Carrera 23 - 12",                "Multicines AstorPlaza", "7621", 3), --Manizales
-                       (4, "Al lado del Ara de Las Acacias", "Portal del Circaso",    "9503", 5), --Medellin
-                       (5, "Sidney, Bogotá Cr 15 - 19",      "Arboleda Theaters",     "4508", 4); --Bogota
+                       (1, "Calle 3 #5",                     "Multiplex Unicentro",   "2454", 1),
+                       (2, "Carrera 22 #33-12",              "Cineplaza",             "3346", 2),
+                       (3, "Carrera 23 - 12",                "Multicines AstorPlaza", "7621", 3),
+                       (4, "Al lado del Ara de Las Acacias", "Portal del Circaso",    "9503", 5),
+                       (5, "Sidney, Bogotá Cr 15 - 19",      "Arboleda Theaters",     "4508", 4);
 
 INSERT INTO sala VALUES
                     -- id, # sillas, tipo, teatro
-                       (1,     70, "SALA_2D", 1), --Multiplex Unicentro
-                       (2,     80, "SALA_3D", 1), --Multiplex Unicentro
-                       (3,     65, "SALA_XD", 2), --Cineplaza
-                       (4,     60, "SALA_2D", 2), --Cineplaza
-                       (5,     90, "SALA_XD", 1); --Multiplex Unicentro
+                       (1,     70, "SALA_2D", 1),
+                       (2,     80, "SALA_3D", 1),
+                       (3,     65, "SALA_XD", 2),
+                       (4,     60, "SALA_2D", 2),
+                       (5,     90, "SALA_XD", 1);
 
  INSERT INTO genero VALUES
                         (1, "Terror"),
@@ -92,11 +86,11 @@ INSERT INTO cupon VALUES
                       (5, "NAVIDAD",    "Cupon para la familia uniciner en Navidad", "USADO",      "2022-12-12", "Mry X-Mas",        1000);
 
 INSERT INTO cupon_clientes VALUES
-                       (1, "1235"),  --Hola Mundo, Ian Horn
-                       (1, "2345"),  --Hola Mundo, Ivor Randolph
-                       (2, "9876"),  --H-Bday, Kirsten Reese
-                       (3, "3344"),  --Agosto venteado, "Reagan Romero"
-                       (4, "1223");  --Mry X-Mas, Oren Ingram
+                       (1, "1235"),
+                       (1, "2345"),
+                       (2, "9876"),
+                       (3, "3344"),
+                       (4, "1223");
 
 INSERT INTO compra VALUES
                     -- id,       fecha,            medio de pago,   valor, cliente, cupon, funcion
@@ -130,13 +124,6 @@ INSERT INTO compra_confiteria VALUES
                                   (3, 10000,          7,              2,         3),
                                   (4, 3000,           6,              4,         4),
                                   (5, 21000,          2,              5,         1);
-
-INSERT INTO administrador_teatro_telefonos VALUES
-                                               ("2454", "3223344", "Celular"),
-                                               ("3346", "78898",   "Fijo"),
-                                               ("9503", "3245677", "Celular"),
-                                               ("4508", "78423",   "Fijo"),
-                                               ("7621", "313337", "Celular");
 
 
 

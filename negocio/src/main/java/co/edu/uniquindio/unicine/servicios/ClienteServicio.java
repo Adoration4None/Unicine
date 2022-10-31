@@ -4,7 +4,6 @@ import co.edu.uniquindio.unicine.entidades.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public interface ClienteServicio {
 
@@ -26,7 +25,7 @@ public interface ClienteServicio {
 
     Compra redimirCupon(Integer idCupon, Compra compra) throws Exception;
 
-    List<Pelicula> buscarPeliculas(String busqueda) throws Exception;
+    List<Funcion> buscarFunciones(String busqueda, Integer idCiudad) throws Exception;
 
     Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception;
 
@@ -42,5 +41,9 @@ public interface ClienteServicio {
 
     Cupon agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
 
-    public List<Pelicula> filtrarPeliculasCiudad(Integer idCiudad) throws Exception;
+    List<Funcion> filtrarFuncionesCiudad(Integer idCiudad) throws Exception;
+
+    List<Ciudad> obtenerCiudades();
+
+    Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
 }

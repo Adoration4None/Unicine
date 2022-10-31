@@ -30,10 +30,12 @@ public class Pelicula implements Serializable {
     @NonNull
     private String trailer;
 
+    @Lob
     @Column(nullable = false)
     @NonNull
     private String sinopsis;
 
+    @Lob
     @Column(nullable = false)
     @NonNull
     private String reparto;

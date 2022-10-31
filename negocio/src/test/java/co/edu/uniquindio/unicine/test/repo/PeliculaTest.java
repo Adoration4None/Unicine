@@ -29,15 +29,4 @@ public class PeliculaTest {
         Assertions.assertEquals(1, funciones.size());
     }
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void buscarPelicula() {
-        List<Pelicula> peliculas = peliculaRepo.buscarPeliculas("A");
-
-        Assertions.assertNotNull(peliculas);
-        peliculas.forEach(System.out::println);
-
-        Assertions.assertEquals(4, peliculas.size());
-    }
-
 }

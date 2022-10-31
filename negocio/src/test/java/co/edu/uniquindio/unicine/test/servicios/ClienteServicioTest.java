@@ -159,11 +159,11 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void buscarPeliculas() {
+    public void buscarFunciones() {
         try {
-            List<Pelicula> peliculasEncontradas = clienteServicio.buscarPeliculas("a");
-            Assertions.assertNotNull(peliculasEncontradas);
-            peliculasEncontradas.forEach(System.out::println);
+            List<Funcion> funcionesEncontradas = clienteServicio.buscarFunciones("a", 1);
+            Assertions.assertNotNull(funcionesEncontradas);
+            funcionesEncontradas.forEach(System.out::println);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -296,14 +296,34 @@ public class ClienteServicioTest {
     //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerPeliculasCiudad() throws Exception {
+    public void obtenerFuncionesCiudad() throws Exception {
         Ciudad ciudad = ciudadRepo.findById(1).orElse(null);
         try {
             if(ciudad != null){
-                List<Pelicula> peliculas = clienteServicio.filtrarPeliculasCiudad(ciudad.getId());
-                Assertions.assertEquals(3, peliculas.size());
-                peliculas.forEach(System.out::println);
+                List<Funcion> funciones = clienteServicio.filtrarFuncionesCiudad(ciudad.getId());
+                Assertions.assertEquals(3, funciones.size());
+                funciones.forEach(System.out::println);
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCiudades() {
+        List<Ciudad> ciudades = clienteServicio.obtenerCiudades();
+        Assertions.assertNotNull(ciudades);
+
+        ciudades.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerCiudad() {
+        try {
+            Ciudad ciudadEncontrada = clienteServicio.obtenerCiudad(2);
+            Assertions.assertEquals("Pereira", ciudadEncontrada.getNombre());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -323,6 +343,5 @@ public class ClienteServicioTest {
                        fechaActual.getDayOfMonth() == cumpleanios.getDayOfMonth();
 
         Assertions.assertTrue(flag);
-
     }
 }

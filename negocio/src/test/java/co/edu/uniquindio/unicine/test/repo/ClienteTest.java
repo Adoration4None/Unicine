@@ -30,9 +30,6 @@ public class ClienteTest {
         Cliente cliente = new Cliente("4223", "Juan Perez", "juanp@mail.com", "a123");
         Cliente cliente2 = new Cliente("12345", "Juan Perez", "juanp@mail.com", "a123");
 
-        cliente.agregarTelefono("322455", "Celular");
-        cliente.agregarTelefono("78890", "Fijo");
-
         Cliente guardado = clienteRepo.save(cliente);
 
         // Verificar si la prueba se paso o no

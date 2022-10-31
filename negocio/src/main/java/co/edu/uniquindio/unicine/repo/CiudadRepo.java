@@ -15,4 +15,7 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
 
     @Query("select t.salas from Ciudad c, in (c.teatros) t where c.id = :idCiudad ")
     List<Sala> obtenerSalasCiudad(Integer idCiudad);
+
+    @Query("select distinct f.sala.teatro.ciudad from Funcion f where f.pelicula.estado <> 'NO_DISPONIBLE'")
+    List<Ciudad> obtenerCiudades();
 }

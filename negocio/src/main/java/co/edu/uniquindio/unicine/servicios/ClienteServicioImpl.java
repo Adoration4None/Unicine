@@ -2,14 +2,11 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
-import jdk.jshell.spi.ExecutionControlProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +14,7 @@ import java.util.Optional;
 public class ClienteServicioImpl implements ClienteServicio {
     // Repositorios sobre los cuales se haran las consultas
     private final ClienteRepo clienteRepo;
-    private final PeliculaRepo peliculaRepo;
+    private final FuncionRepo funcionRepo;
     private final CuponRepo cuponRepo;
     private final CompraRepo compraRepo;
     private final EntradaRepo entradaRepo;
@@ -27,11 +24,11 @@ public class ClienteServicioImpl implements ClienteServicio {
     // Servicio de email
     private final EmailServicio emailServicio;
 
-    public ClienteServicioImpl(ClienteRepo clienteRepo, PeliculaRepo peliculaRepo, CuponRepo cuponRepo,
+    public ClienteServicioImpl(ClienteRepo clienteRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo,
                                CompraRepo compraRepo, EmailServicio emailServicio, EntradaRepo entradaRepo,
                                CiudadRepo ciudadRepo, SalaRepo salaRepo) {
         this.clienteRepo = clienteRepo;
-        this.peliculaRepo = peliculaRepo;
+        this.funcionRepo = funcionRepo;
         this.cuponRepo = cuponRepo;
         this.compraRepo = compraRepo;
         this.emailServicio = emailServicio;
@@ -191,10 +188,11 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Pelicula> buscarPeliculas(String busqueda) throws Exception {
+    public List<Funcion> buscarFunciones(String busqueda, Integer idCiudad) throws Exception {
         if(busqueda == null || busqueda.equals("")) throw new Exception("Busqueda vacia");
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("Ciudad vacia");
 
-        return peliculaRepo.buscarPeliculas(busqueda);
+        return funcionRepo.buscarFunciones(busqueda, idCiudad);
     }
 
     public Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception {
@@ -352,19 +350,30 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Pelicula> filtrarPeliculasCiudad(Integer idCiudad) throws Exception {
-        if(idCiudad.equals(null) || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
+    public List<Funcion> filtrarFuncionesCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
 
         List<Sala> salas = ciudadRepo.obtenerSalasCiudad(idCiudad);
 
         if(salas.isEmpty()) throw new Exception("La ciudad no tiene salas de cine");
 
-        List<Pelicula> peliculas = new ArrayList<>();
+        List<Funcion> funciones = new ArrayList<>();
 
         for (Sala s: salas) {
-            peliculas.addAll(salaRepo.obtenerPeliculasSala(s.getId()));
+            funciones.addAll(salaRepo.obtenerFuncionesSala(s.getId()));
         }
 
-        return peliculas;
+        return funciones;
+    }
+
+    @Override
+    public List<Ciudad> obtenerCiudades() {
+        return ciudadRepo.obtenerCiudades();
+    }
+
+    @Override
+    public Ciudad obtenerCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
+        return ciudadRepo.findById(idCiudad).orElse(null);
     }
 }
