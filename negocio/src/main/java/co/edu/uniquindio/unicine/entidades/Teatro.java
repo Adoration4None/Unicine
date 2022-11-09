@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Teatro implements Serializable {
     // Atributos -------------------------------------------------------------------
@@ -30,6 +29,8 @@ public class Teatro implements Serializable {
     @NonNull
     private String direccion;
 
+    private String imagen;
+
     // Relaciones -------------------------------------------------------------------
     @ManyToOne
     @NonNull
@@ -42,4 +43,10 @@ public class Teatro implements Serializable {
     @OneToMany(mappedBy = "teatro")
     @ToString.Exclude
     private List<Sala> salas = new ArrayList<>();
+
+    // Metodos ----------------------------------------------------------------------
+
+    public void agregarSala(Sala sala) {
+        salas.add(sala);
+    }
 }

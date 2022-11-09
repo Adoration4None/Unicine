@@ -43,4 +43,8 @@ public class Sala implements Serializable {
     @NonNull
     private Teatro teatro;
 
+    // Metodos -------------------------------------------------------------------
+    public void agregarFuncion(Funcion funcion) {
+        funciones.add(funcion);
+    }
 }

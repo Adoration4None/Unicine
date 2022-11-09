@@ -31,9 +31,9 @@ public class Cliente extends Persona implements Serializable {
     @ToString.Exclude
     private List<Compra> compras = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "clientes")
+    @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
-    private List<Cupon> cupones = new ArrayList<>();
+    private List<CuponCliente> cuponesCliente = new ArrayList<>();
 
     // Constructor --------------------------------------------------------------------------------------
     @Builder
@@ -41,4 +41,11 @@ public class Cliente extends Persona implements Serializable {
         super(cedula, nombreCompleto, email, contrasena);
     }
 
+    public void agregarCuponCliente(CuponCliente cuponCliente) {
+        cuponesCliente.add(cuponCliente);
+    }
+
+    public void agregarCompra(Compra compra) {
+        compras.add(compra);
+    }
 }

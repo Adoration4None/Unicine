@@ -23,7 +23,7 @@ public interface ClienteServicio {
 
     List<Compra> listarCompras(String cedulaCliente) throws Exception;
 
-    Compra redimirCupon(Integer idCupon, Compra compra) throws Exception;
+    Compra redimirCupon(Integer idCuponCliente, Compra compra) throws Exception;
 
     List<Funcion> buscarFunciones(String busqueda, Integer idCiudad) throws Exception;
 
@@ -35,15 +35,18 @@ public interface ClienteServicio {
 
     Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception;
 
-    Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception;
+    Compra finalizarCompra(Compra compra) throws Exception;
 
     boolean cambiarContrasena(String emailCliente) throws Exception;
 
-    Cupon agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
+    CuponCliente agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
 
     List<Funcion> filtrarFuncionesCiudad(Integer idCiudad) throws Exception;
 
     List<Ciudad> obtenerCiudades();
 
     Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
+
+    List<Entrada> obtenerEntradasCompradas(Funcion funcion) throws Exception;
+
 }

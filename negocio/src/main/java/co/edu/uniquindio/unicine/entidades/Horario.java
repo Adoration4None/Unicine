@@ -36,4 +36,7 @@ public class Horario implements Serializable {
     @ToString.Exclude
     private List<Funcion> funciones = new ArrayList<>();
 
+    public void agregarFuncion(Funcion funcion) {
+        funciones.add(funcion);
+    }
 }

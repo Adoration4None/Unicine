@@ -29,7 +29,7 @@ public class Cupon implements Serializable {
     private Float porcentajeDescuento;
 
     @Column(nullable = false)
-    private LocalDateTime fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(nullable = false)
     private String descripcion;
@@ -38,30 +38,24 @@ public class Cupon implements Serializable {
     @Column(length = 20, nullable = false)
     private CriterioCupon criterio;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private EstadoCupon estado;
-
     // Relaciones -------------------------------------------------------
-    @ManyToMany
-    @ToString.Exclude
-    private List<Cliente> clientes = new ArrayList<>();
-
     @OneToMany(mappedBy = "cupon")
     @ToString.Exclude
-    private List<Compra> compras = new ArrayList<>();
+    private List<CuponCliente> clientesCupon = new ArrayList<>();
 
     // Constructor -------------------------------------------------------
     @Builder
-    public Cupon(String nombre, Float porcentajeDescuento, LocalDateTime fechaVencimiento, String descripcion,
+    public Cupon(String nombre, Float porcentajeDescuento, LocalDate fechaVencimiento, String descripcion,
                  CriterioCupon criterio) {
         this.nombre = nombre;
         this.porcentajeDescuento = porcentajeDescuento;
         this.fechaVencimiento = fechaVencimiento;
         this.descripcion = descripcion;
         this.criterio = criterio;
-
-        this.estado = EstadoCupon.DISPONIBLE;
     }
 
+    // Metodos ------------------------------------------------------------
+    public void agregarCuponCliente(CuponCliente cuponCliente) {
+        clientesCupon.add(cuponCliente);
+    }
 }

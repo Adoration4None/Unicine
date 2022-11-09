@@ -1,13 +1,12 @@
 package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
-import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
-import co.edu.uniquindio.unicine.repo.FuncionRepo;
-import co.edu.uniquindio.unicine.repo.SalaRepo;
-import co.edu.uniquindio.unicine.repo.TeatroRepo;
+import co.edu.uniquindio.unicine.repo.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -18,12 +17,20 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     private final FuncionRepo funcionRepo;
 
     private final AdministradorTeatroRepo adminTeatroRepo;
+    private final CiudadRepo ciudadRepo;
+    private final HorarioRepo horarioRepo;
+    private final PeliculaRepo peliculaRepo;
 
-    public AdminTeatroServicioImpl(TeatroRepo teatroRepo, SalaRepo salaRepo, FuncionRepo funcionRepo, AdministradorTeatroRepo adminTeatroRepo) {
+    public AdminTeatroServicioImpl(TeatroRepo teatroRepo, SalaRepo salaRepo, FuncionRepo funcionRepo,
+                                   AdministradorTeatroRepo adminTeatroRepo, CiudadRepo ciudadRepo, HorarioRepo horarioRepo,
+                                   PeliculaRepo peliculaRepo) {
         this.teatroRepo = teatroRepo;
         this.salaRepo = salaRepo;
         this.funcionRepo = funcionRepo;
         this.adminTeatroRepo = adminTeatroRepo;
+        this.ciudadRepo = ciudadRepo;
+        this.horarioRepo = horarioRepo;
+        this.peliculaRepo = peliculaRepo;
     }
 
     @Override
@@ -38,11 +45,13 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     // Gestionar teatros --------------------------------------------------------------------------------------
     @Override
     public Teatro crearTeatro(Teatro teatro) throws Exception {
-
         if(teatro == null) throw new Exception("No hay datos del teatro a crear");
 
         if(teatroRepo.findByNombreAndDireccionAndCiudad(teatro.getNombre(), teatro.getDireccion(), teatro.getCiudad()) != null)
             throw new Exception("El teatro ya existe");
+
+        teatro.getCiudad().agregarTeatro(teatro);
+        ciudadRepo.save( teatro.getCiudad() );
 
         return teatroRepo.save(teatro);
     }
@@ -67,29 +76,37 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public Teatro obtenerTeatro(Integer idTeatro) throws Exception {
-        Optional<Teatro> teatroGuardado = teatroRepo.findById(idTeatro);
-        return teatroGuardado.orElse(null);
+        if(idTeatro == null || idTeatro.equals(0)) throw new Exception("ID de teatro vacio");
+
+        Teatro teatroGuardado = teatroRepo.findById(idTeatro).orElse(null);
+
+        if(teatroGuardado == null) throw new Exception("El teatro no existe en la base de datos");
+
+        return teatroGuardado;
     }
 
     @Override
     public List<Teatro> listarTeatros() {
-        List<Teatro> teatros = teatroRepo.findAll();
-        return teatros;
+        return teatroRepo.findAll();
     }
 
 
     // Gestionar salas ----------------------------------------------------------------------------------------
     @Override
     public Sala crearSala(Sala sala) throws Exception {
-        Integer salaId = sala.getId();
+        if(sala == null) throw new Exception("No hay sala para crear");
+        if( salaRepo.findByCantidadSillasAndTipoAndTeatro(sala.getCantidadSillas(), sala.getTipo(), sala.getTeatro()) != null )
+            throw new Exception("La sala ya existe");
 
-        if(salaRepo.findById(salaId).isPresent()) throw new Exception("La sala con el id" + salaId + " ya existe");
+        sala.getTeatro().agregarSala(sala);
+        teatroRepo.save( sala.getTeatro() );
 
         return salaRepo.save(sala);
     }
 
     @Override
     public Sala actualizarSala(Sala sala) throws Exception {
+        if(sala == null) throw new Exception("No hay sala para actualizar");
         Optional<Sala> salaGuardada = salaRepo.findById(sala.getId());
 
         if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
@@ -99,6 +116,8 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public void eliminarSala(Integer idSala) throws Exception {
+        if(idSala == null || idSala.equals(0)) throw new Exception("ID de sala vacio");
+
         Optional<Sala> salaGuardada = salaRepo.findById(idSala);
 
         if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
@@ -108,32 +127,56 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public Sala obtenerSala(Integer idSala) throws Exception {
-        Optional<Sala> salaGuardada = salaRepo.findById(idSala);
-        return salaGuardada.orElse(null);
+        if(idSala == null || idSala.equals(0)) throw new Exception("ID de sala vacio");
+
+        Sala salaGuardada = salaRepo.findById(idSala).orElse(null);
+
+        if(salaGuardada == null) throw new Exception("La sala no existe en la base de datos");
+
+        return salaGuardada;
     }
 
     @Override
     public List<Sala> listarSalas() {
-        List<Sala> salas = salaRepo.findAll();
-        return salas;
+        return salaRepo.findAll();
     }
 
     // Gestionar funciones ------------------------------------------------------------------------------------
     @Override
     public Funcion crearFuncion(Funcion funcion) throws Exception {
-        Integer funcionId = funcion.getId();
 
         if( funcionRepo.findByPeliculaAndSalaAndHorario(funcion.getPelicula(), funcion.getSala(), funcion.getHorario()) != null)
             throw new Exception("La funcion ya existe");
 
+        if( tiposNoCoinciden(funcion.getTipo(), funcion.getSala().getTipo()) )
+            throw new Exception("El tipo de la funcion no corresponde con el tipo de la sala");
+
+        funcion.getSala().agregarFuncion(funcion);
+        salaRepo.save( funcion.getSala() );
+
+        funcion.getHorario().agregarFuncion(funcion);
+        horarioRepo.save( funcion.getHorario() );
+
+        funcion.getPelicula().agregarFuncion(funcion);
+        peliculaRepo.save( funcion.getPelicula() );
+
         return funcionRepo.save(funcion);
+    }
+
+    private boolean tiposNoCoinciden(TipoFuncion tipoFuncion, TipoSala tipoSala) {
+        Map<TipoFuncion, TipoSala> tiposCorrespondientes = new HashMap<>();
+        tiposCorrespondientes.put(TipoFuncion.FUNCION_2D, TipoSala.SALA_2D);
+        tiposCorrespondientes.put(TipoFuncion.FUNCION_3D, TipoSala.SALA_3D);
+        tiposCorrespondientes.put(TipoFuncion.FUNCION_XD, TipoSala.SALA_XD);
+
+        return tipoSala != tiposCorrespondientes.get(tipoFuncion);
     }
 
     @Override
     public Funcion actualizarFuncion(Funcion funcion) throws Exception {
         Optional<Funcion> funcionGuardada = funcionRepo.findById(funcion.getId());
 
-        if(funcionGuardada.isEmpty()) throw new Exception("La funciÃ³n no existe");
+        if(funcionGuardada.isEmpty()) throw new Exception("La funcion no existe");
 
         return funcionRepo.save(funcion);
     }
@@ -149,13 +192,49 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public Funcion obtenerFuncion(Integer idFuncion) throws Exception {
-        Optional<Funcion> funcionGuardada = funcionRepo.findById(idFuncion);
-        return funcionGuardada.orElse(null);
+        if(idFuncion == null || idFuncion.equals(0)) throw new Exception("ID de funcion vacio");
+
+        Funcion funcionGuardada = funcionRepo.findById(idFuncion).orElse(null);
+
+        if(funcionGuardada == null) throw new Exception("La funcion no existe en la base de datos");
+
+        return funcionGuardada;
     }
 
     @Override
     public List<Funcion> listarFunciones() {
-        List<Funcion> funciones = funcionRepo.findAll();
-        return funciones;
+        return funcionRepo.findAll();
+    }
+
+
+    // Opciones de ciudad ---------------------------------------------------------------------------------------
+    @Override
+    public Ciudad crearCiudad(Ciudad ciudad) throws Exception {
+        if(ciudad == null) throw new Exception("No hay ciudad para crear");
+        if( ciudadRepo.findByNombreAndDepartamento(ciudad.getNombre(), ciudad.getDepartamento()) != null )
+            throw new Exception("La ciudad ya existe");
+
+        return ciudadRepo.save(ciudad);
+    }
+
+    @Override
+    public List<Ciudad> obtenerCiudades() {
+        return ciudadRepo.findAll();
+    }
+
+
+    // Opciones de horario -------------------------------------------------------------------------------------
+    @Override
+    public Horario crearHorario(Horario horario) throws Exception {
+        if(horario == null) throw new Exception("No hay horario para crear");
+        if(horarioRepo.findByFechaAndHora(horario.getFecha(), horario.getHora()) != null)
+            throw new Exception("El horario ya existe");
+
+        return horarioRepo.save(horario);
+    }
+
+    @Override
+    public List<Horario> obtenerHorariosDisponibles() {
+        return horarioRepo.obtenerHorariosDisponibles();
     }
 }

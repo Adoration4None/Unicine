@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.test.repo;
 
 import co.edu.uniquindio.unicine.repo.EntradaRepo;
+import co.edu.uniquindio.unicine.repo.FuncionRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,31 +15,7 @@ public class EntradaTest {
     @Autowired
     private EntradaRepo entradaRepo;
 
-    // CRUD ----------------------------------------------------------------------------------------------------
+    @Autowired
+    private FuncionRepo funcionRepo;
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crear() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void eliminar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener() {
-
-    }
-
-    // Otras consultas -----------------------------------------------------------------------------------------
 }

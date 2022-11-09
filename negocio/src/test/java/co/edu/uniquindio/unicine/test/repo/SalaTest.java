@@ -14,29 +14,15 @@ public class SalaTest {
     @Autowired
     private SalaRepo salaRepo;
 
-    // CRUD -----------------------------------------------------------------------------------------------------
-
     @Test
     @Sql("classpath:dataset.sql")
-    public void crear() {
+    public void obtenerFuncionesSala() {
 
     }
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void eliminar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizar() {
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtener() {
+    public void verificarAsientosDisponibles() {
 
     }
 }

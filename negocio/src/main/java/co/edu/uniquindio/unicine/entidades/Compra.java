@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Compra implements Serializable {
-    // Atributos -----------------------------------------------------
+    // Atributos ----------------------------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -28,7 +28,7 @@ public class Compra implements Serializable {
 
     private Float valorTotal;
 
-    // Relaciones ------------------------------------------------------
+    // Relaciones ------------------------------------------------------------------------------------
     @ManyToOne
     private Cliente cliente;
 
@@ -38,7 +38,7 @@ public class Compra implements Serializable {
 
     @ManyToOne
     @ToString.Exclude
-    private Cupon cupon;
+    private CuponCliente cuponCliente;
 
     @ManyToOne
     private Funcion funcion;
@@ -60,16 +60,18 @@ public class Compra implements Serializable {
        System.out.println(id);
     }
 
+    // Metodos -------------------------------------------------------------------------------------------
+
     public Float calcularValorTotal() throws Exception {
         float total = 0f;
 
-        if(this.entradas == null || this.funcion == null)
+        if(entradas.isEmpty() || funcion == null)
             throw new Exception("No se puede calcular el valor de la compra");
 
         total += obtenerTotalEntradas();
 
         if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
-        if(this.cupon != null) total -= (total * this.cupon.getPorcentajeDescuento());
+        if(this.cuponCliente != null) total -= (total * this.cuponCliente.obtenerPorcentajeDescuento());
 
         this.valorTotal = total;
         return this.valorTotal;
@@ -83,5 +85,13 @@ public class Compra implements Serializable {
 
     public float obtenerTotalEntradas() {
         return this.funcion.getPrecio() * entradas.size();
+    }
+
+    public void agregarCompraConfiteria(CompraConfiteria compraConfiteria) {
+       comprasConfiteria.add(compraConfiteria);
+    }
+
+    public void agregarEntrada(Entrada entrada) {
+       entradas.add(entrada);
     }
 }

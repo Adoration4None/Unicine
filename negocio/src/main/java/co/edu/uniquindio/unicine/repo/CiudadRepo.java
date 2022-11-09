@@ -18,4 +18,6 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
 
     @Query("select distinct f.sala.teatro.ciudad from Funcion f where f.pelicula.estado <> 'NO_DISPONIBLE'")
     List<Ciudad> obtenerCiudades();
+
+    Ciudad findByNombreAndDepartamento(String nombre, String departamento);
 }

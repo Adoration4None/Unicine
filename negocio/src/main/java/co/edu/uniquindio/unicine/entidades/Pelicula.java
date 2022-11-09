@@ -46,11 +46,15 @@ public class Pelicula implements Serializable {
     private EstadoPelicula estado;
 
     // Relaciones -------------------------------------------------------
-
     @ManyToMany
     private List<Genero> generos = new ArrayList<>();
 
     @OneToMany(mappedBy = "pelicula")
     @ToString.Exclude
     private List<Funcion> funciones = new ArrayList<>();
+
+    // Metodos ---------------------------------------------------------
+    public void agregarFuncion(Funcion funcion) {
+        funciones.add(funcion);
+    }
 }

@@ -22,7 +22,7 @@ public interface ClienteRepo extends JpaRepository<Cliente, String> {
 
     Cliente findByEmailAndContrasena(String email, String contrasena);
 
-    @Query("select cup from Cliente cli, in (cli.cupones) cup where cli.email  = :email")
+    @Query("select cup from Cliente cli, in (cli.cuponesCliente) cup where cli.email  = :email")
     List<Cupon> obtenerCupones(String email);
 
     @Query("select comp from Compra comp where comp.cliente.cedula = :cedulaCliente")

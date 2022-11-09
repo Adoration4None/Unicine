@@ -16,6 +16,7 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final ClienteRepo clienteRepo;
     private final FuncionRepo funcionRepo;
     private final CuponRepo cuponRepo;
+    private final CuponClienteRepo cuponClienteRepo;
     private final CompraRepo compraRepo;
     private final EntradaRepo entradaRepo;
     private final CiudadRepo ciudadRepo;
@@ -25,11 +26,12 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final EmailServicio emailServicio;
 
     public ClienteServicioImpl(ClienteRepo clienteRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo,
-                               CompraRepo compraRepo, EmailServicio emailServicio, EntradaRepo entradaRepo,
-                               CiudadRepo ciudadRepo, SalaRepo salaRepo) {
+                               CuponClienteRepo cuponClienteRepo, CompraRepo compraRepo, EmailServicio emailServicio,
+                               EntradaRepo entradaRepo, CiudadRepo ciudadRepo, SalaRepo salaRepo) {
         this.clienteRepo = clienteRepo;
         this.funcionRepo = funcionRepo;
         this.cuponRepo = cuponRepo;
+        this.cuponClienteRepo = cuponClienteRepo;
         this.compraRepo = compraRepo;
         this.emailServicio = emailServicio;
         this.entradaRepo = entradaRepo;
@@ -71,11 +73,13 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public Cliente registrar(Cliente cliente) throws Exception {
-
         if(cliente == null) throw new Exception("No hay cliente para registrar");
 
         if ( emailExiste(cliente.getEmail()) )
             throw new Exception("El correo que intenta registrar ya existe");
+
+        // Setteo del estado inactivo para mayor seguridad
+        cliente.setEstado(EstadoPersona.INACTIVO);
 
         Cliente guardado = clienteRepo.save(cliente);
 
@@ -108,7 +112,6 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public Cliente activarCuenta(Cliente cliente) throws Exception {
-
         if(cliente == null) throw new Exception("No hay cliente al cual activar cuenta");
         if( !emailExiste(cliente.getEmail()) ) throw new Exception("El cliente no existe en la base de datos");
 
@@ -120,6 +123,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public Cliente actualizar(Cliente cliente) throws Exception {
+        if(cliente == null) throw new Exception("No hay cliente para actualizar");
+
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cliente.getCedula());
 
         if (clienteGuardado.isEmpty()) throw new Exception("Cliente no encontrado");
@@ -132,6 +137,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public void eliminar(String cedulaCliente) throws Exception {
+        if(cedulaCliente == null || cedulaCliente.equals("")) throw new Exception("Cedula del cliente vacia");
+
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cedulaCliente);
 
         if (clienteGuardado.isEmpty()) throw new Exception("El cliente no existe");
@@ -141,6 +148,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public Cliente obtener(String cedulaCliente) throws Exception {
+        if(cedulaCliente == null || cedulaCliente.equals("")) throw new Exception("Cedula del cliente vacia");
+
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cedulaCliente);
 
         if (clienteGuardado.isEmpty()) throw new Exception("Cliente no encontrado");
@@ -155,6 +164,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
     @Override
     public List<Compra> listarCompras(String cedulaCliente) throws Exception {
+        if(cedulaCliente == null || cedulaCliente.equals("")) throw new Exception("Cedula del cliente vacia");
+
         Optional<Cliente> clienteGuardado = clienteRepo.findById(cedulaCliente);
 
         if(clienteGuardado.isEmpty()) throw new Exception("Cliente no encontrado");
@@ -163,26 +174,25 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Compra redimirCupon(Integer idCupon, Compra compra) throws Exception {
+    public Compra redimirCupon(Integer idCuponCliente, Compra compra) throws Exception {
 
+        if(idCuponCliente == null || idCuponCliente.equals(0)) throw new Exception("ID de cupon invalido");
         if(compra == null) throw new Exception("No hay compra en la cual redimir el cupon");
-        if( compraNoExiste(compra.getId()) ) throw new Exception("La compra no existe en la base de datos");
 
-        if( !cuponRepo.validarCupon(idCupon) ) {
-            throw new Exception("El cupon ingresado no existe o ya no se encuentra disponible");
-        }
+        CuponCliente cuponRedimido = cuponClienteRepo.findById(idCuponCliente).orElse(null);
 
-        Cupon cuponRedimido = cuponRepo.findById(idCupon).orElse(null);
+        if( cuponRedimido == null ) throw new Exception("El cupon ingresado no se encuentra en la base de datos");
 
-        if (cuponRedimido != null) {
-            // Actualizar estado del cupon
-            cuponRedimido.setEstado(EstadoCupon.USADO);
-            cuponRedimido.getCompras().add(compra);
-            cuponRepo.save(cuponRedimido);
+        if( !cuponNoVencido(cuponRedimido.getCupon()) )
+            throw new Exception("El cupon ingresado no se encuentra disponible");
 
-            // Agregar el cupon a la compra
-            compra.setCupon(cuponRedimido);
-        }
+        // Actualizar estado del cupon
+        cuponRedimido.setEstado(EstadoCupon.USADO);
+        cuponRedimido.setCompra(compra);
+        cuponClienteRepo.save(cuponRedimido);
+
+        // Agregar el cupon a la compra
+        compra.setCuponCliente(cuponRedimido);
 
         return compra;
     }
@@ -203,28 +213,40 @@ public class ClienteServicioImpl implements ClienteServicio {
         if( clienteInactivo(cliente.getCedula()) )
             throw new Exception("El cliente debe activar su cuenta para poder comprar");
 
-        Compra compraNueva = Compra.builder().cliente(cliente).funcion(funcion).build();
-        compraRepo.save(compraNueva);
-
-        return compraNueva;
+        return Compra.builder().cliente(cliente).funcion(funcion).build();
     }
 
     @Override
     public Compra asignarAsientosCompra(Compra compra, List<Entrada> entradas) throws Exception {
 
         if(compra == null) throw new Exception("No hay compra a la cual asignar asientos");
+        if(entradas == null || entradas.isEmpty() ) throw new Exception("No se han seleccionado entradas para comprar");
 
-        if(entradas == null || entradas.size() < 1)
-            throw new Exception("No se han seleccionado entradas para comprar");
+        if( entradasNoDisponibles( compra.getFuncion(), entradas) )
+            throw new Exception("Alguno(s) de los asientos ya esta(n) asignado(s)");
 
-        if( compraNoExiste(compra.getId()) ) throw new Exception("La compra no existe en la base de datos");
+        if( !salaRepo.verificarAsientosDisponibles(entradas.size()) )
+            throw new Exception("El numero de entradas excede la cantidad de sillas en la sala");
 
         compra.setEntradas(entradas);
         asignarCompraEntradas(compra, entradas);
 
-        compraRepo.save(compra);
-
         return compra;
+    }
+
+    private boolean entradasNoDisponibles(Funcion funcion, List<Entrada> entradas) {
+        try {
+            List<Entrada> entradasCompradas = obtenerEntradasCompradas(funcion);
+
+            for(Entrada e : entradasCompradas) {
+                if( entradas.contains(e) ) return true;
+            }
+
+            return false;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void asignarCompraEntradas(Compra compra, List<Entrada> entradas) {
@@ -234,8 +256,6 @@ public class ClienteServicioImpl implements ClienteServicio {
         } );
     }
 
-    private boolean compraNoExiste(Integer id) { return compraRepo.findById(id).isEmpty(); }
-
     @Override
     public Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception {
 
@@ -244,10 +264,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         if(confiteria == null || confiteria.size() < 1)
             throw new Exception("No se ha seleccionado confiteria para comprar");
 
-        if( compraNoExiste(compra.getId()) ) throw new Exception("La compra no existe en la base de datos");
-
         compra.setComprasConfiteria(confiteria);
-        compraRepo.save(compra);
 
         return compra;
     }
@@ -256,21 +273,17 @@ public class ClienteServicioImpl implements ClienteServicio {
     public Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception {
         if(compra == null) throw new Exception("No hay compra a la cual asignar metodo de pago");
         if( metodoPago == null ) throw new Exception("No se ha seleccionado metodo de pago");
-        if( compraNoExiste(compra.getId()) ) throw new Exception("La compra no existe en la base de datos");
 
         compra.setMetodoPago(metodoPago);
-        compraRepo.save(compra);
 
         return compra;
     }
 
     @Override
-    public Compra finalizarCompra(Compra compra, LocalDateTime fechaCompra) throws Exception {
+    public Compra finalizarCompra(Compra compra) throws Exception {
         if(compra == null) throw new Exception("No hay compra para registrar");
-        if( fechaCompra == null ) throw new Exception("No se ha brindado una fecha de compra");
-        if( compraNoExiste(compra.getId()) ) throw new Exception("La compra no existe en la base de datos");
 
-        compra.setFechaCompra(fechaCompra);
+        compra.setFechaCompra( LocalDateTime.now() );
         compra.calcularValorTotal();
         compraRepo.save(compra);
 
@@ -325,15 +338,21 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Cupon agregarCupon(String nombreCupon, Cliente cliente) throws Exception {
+    public CuponCliente agregarCupon(String nombreCupon, Cliente cliente) throws Exception {
+        CuponCliente cuponCliente;
         Cupon cupon;
 
         if(nombreCupon == null || nombreCupon.equals("")) throw new Exception("Nombre de cupon vacio");
+        if(cliente == null) throw new Exception("No hay cliente al cual asignar el cupon");
+        if( !clienteRepo.existsById(cliente.getCedula()) )
+            throw new Exception("El cliente no existe en la base de datos");
 
-        if( nombreCuponValido(nombreCupon) ) {
-            cupon = cuponRepo.findByNombre(nombreCupon);
-            cupon.getClientes().add(cliente);
-            cliente.getCupones().add(cupon);
+        cupon = cuponRepo.findByNombre(nombreCupon);
+
+        if( cupon != null && cuponNoVencido(cupon) ) {
+            cuponCliente = new CuponCliente(cliente, cupon);
+            cupon.agregarCuponCliente(cuponCliente);
+            cliente.agregarCuponCliente(cuponCliente);
 
             cuponRepo.save(cupon);
             clienteRepo.save(cliente);
@@ -342,11 +361,11 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("Cupon no valido");
         }
 
-        return cupon;
+        return cuponClienteRepo.save(cuponCliente);
     }
 
-    private boolean nombreCuponValido(String nombreCupon) {
-        return cuponRepo.findByNombre(nombreCupon) != null;
+    private boolean cuponNoVencido(Cupon cupon) {
+        return !cupon.getFechaVencimiento().equals( LocalDate.now() );
     }
 
     @Override
@@ -360,7 +379,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         List<Funcion> funciones = new ArrayList<>();
 
         for (Sala s: salas) {
-            funciones.addAll(salaRepo.obtenerFuncionesSala(s.getId()));
+            funciones.addAll( salaRepo.obtenerFuncionesSala(s.getId()) );
         }
 
         return funciones;
@@ -376,4 +395,14 @@ public class ClienteServicioImpl implements ClienteServicio {
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
         return ciudadRepo.findById(idCiudad).orElse(null);
     }
+
+    @Override
+    public List<Entrada> obtenerEntradasCompradas(Funcion funcion) throws Exception {
+        if(funcion == null) throw new Exception("No hay funcion de la cual obtener entradas compradas");
+        if( !funcionRepo.existsById(funcion.getId()) )
+            throw new Exception("La funcion no existe en la base de datos");
+
+        return entradaRepo.obtenerEntradasCompradasFuncion(funcion.getId());
+    }
+
 }

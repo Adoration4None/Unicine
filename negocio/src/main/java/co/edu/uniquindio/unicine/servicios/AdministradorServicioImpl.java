@@ -1,10 +1,7 @@
 package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
-import co.edu.uniquindio.unicine.repo.AdministradorTeatroRepo;
-import co.edu.uniquindio.unicine.repo.ConfiteriaRepo;
-import co.edu.uniquindio.unicine.repo.CuponRepo;
-import co.edu.uniquindio.unicine.repo.PeliculaRepo;
+import co.edu.uniquindio.unicine.repo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,25 +14,23 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     private final PeliculaRepo peliculaRepo;
     private final ConfiteriaRepo confiteriaRepo;
     private final CuponRepo cuponRepo;
+    private final GeneroRepo generoRepo;
 
     String EMAIL_ADMINISTRADOR = "administradorunicine@gmail.com";
     String CONTRASENA_ADMINISTRADOR = "samuelyfelipe";
 
     public AdministradorServicioImpl(AdministradorTeatroRepo administradorTeatroRepo, PeliculaRepo peliculaRepo,
-                                     ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo) {
+                                     ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo, GeneroRepo generoRepo) {
         this.administradorTeatroRepo = administradorTeatroRepo;
         this.peliculaRepo = peliculaRepo;
         this.confiteriaRepo = confiteriaRepo;
         this.cuponRepo = cuponRepo;
+        this.generoRepo = generoRepo;
     }
 
     @Override
     public boolean iniciarSesion(String email, String contrasena) {
-
-        if(email.equals(EMAIL_ADMINISTRADOR) && contrasena.equals(CONTRASENA_ADMINISTRADOR)){
-            return true;
-        }
-        return false;
+        return email.equals(EMAIL_ADMINISTRADOR) && contrasena.equals(CONTRASENA_ADMINISTRADOR);
     }
 
     // Gestionar administradores de teatros ----------------------------------------------------------------------
@@ -44,7 +39,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         String administradorTeatroId = administradorTeatro.getCedula();
 
         if(administradorTeatroRepo.findById(administradorTeatroId).isPresent())
-            throw new Exception("El administrador de teatro con el id" + administradorTeatroId + " ya existe");
+            throw new Exception("El administrador de teatro con cedula " + administradorTeatroId + " ya existe");
+
+        // Setteo del estado inactivo para mayor seguridad
+        administradorTeatro.setEstado(EstadoPersona.INACTIVO);
 
         return administradorTeatroRepo.save(administradorTeatro);
     }
@@ -78,8 +76,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public List<AdministradorTeatro> listarAdministradores() {
-        List<AdministradorTeatro> administradoresTeatros = administradorTeatroRepo.findAll();
-        return administradoresTeatros;
+        return administradorTeatroRepo.findAll();
     }
 
     // Gestionar peliculas ---------------------------------------------------------------------------------------
@@ -113,14 +110,18 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public Pelicula obtenerPelicula(String nombrePelicula) throws Exception {
-        Optional<Pelicula> peliculaGuardada = peliculaRepo.findById(nombrePelicula);
-        return peliculaGuardada.orElse(null);
+        if(nombrePelicula == null || nombrePelicula.equals("")) throw new Exception("Nombre de pelicula vacio");
+
+        Pelicula peliculaGuardada = peliculaRepo.findById(nombrePelicula).orElse(null);
+
+        if(peliculaGuardada == null) throw new Exception("La pelicula no existe en la base de datos");
+
+        return peliculaGuardada;
     }
 
     @Override
     public List<Pelicula> listarPeliculas() {
-        List<Pelicula> peliculas = peliculaRepo.findAll();
-        return peliculas;
+        return peliculaRepo.findAll();
     }
 
     // Gestionar confiteria --------------------------------------------------------------------------------------
@@ -154,28 +155,34 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public Confiteria obtenerComestible(Integer idComestible) throws Exception {
-        Optional<Confiteria> comestibleGuardado = confiteriaRepo.findById(idComestible);
-        return comestibleGuardado.orElse(null);
+        if(idComestible == null || idComestible.equals(0)) throw new Exception("ID del comestible vacio");
+
+        Confiteria comestibleGuardado = confiteriaRepo.findById(idComestible).orElse(null);
+
+        if(comestibleGuardado == null) throw new Exception("El comestible no existe en la base de datos");
+
+        return comestibleGuardado;
     }
 
     @Override
     public List<Confiteria> listarConfiteria() {
-        List<Confiteria> confiteria = confiteriaRepo.findAll();
-        return confiteria;
+        return confiteriaRepo.findAll();
     }
+
 
     // Gestionar cupones -----------------------------------------------------------------------------------------
     @Override
     public Cupon crearCupon(Cupon cupon) throws Exception {
-
-        if(cuponRepo.findByNombre(cupon.getNombre()) != null)
-            throw new Exception("El cupon ya existe");
+        if(cupon == null) throw new Exception("No hay cupon para crear");
+        if(cuponRepo.findByNombre(cupon.getNombre()) != null) throw new Exception("El cupon ya existe");
 
         return cuponRepo.save(cupon);
     }
 
     @Override
     public Cupon actualizarCupon(Cupon cupon) throws Exception {
+        if(cupon == null) throw new Exception("No hay cupon para actualizar");
+
         Optional<Cupon> cuponGuardado = cuponRepo.findById(cupon.getId());
 
         if(cuponGuardado.isEmpty()) throw new Exception("El cupon no existe");
@@ -185,6 +192,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public void eliminarCupon(Integer idCupon) throws Exception {
+        if(idCupon == null || idCupon.equals(0)) throw new Exception("ID de cupon vacio");
+
         Optional<Cupon> cuponGuardado = cuponRepo.findById(idCupon);
         if(cuponGuardado.isEmpty()) throw new Exception("El cupon no existe");
 
@@ -193,13 +202,32 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public Cupon obtenerCupon(Integer idCupon) throws Exception {
-        Optional<Cupon> cuponGuardado = cuponRepo.findById(idCupon);
-        return cuponGuardado.orElse(null);
+        if(idCupon == null || idCupon.equals(0)) throw new Exception("ID de cupon vacio");
+
+        Cupon cuponGuardado = cuponRepo.findById(idCupon).orElse(null);
+
+        if(cuponGuardado == null) throw new Exception("El cupon no existe en la base de datos");
+
+        return cuponGuardado;
     }
 
     @Override
     public List<Cupon> listarCupones() {
-        List<Cupon> cupones = cuponRepo.findAll();
-        return cupones;
+        return cuponRepo.findAll();
+    }
+
+
+    // Opciones de genero de pelicula --------------------------------------------------------------------------
+    @Override
+    public Genero crearGenero(Genero genero) throws Exception {
+        if(genero == null) throw new Exception("No hay genero para crear");
+        if( generoRepo.findByNombre(genero.getNombre()) != null ) throw new Exception("El genero ya existe");
+
+        return generoRepo.save(genero);
+    }
+
+    @Override
+    public List<Genero> obtenerGeneros() {
+        return generoRepo.findAll();
     }
 }

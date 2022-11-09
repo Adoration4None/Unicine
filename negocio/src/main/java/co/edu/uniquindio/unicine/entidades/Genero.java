@@ -21,7 +21,7 @@ public class Genero {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(length = 20, nullable = false, unique = true)
     @NonNull
     private String nombre;
 

@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.servicios;
 
-import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
-import co.edu.uniquindio.unicine.entidades.Confiteria;
-import co.edu.uniquindio.unicine.entidades.Cupon;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,4 +55,10 @@ public interface AdministradorServicio {
     Cupon obtenerCupon(Integer idCupon) throws Exception;
 
     List<Cupon> listarCupones();
+
+
+    // Opciones de genero de pelicula -------------------------------------------------------------------------
+    Genero crearGenero(Genero genero) throws Exception;
+
+    List<Genero> obtenerGeneros();
 }

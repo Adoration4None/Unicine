@@ -151,7 +151,7 @@ public class ClienteServicioTest {
 
         try {
             Compra compra = clienteServicio.redimirCupon(2, compraInicial);
-            Assertions.assertEquals(2, compra.getCupon().getId());
+            Assertions.assertEquals(2, compra.getCuponCliente().getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -256,11 +256,11 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void finalizarCompra() {
         Compra compraInicial = compraRepo.findById(5).orElse(null);
-        LocalDateTime fechaActual = LocalDateTime.now();
 
         try {
-            Compra compra = clienteServicio.finalizarCompra(compraInicial, fechaActual);
-            Assertions.assertEquals(fechaActual, compra.getFechaCompra());
+            Compra compra = clienteServicio.finalizarCompra(compraInicial);
+            assert compraInicial != null;
+            Assertions.assertEquals( compraInicial.getCliente(), compra.getCliente() );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -283,17 +283,16 @@ public class ClienteServicioTest {
 
         try {
             Cliente cliente = clienteServicio.obtener("3344");
-            Cupon cupon = clienteServicio.agregarCupon("Halo", cliente);
+            CuponCliente cuponCliente = clienteServicio.agregarCupon("Halo", cliente);
 
-            Assertions.assertTrue(cliente.getCupones().contains(cupon));
-            cliente.getCupones().forEach(System.out::println);
-            cupon.getClientes().forEach(System.out::println);
+            Assertions.assertTrue(cliente.getCuponesCliente().contains(cuponCliente));
+            cliente.getCuponesCliente().forEach(System.out::println);
+            System.out.println( cuponCliente.getCliente().getNombreCompleto() );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    //CLEAN
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerFuncionesCiudad() throws Exception {

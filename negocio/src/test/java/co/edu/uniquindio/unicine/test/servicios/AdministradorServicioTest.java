@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -217,7 +218,7 @@ public class AdministradorServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearCupon() {
-        Cupon cuponCrear = new Cupon("Cupon magico", 5000F, LocalDateTime.now(), "", CriterioCupon.HALLOWEEN);
+        Cupon cuponCrear = new Cupon("Cupon magico", 5000F, LocalDate.now(), "", CriterioCupon.HALLOWEEN);
         try{
             Cupon nuevo = administradorServicio.crearCupon(cuponCrear);
             Assertions.assertNotNull(nuevo);

@@ -18,7 +18,7 @@ public class CuponTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void validarCupon(){
-        boolean flag = cuponRepo.validarCupon(2);
+        boolean flag = cuponRepo.validarCuponCliente(2);
         Assertions.assertTrue(flag);
     }
 }
