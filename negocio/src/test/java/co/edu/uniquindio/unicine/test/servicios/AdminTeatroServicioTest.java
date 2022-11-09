@@ -54,7 +54,7 @@ public class AdminTeatroServicioTest {
         Ciudad ciudad = ciudadRepo.findById(2).orElse(null);
 
         if(ciudad != null) {
-            Teatro teatroCrear = new Teatro(2, "Hola", "Hi", ciudad, new AdministradorTeatro(), null);
+            Teatro teatroCrear = new Teatro("Hola", "Hi", ciudad, new AdministradorTeatro());
 
             try{
                 Teatro nuevo = adminTeatroServicio.crearTeatro(teatroCrear);

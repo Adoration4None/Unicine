@@ -22,11 +22,11 @@ INSERT INTO administrador_teatro VALUES
                         ("7621", "DTR8UY6IS32", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez");
 
 INSERT INTO teatro VALUES
-                       (1, "Calle 3 #5",                     "Multiplex Unicentro",   "2454", 1),
-                       (2, "Carrera 22 #33-12",              "Cineplaza",             "3346", 2),
-                       (3, "Carrera 23 - 12",                "Multicines AstorPlaza", "7621", 3),
-                       (4, "Al lado del Ara de Las Acacias", "Portal del Circaso",    "9503", 5),
-                       (5, "Sidney, Bogotá Cr 15 - 19",      "Arboleda Theaters",     "4508", 4);
+                       (1, "Calle 3 #5",                     "ruta foto 1", "Multiplex Unicentro",   "2454", 1),
+                       (2, "Carrera 22 #33-12",              "ruta foto 2", "Cineplaza",             "3346", 2),
+                       (3, "Carrera 23 - 12",                "ruta foto 3", "Multicines AstorPlaza", "7621", 3),
+                       (4, "Al lado del Ara de Las Acacias", "ruta foto 4", "Portal del Circaso",    "9503", 5),
+                       (5, "Sidney, Bogotá Cr 15 - 19",      "ruta foto 5", "Arboleda Theaters",     "4508", 4);
 
 INSERT INTO sala VALUES
                     -- id, # sillas, tipo, teatro
