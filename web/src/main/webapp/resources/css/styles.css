@@ -2,6 +2,14 @@
     max-width: 90px;
 }
 
+.logo-principal {
+    max-width: 50rem;
+}
+
+.img-login{
+    max-width: 120px;
+}
+
 .oculto{
     display: none;
 }
@@ -20,3 +28,29 @@
 .dialogo{
     background-color: rgba(16, 14, 25, .9);
 }
+
+.body {
+    background-color: #100E19;
+}
+
+.texto-resaltado {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    font-size: calc(1.325rem + .9vw);
+}
+
+.texto {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: calc(1.12rem + .9vw);
+}
+
+.elegir-ciudad {
+    background-color: #0A0814;
+    border-radius: 20px;
+}
+
+.seleccion_ciudad {
+    background: #1B1632;
+}
+

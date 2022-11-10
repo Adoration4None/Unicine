@@ -45,16 +45,16 @@ public class RegistroClienteBean implements Serializable {
                 clienteServicio.registrar(cliente);
 
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro Exitoso", "Tu cuenta se ha registrado exitosamente!");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
+                FacesContext.getCurrentInstance().addMessage("mensaje_registro", fm);
             }
             catch (Exception e) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
+                FacesContext.getCurrentInstance().addMessage("mensaje_registro", fm);
             }
         }
         else {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
+            FacesContext.getCurrentInstance().addMessage("mensaje_registro", fm);
         }
 
     }

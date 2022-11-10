@@ -17,9 +17,9 @@
     <title jsf:id="titulo-inicio">Unicine</title>
 </h:head>
 
-<h:body>
+<h:body styleClass="body" >
     <div jsf:id="navegacion-inicio" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'navegacion'}">
-        <header class="border-bottom">
+        <header>
             <div class="container-fluid">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
@@ -31,8 +31,8 @@
                     </ul>
 
                     <ul class="nav col-12 col-lg-auto justify-content-center">
-                        <li> <p:commandButton onclick="PF('registro').show()" value="Registrarse"/> </li>
-                        <li><a href="#" class="nav-link px-2 link-dark">Iniciar sesion</a></li>
+                        <li class="mx-1 my-1"> <p:commandButton onclick="PF('registro').show()" value="Registrarse"/> </li>
+                        <li class="mx-1 my-1"> <p:commandButton onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
                     </ul>
 
                     <p:dialog widgetVar="registro" header="Registrarse" modal="true" showEffect="fade" resizable="false" class="dialogo">
@@ -75,12 +75,48 @@
                             </h:panelGrid>
 
                             <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" update="@form" />
-                            <p:growl for="mensaje_bean" showDetail="true"/>
+                            <p:growl for="mensaje_registro" showDetail="true"/>
                         </h:form>
+                    </p:dialog>
+
+                    <p:dialog widgetVar="login" header="Inicio de Sesion" modal="true" showEffect="fade" resizable="false">
+                        <span class="me-1 my-auto border-end">
+                            <h:graphicImage library="img" name="logo2.png" styleClass="img-login" />
+                        </span>
+
+                        <span>
+                            <h3>Iniciar Sesion en Unicine</h3>
+
+                            <h:form>
+                                <h:panelGrid columns="1" cellpadding="3">
+                                   <p:commandButton icon="logo-google.svg" value="Continuar con Google" action="#{loginClienteBean.iniciarSesionGoogle}" update="@form" />
+
+                                    <p:separator />
+
+                                    <span class="ui-float-label">
+                                       <p:inputText id="correo_login" value="#{loginClienteBean.emailCliente}"/>
+                                       <p:outputLabel for="correo_login" value="Correo electronico:"/>
+                                   </span>
+
+                                    <span class="ui-float-label">
+                                       <p:password id="contrasena_login" value="#{loginClienteBean.contrasenaCliente}"/>
+                                       <p:outputLabel for="contrasena_login" value="Contraseña:"/>
+                                   </span>
+
+                                </h:panelGrid>
+
+                                <p:commandButton value="Iniciar Sesion" action="#{loginClienteBean.iniciarSesion}" update="@form" />
+
+                                <p:separator />
+
+                                <p>¿Eres nuevo? <span onclick="PF('registro').show()">Registrate</span> </p>
+                                <p:growl for="mensaje_login" showDetail="true"/>
+                            </h:form>
+                        </span>
 
                     </p:dialog>
 
-                    <div class="dropdown text-end mx-3">
+                    <div class="dropdown text-end mx-3 my-1">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
                         </a>
@@ -144,22 +180,28 @@
     </div>
 
 
-    <div jsf:id="seccion-ciudad" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'container'}" >
-        <h1>Bienvenido a Unicine</h1>
+    <div jsf:id="seccion-ciudad" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'col-auto align-items-center align-content-center m-3 text-center'}" >
 
-        <h2>¿Donde estas?</h2>
-        <div>
+        <h:graphicImage library="img" name="logo.png" styleClass="logo-principal my-0" />
+
+        <h1 class="texto-resaltado">Bienvenido a Unicine</h1>
+
+        <h2 class="texto my-3">¿Donde estas?</h2>
+        <div class="elegir-ciudad p-3 m-auto">
             <h:form>
-                <div class="input-search ui-inputgroup">
-                    <p:outputLabel for="seleccion_ciudad" value="Selecciona tu ciudad" />
-                    <p:selectOneMenu id="seleccion_ciudad" value="#{principalBean.nombreCiudad}" required="true" converter="#{ciudadConverter}">
+                <div>
+                    <h3 class="texto">Selecciona tu ciudad</h3>
+
+                    <p:selectOneMenu id="seleccion_ciudad" style="background: #1B1632" value="#{principalBean.nombreCiudad}" required="true" converter="#{ciudadConverter}">
                         <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
                         <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
                     </p:selectOneMenu>
+
                     <p:commandButton update="@form,seccion-funciones,seccion-ciudad,navegacion-inicio,navegacion"
                                      icon="pi pi-search" action="#{principalBean.seleccionarCiudad}">
                         <f:ajax render="seccion-funciones" />
                     </p:commandButton>
+
                     <p:message for="seleccion_ciudad" showDetail="true"/>
                 </div>
             </h:form>
