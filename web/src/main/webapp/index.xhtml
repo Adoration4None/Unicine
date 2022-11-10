@@ -10,56 +10,141 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css" />
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputScript name="bootstrap.bundle.min.js" library="js" />
-    <title>Unicine | #{principalBean.nombreCiudad}</title>
+
+    <title jsf:id="titulo-inicio">Unicine</title>
 </h:head>
 
-<style>
-    .oculto{
-        display: none;
-    }
-</style>
-
 <h:body>
-    <header class="p-3 mb-3 border-bottom">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li>
-                        <a href="/" class="nav-link px-2 link-dark">
-                            Icono Unicine
-                        </a>
-                    </li>
-                    <li class="nav-link px-2 link-dark">#{principalBean.nombreCiudad}</li>
-                </ul>
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action="">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
-                </form>
-
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="cliente/registro.xhtml" class="nav-link px-2 link-dark">Registrarse</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Iniciar sesion</a></li>
-                </ul>
-
-                <div class="dropdown text-end">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
-                    </a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+    <div jsf:id="navegacion-inicio" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'navegacion'}">
+        <header class="border-bottom">
+            <div class="container-fluid">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
+                        <li>
+                            <a href="/" class="nav-link px-2 link-dark">
+                                <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                            </a>
+                        </li>
                     </ul>
+
+                    <ul class="nav col-12 col-lg-auto justify-content-center">
+                        <li> <p:commandButton onclick="PF('registro').show()" value="Registrarse"/> </li>
+                        <li><a href="#" class="nav-link px-2 link-dark">Iniciar sesion</a></li>
+                    </ul>
+
+                    <p:dialog widgetVar="registro" header="Registrarse" modal="true" showEffect="fade" resizable="false" class="dialogo">
+                        <h:form>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel for="nombre_cliente" value="Nombres:" />
+                                <p:inputText id="nombre_cliente" value="#{registroClienteBean.nombresCliente}" required="true" />
+                                <p:message for="nombre_cliente" />
+
+                                <p:outputLabel for="apellido_cliente" value="Apellidos:" />
+                                <p:inputText id="apellido_cliente" value="#{registroClienteBean.apellidosCliente}" required="true" />
+                                <p:message for="apellido_cliente" />
+
+                                <p:outputLabel for="cedula_cliente" value="Numero de documento:" />
+                                <p:inputText id="cedula_cliente" value="#{registroClienteBean.cliente.cedula}" required="true" />
+                                <p:message for="cedula_cliente" />
+
+                                <p:outputLabel for="email_cliente" value="Correo electronico:" />
+                                <p:inputText id="email_cliente" value="#{registroClienteBean.cliente.email}" required="true"/>
+                                <p:message for="email_cliente" />
+
+                                <p:outputLabel for="contrasena_cliente" value="Contraseña:" />
+                                <p:password id="contrasena_cliente" value="#{registroClienteBean.cliente.contrasena}" required="true" toggleMask="true"/>
+                                <p:message for="contrasena_cliente" />
+
+                                <p:outputLabel for="confirmacion_contrasena_cliente" value="Confirmar contraseña:" />
+                                <p:password id="confirmacion_contrasena_cliente" value="#{registroClienteBean.confirmacionContrasena}" required="true" toggleMask="true"/>
+                                <p:message for="confirmacion_contrasena_cliente" />
+
+                                <p:outputLabel for="celular_cliente" value="Telefono celular:" />
+                                <p:inputText id="celular_cliente" value="#{registroClienteBean.cliente.telefonoCelular}" />
+                                <p:message for="celular_cliente" />
+
+                                <p:outputLabel for="fijo_cliente" value="Telefono fijo:" />
+                                <p:inputText id="fijo_cliente" value="#{registroClienteBean.cliente.telefonoFijo}" />
+                                <p:message for="fijo_cliente" />
+
+                                <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
+                                <p:datePicker id="fecha_nacimiento_cliente" value="#{registroClienteBean.cliente.fechaNacimiento}" />
+                            </h:panelGrid>
+
+                            <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" update="@form" />
+                            <p:growl for="mensaje_bean" showDetail="true"/>
+                        </h:form>
+
+                    </p:dialog>
+
+                    <div class="dropdown text-end mx-3">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+    </div>
+
+    <div jsf:id="navegacion" class="#{principalBean.ciudadSeleccionada == false ? 'oculto' : 'navegacion'}">
+        <header class="border-bottom">
+            <div class="container-fluid">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <ul class="nav col-12 col-lg-auto me-lg-auto align-items-center justify-content-center">
+                        <li>
+                            <a href="/" class="nav-link px-2 link-dark">
+                                <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                            </a>
+                        </li>
+                        <li class="nav-link px-2 link-dark">
+                            #{principalBean.nombreCiudad}
+                        </li>
+                    </ul>
+
+                    <h:form>
+                        <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 mx-5" role="search">
+<!--                           aqui no me funciono ponerle el tamaño usando la clase -->
+                            <p:inputText style="width: 300px;" placeholder="¿Que pelicula estas buscando?" required="true" value="#{principalBean.busquedaPelicula}"/>
+                            <p:commandButton update="@form,lista-funciones" icon="pi pi-search" action="#{principalBean.buscarPelicula}"/>
+                        </div>
+                    </h:form>
+
+                    <ul class="nav col-12 col-lg-auto justify-content-center">
+                        <li><a href="cliente/registro.xhtml" class="nav-link px-2 link-dark">Registrarse</a></li>
+                        <li><a href="#" class="nav-link px-2 link-dark">Iniciar sesion</a></li>
+                    </ul>
+
+                    <div class="dropdown text-end mx-3">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
+    </div>
 
-    <div jsf:id="seccion-ciudad" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : ''}" >
+
+    <div jsf:id="seccion-ciudad" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'container'}" >
         <h1>Bienvenido a Unicine</h1>
 
         <h2>¿Donde estas?</h2>
@@ -67,8 +152,12 @@
             <h:form>
                 <div class="input-search ui-inputgroup">
                     <p:outputLabel for="seleccion_ciudad" value="Selecciona tu ciudad" />
-                    <p:inputText id="seleccion_ciudad" required="true" value="#{principalBean.busqueda}"/>
-                    <p:commandButton update="@form,seccion-funciones,seccion-ciudad" icon="pi pi-search" action="#{principalBean.seleccionarCiudad}">
+                    <p:selectOneMenu id="seleccion_ciudad" value="#{principalBean.nombreCiudad}" required="true" converter="#{ciudadConverter}">
+                        <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                        <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton update="@form,seccion-funciones,seccion-ciudad,navegacion-inicio,navegacion"
+                                     icon="pi pi-search" action="#{principalBean.seleccionarCiudad}">
                         <f:ajax render="seccion-funciones" />
                     </p:commandButton>
                     <p:message for="seleccion_ciudad" showDetail="true"/>
@@ -79,13 +168,25 @@
     </div>
 
     <div jsf:id="seccion-funciones" class="#{principalBean.ciudadSeleccionada  == false ? 'oculto' : ''}" >
-        <div>
-            <h:form>
-                <div class="input-search ui-inputgroup">
-                    <p:inputText placeholder="¿Que pelicula estas buscando?" required="true" value="#{principalBean.busquedaPelicula}"/>
-                    <p:commandButton update="@form,lista-funciones" icon="pi pi-search" action="#{principalBean.buscarPelicula}"/>
+
+        <div class="container">
+
+            <div>
+                <h1>En Estreno</h1>
+                <div>
+
                 </div>
-            </h:form>
+            </div>
+
+            <div>
+                <h1>Preventa</h1>
+                <div>
+
+                </div>
+            </div>
+
+
+
         </div>
 
         <h2>Funciones</h2>

@@ -218,6 +218,17 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
+    public Ciudad obtenerCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de ciudad vacio");
+
+        Ciudad ciudadGuardada = ciudadRepo.findById(idCiudad).orElse(null);
+
+        if(ciudadGuardada == null) throw new Exception("La funcion no existe en la base de datos");
+
+        return ciudadGuardada;
+    }
+
+    @Override
     public List<Ciudad> listarCiudades() {
         return ciudadRepo.findAll();
     }

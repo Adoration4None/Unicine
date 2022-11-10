@@ -71,12 +71,12 @@ INSERT INTO horario VALUES
                         (8, "2022-10-07", "20:00");
 
 INSERT INTO funcion VALUES
-                    --  id, estado sala, precio,    tipo,      horario,     pelicula,           sala
-                        (1, "DISPONIBLE", 15000, "FUNCION_3D",    2,     "One Piece Film: Red",  2),
-                        (2, "DISPONIBLE", 17000, "FUNCION_2D",    8,     "Taxi Driver",          4),
-                        (3, "COMPLETA",   20000, "FUNCION_XD",    6,     "Fast & Furious 10",    3),
-                        (4, "COMPLETA",   12500, "FUNCION_3D",    7,     "The Truman Show",      5),
-                        (5, "DISPONIBLE",  6000, "FUNCION_XD",    1,     "The Batman",           1);
+                    --  id, precio,  tipo,      horario,     pelicula,           sala
+                        (1, 15000, "FUNCION_3D",    2,     "One Piece Film: Red",  2),
+                        (2, 17000, "FUNCION_2D",    8,     "Taxi Driver",          4),
+                        (3, 20000, "FUNCION_XD",    6,     "Fast & Furious 10",    3),
+                        (4, 12500, "FUNCION_3D",    7,     "The Truman Show",      5),
+                        (5, 6000,  "FUNCION_XD",    1,     "The Batman",           1);
 
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA", "Cupon de bienvenida",                       "2022-10-05", "Hola Mundo",      5000),

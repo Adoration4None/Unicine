@@ -47,6 +47,8 @@ public interface AdminTeatroServicio {
     // Opciones de ciudad -------------------------------------------------------------------------------------
     Ciudad crearCiudad(Ciudad ciudad) throws Exception;
 
+    Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
+
     List<Ciudad> listarCiudades();
 
 

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
+import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
@@ -22,15 +23,20 @@ import java.util.List;
 @ViewScoped
 public class PrincipalBean implements Serializable {
 
-
     @Getter @Setter
     private String nombreCiudad;
 
     @Getter @Setter
-    private String busqueda, busquedaPelicula;
+    private String busquedaPelicula;
 
     @Getter @Setter
     private List<Funcion> funcionesCiudad;
+
+    @Getter @Setter
+    private List<Ciudad> ciudades;
+
+    @Getter @Setter
+    private Ciudad ciudadActual;
 
     @Autowired
     private ClienteServicio clienteServicio;
@@ -38,34 +44,32 @@ public class PrincipalBean implements Serializable {
     @Getter @Setter
     private boolean ciudadSeleccionada;
 
-    public void seleccionarCiudad(){
+    @PostConstruct
+    public void init() {
+        ciudades = clienteServicio.obtenerCiudades();
+    }
+
+    public void seleccionarCiudad(Ciudad ciudad){
         try {
-            nombreCiudad = clienteServicio.obtenerCiudad(Integer.valueOf(busqueda)).getNombre();
-            funcionesCiudad = clienteServicio.filtrarFuncionesCiudad(Integer.valueOf(busqueda));
-            ciudadSeleccionada = true;
+            if(ciudad != null) {
+                ciudadActual = ciudad;
+                nombreCiudad = clienteServicio.obtenerCiudad( ciudadActual.getId() ).getNombre();
+                funcionesCiudad = clienteServicio.filtrarFuncionesCiudad( ciudadActual.getId() );
+                ciudadSeleccionada = true;
+            }
+            else System.out.println("Ciudad nula");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public void buscarPelicula() {
-        if(!busqueda.isEmpty()) {
+        if(ciudadActual != null) {
             try {
-                funcionesCiudad = clienteServicio.buscarFunciones(busquedaPelicula, Integer.valueOf(busqueda));
-                //reload();
+                funcionesCiudad = clienteServicio.buscarFunciones(busquedaPelicula, ciudadActual.getId() );
             } catch (Exception e) {
                 mostrarError(e);
             }
-        }
-    }
-
-    public void reload() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
-        } catch (IOException e) {
-            mostrarError(e);
         }
     }
 

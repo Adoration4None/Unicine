@@ -17,47 +17,7 @@
 
     <p:panel header="Registro de Cliente">
 
-        <h:form>
-            <h:panelGrid columns="3" cellpadding="5">
-                <p:outputLabel for="nombre_cliente" value="Nombres:" />
-                <p:inputText id="nombre_cliente" value="#{registroClienteBean.nombresCliente}" required="true" />
-                <p:message for="nombre_cliente" />
 
-                <p:outputLabel for="apellido_cliente" value="Apellidos:" />
-                <p:inputText id="apellido_cliente" value="#{registroClienteBean.apellidosCliente}" required="true" />
-                <p:message for="apellido_cliente" />
-
-                <p:outputLabel for="cedula_cliente" value="Numero de documento:" />
-                <p:inputText id="cedula_cliente" value="#{registroClienteBean.cliente.cedula}" required="true" />
-                <p:message for="cedula_cliente" />
-
-                <p:outputLabel for="email_cliente" value="Correo electronico:" />
-                <p:inputText id="email_cliente" value="#{registroClienteBean.cliente.email}" required="true"/>
-                <p:message for="email_cliente" />
-
-                <p:outputLabel for="contrasena_cliente" value="Contraseña:" />
-                <p:password id="contrasena_cliente" value="#{registroClienteBean.cliente.contrasena}" required="true" toggleMask="true"/>
-                <p:message for="contrasena_cliente" />
-
-                <p:outputLabel for="confirmacion_contrasena_cliente" value="Confirmar contraseña:" />
-                <p:password id="confirmacion_contrasena_cliente" value="#{registroClienteBean.confirmacionContrasena}" required="true" toggleMask="true"/>
-                <p:message for="confirmacion_contrasena_cliente" />
-
-                <p:outputLabel for="celular_cliente" value="Telefono celular:" />
-                <p:inputText id="celular_cliente" value="#{registroClienteBean.cliente.telefonoCelular}" />
-                <p:message for="celular_cliente" />
-
-                <p:outputLabel for="fijo_cliente" value="Telefono fijo:" />
-                <p:inputText id="fijo_cliente" value="#{registroClienteBean.cliente.telefonoFijo}" />
-                <p:message for="fijo_cliente" />
-
-                <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
-                <p:datePicker id="fecha_nacimiento_cliente" value="#{registroClienteBean.cliente.fechaNacimiento}" />
-            </h:panelGrid>
-
-            <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" update="@form" />
-            <p:growl for="mensaje_bean" showDetail="true"/>
-        </h:form>
     </p:panel>
 
 </h:body>
