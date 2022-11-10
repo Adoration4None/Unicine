@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <title>Unicine | Inicio</title>
+</h:head>
+
+<h:body>
+    <header class="p-3 mb-3 border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    Icono Unicine
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-end mb-md-0">
+                    <li><a href="cliente/registro.xhtml" class="nav-link px-2 link-dark">Registrarse</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">Iniciar sesion</a></li>
+                </ul>
+
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <h1>Bienvenido a Unicine</h1>
+
+    <h2>¿Donde estas?</h2>
+    <div>
+        <h:form>
+            <div class="input-search ui-inputgroup">
+                <p:outputLabel for="seleccion_ciudad" value="Selecciona tu ciudad" />
+                <p:inputText id="seleccion_ciudad" required="true" value="#{buscarCiudadBean.busqueda}"/>
+                <p:commandButton update="@form" icon="pi pi-search" action="#{buscarCiudadBean.buscar}"/>
+                <p:message for="seleccion_ciudad" showDetail="true"/>
+            </div>
+        </h:form>
+    </div>
+
+</h:body>
+</html>

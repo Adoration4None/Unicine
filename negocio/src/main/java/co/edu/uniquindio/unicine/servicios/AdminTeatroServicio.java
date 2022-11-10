@@ -1,7 +1,6 @@
 package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -48,11 +47,11 @@ public interface AdminTeatroServicio {
     // Opciones de ciudad -------------------------------------------------------------------------------------
     Ciudad crearCiudad(Ciudad ciudad) throws Exception;
 
-    List<Ciudad> obtenerCiudades();
+    List<Ciudad> listarCiudades();
 
 
     // Opciones de horario ------------------------------------------------------------------------------------
     Horario crearHorario(Horario horario) throws Exception;
 
-    List<Horario> obtenerHorariosDisponibles();
+    List<Horario> listarHorarios();
 }

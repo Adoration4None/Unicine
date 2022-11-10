@@ -17,4 +17,7 @@ public interface FuncionRepo extends JpaRepository<Funcion, Integer> {
     List<Funcion> buscarFunciones(String busqueda, Integer idCiudad);
 
     Funcion findByPeliculaAndSalaAndHorario(Pelicula pelicula, Sala sala, Horario horario);
+
+    @Query("select f from Funcion f where f.sala.id = :idSala and f.horario.id = :idHorario")
+    List<Funcion> obtenerFuncionesSalaHorario(Integer idSala, Integer idHorario);
 }

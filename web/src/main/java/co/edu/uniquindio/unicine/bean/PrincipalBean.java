@@ -22,14 +22,12 @@ import java.util.List;
 @ViewScoped
 public class PrincipalBean implements Serializable {
 
-    @Value("#{param['city-id']}")
-    private String ciudadParam;
 
     @Getter @Setter
     private String nombreCiudad;
 
     @Getter @Setter
-    private String busqueda;
+    private String busqueda, busquedaPelicula;
 
     @Getter @Setter
     private List<Funcion> funcionesCiudad;
@@ -37,23 +35,24 @@ public class PrincipalBean implements Serializable {
     @Autowired
     private ClienteServicio clienteServicio;
 
-    @PostConstruct
-    public void init() {
-        if(ciudadParam != null && !ciudadParam.equals("")) {
-            try {
-                funcionesCiudad = clienteServicio.filtrarFuncionesCiudad(Integer.valueOf(ciudadParam));
-                nombreCiudad = clienteServicio.obtenerCiudad(Integer.valueOf(ciudadParam)).getNombre();
-            } catch (Exception e) {
-                mostrarError(e);
-            }
+    @Getter @Setter
+    private boolean ciudadSeleccionada;
+
+    public void seleccionarCiudad(){
+        try {
+            nombreCiudad = clienteServicio.obtenerCiudad(Integer.valueOf(busqueda)).getNombre();
+            funcionesCiudad = clienteServicio.filtrarFuncionesCiudad(Integer.valueOf(busqueda));
+            ciudadSeleccionada = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void buscarPelicula() {
         if(!busqueda.isEmpty()) {
             try {
-                funcionesCiudad = clienteServicio.buscarFunciones(busqueda, Integer.valueOf(ciudadParam));
-                reload();
+                funcionesCiudad = clienteServicio.buscarFunciones(busquedaPelicula, Integer.valueOf(busqueda));
+                //reload();
             } catch (Exception e) {
                 mostrarError(e);
             }

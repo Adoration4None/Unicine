@@ -13,6 +13,5 @@ import java.util.List;
 public interface HorarioRepo extends JpaRepository<Horario, Integer> {
     Horario findByFechaAndHora(LocalDate fecha, LocalTime hora);
 
-    @Query("select h from  Horario h where h.funciones.size = 0")
-    List<Horario> obtenerHorariosDisponibles();
+
 }

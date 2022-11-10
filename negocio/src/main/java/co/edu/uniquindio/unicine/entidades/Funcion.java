@@ -27,10 +27,6 @@ public class Funcion implements Serializable {
     @Column(nullable = false)
     private Float precio;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private EstadoSala estadoSala;
-
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
@@ -55,7 +51,6 @@ public class Funcion implements Serializable {
         this.horario = horario;
 
         this.precio += completarPrecioSegunTipo();
-        this.estadoSala = EstadoSala.DISPONIBLE;
     }
 
     private Float completarPrecioSegunTipo() {
