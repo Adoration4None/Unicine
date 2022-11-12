@@ -41,12 +41,11 @@ public interface ClienteServicio {
 
     CuponCliente agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
 
-    List<Funcion> filtrarFuncionesCiudad(Integer idCiudad) throws Exception;
-
     List<Ciudad> obtenerCiudades();
 
     Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
 
     List<Entrada> obtenerEntradasCompradas(Funcion funcion) throws Exception;
 
+    List<Funcion> filtrarFuncionesEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception;
 }

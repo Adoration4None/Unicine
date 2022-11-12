@@ -45,6 +45,12 @@
     font-size: calc(1.12rem + .9vw);
 }
 
+.enlace {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    cursor: pointer;
+}
+
 .elegir-ciudad {
     background-color: #0A0814;
     border-radius: 20px;
@@ -53,4 +59,18 @@
 .seleccion_ciudad {
     background: #1B1632;
 }
+
+.titulo {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    font-size: calc(1.325rem + .9vw);
+    text-transform: uppercase;
+}
+
+.funciones {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: calc(1rem);
+}
+
 

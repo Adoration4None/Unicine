@@ -1,7 +1,11 @@
 package co.edu.uniquindio.unicine.bean;
 
 import co.edu.uniquindio.unicine.entidades.Ciudad;
+import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
 import co.edu.uniquindio.unicine.entidades.Funcion;
+import co.edu.uniquindio.unicine.entidades.Teatro;
+import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
+import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +26,11 @@ import java.util.List;
 @Component
 @ViewScoped
 public class PrincipalBean implements Serializable {
+    @Autowired
+    private ClienteServicio clienteServicio;
+
+    @Autowired
+    private AdminTeatroServicio adminTeatroServicio;
 
     @Getter @Setter
     private String nombreCiudad;
@@ -30,7 +39,7 @@ public class PrincipalBean implements Serializable {
     private String busquedaPelicula;
 
     @Getter @Setter
-    private List<Funcion> funcionesCiudad;
+    private List<Funcion> funcionesEstrenoCiudad, funcionesPreventaCiudad, funcionesBusqueda;
 
     @Getter @Setter
     private List<Ciudad> ciudades;
@@ -38,8 +47,11 @@ public class PrincipalBean implements Serializable {
     @Getter @Setter
     private Ciudad ciudadActual;
 
-    @Autowired
-    private ClienteServicio clienteServicio;
+    @Getter @Setter
+    private Teatro teatro;
+
+    @Getter @Setter
+    private List<Teatro> teatros;
 
     @Getter @Setter
     private boolean ciudadSeleccionada;
@@ -47,17 +59,16 @@ public class PrincipalBean implements Serializable {
     @PostConstruct
     public void init() {
         ciudades = clienteServicio.obtenerCiudades();
+        adminTeatroServicio.listarTeatros();
     }
 
-    public void seleccionarCiudad(Ciudad ciudad){
+    public void seleccionarCiudad(){
         try {
-            if(ciudad != null) {
-                ciudadActual = ciudad;
-                nombreCiudad = clienteServicio.obtenerCiudad( ciudadActual.getId() ).getNombre();
-                funcionesCiudad = clienteServicio.filtrarFuncionesCiudad( ciudadActual.getId() );
-                ciudadSeleccionada = true;
-            }
-            else System.out.println("Ciudad nula");
+            nombreCiudad = clienteServicio.obtenerCiudad( ciudadActual.getId() ).getNombre();
+            funcionesEstrenoCiudad = clienteServicio.filtrarFuncionesEstadoCiudad( ciudadActual.getId(), EstadoPelicula.ESTRENO );
+            funcionesPreventaCiudad = clienteServicio.filtrarFuncionesEstadoCiudad( ciudadActual.getId(), EstadoPelicula.PREVENTA );
+            ciudadSeleccionada = true;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +77,7 @@ public class PrincipalBean implements Serializable {
     public void buscarPelicula() {
         if(ciudadActual != null) {
             try {
-                funcionesCiudad = clienteServicio.buscarFunciones(busquedaPelicula, ciudadActual.getId() );
+                funcionesBusqueda = clienteServicio.buscarFunciones(busquedaPelicula, ciudadActual.getId() );
             } catch (Exception e) {
                 mostrarError(e);
             }
