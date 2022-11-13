@@ -48,17 +48,20 @@ INSERT INTO sala VALUES
 
 INSERT INTO pelicula VALUES
                          ("One Piece Film: Red", "ESTRENO",           "ruta imagen", "Actores de voz",   "Piratas",           "ruta trailer"),
-                         ("Fast & Furious 10",   "PROXIMA",           "ruta imagen", "Actores",          "Carros y bala",     "ruta trailer"),
-                         ("Taxi Driver",         "NO_DISPONIBLE",     "ruta imagen", "Actores",          "Taxi, accion",      "ruta trailer"),
+                         ("Fast & Furious 10",   "PREVENTA",          "ruta imagen", "Actores",          "Carros y bala",     "ruta trailer"),
+                         ("Taxi Driver",         "ESTRENO",           "ruta imagen", "Actores",          "Taxi, accion",      "ruta trailer"),
                          ("The Batman",          "ULTIMAS_FUNCIONES", "ruta imagen", "Actores",          "Otra de Batman",    "ruta trailer" ),
-                         ("The Truman Show",     "PROXIMA",           "ruta imagen", "actores de voice", "Comedia Dramatica", "ruta trailer");
+                         ("The Truman Show",     "PREVENTA",          "ruta imagen", "actores de voice", "Comedia Dramatica", "ruta trailer"),
+                         ("Lilo Lilo Cocodrilo", "PREVENTA",          "ruta imagen", "Actores",          "Cocodrilo chistoso", "ruta trailer");
 
 INSERT INTO pelicula_generos VALUES
                          ("One Piece Film: Red", 5),
                          ("Fast & Furious 10", 3),
                          ("Taxi Driver", 3),
                          ("The Batman", 3),
-                         ("The Truman Show", 8);
+                         ("The Truman Show", 8),
+                         ("Lilo Lilo Cocodrilo", 6),
+                         ("Lilo Lilo Cocodrilo", 8);
 
 INSERT INTO horario VALUES
                         (1, "2022-10-06", "14:00"),
@@ -71,12 +74,14 @@ INSERT INTO horario VALUES
                         (8, "2022-10-07", "20:00");
 
 INSERT INTO funcion VALUES
-                    --  id, estado sala, precio,    tipo,      horario,     pelicula,           sala
-                        (1, "DISPONIBLE", 15000, "FUNCION_3D",    2,     "One Piece Film: Red",  2),
-                        (2, "DISPONIBLE", 17000, "FUNCION_2D",    8,     "Taxi Driver",          4),
-                        (3, "COMPLETA",   20000, "FUNCION_XD",    6,     "Fast & Furious 10",    3),
-                        (4, "COMPLETA",   12500, "FUNCION_3D",    7,     "The Truman Show",      5),
-                        (5, "DISPONIBLE",  6000, "FUNCION_XD",    1,     "The Batman",           1);
+                    --  id, precio,  tipo,      horario,     pelicula,           sala
+                        (1, 15000, "FUNCION_3D",    2,     "One Piece Film: Red",  2),
+                        (2, 17000, "FUNCION_2D",    8,     "Taxi Driver",          4),
+                        (3, 20000, "FUNCION_XD",    6,     "Fast & Furious 10",    3),
+                        (4, 12500, "FUNCION_3D",    7,     "The Truman Show",      5),
+                        (5, 6000,  "FUNCION_XD",    1,     "The Batman",           1),
+                        (6, 10000, "FUNCION_3D",    6,     "Lilo Lilo Cocodrilo",  2),
+                        (7, 20000, "FUNCION_XD",    8,     "Fast & Furious 10",    5);
 
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA", "Cupon de bienvenida",                       "2022-10-05", "Hola Mundo",      5000),

@@ -369,23 +369,6 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Funcion> filtrarFuncionesCiudad(Integer idCiudad) throws Exception {
-        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
-
-        List<Sala> salas = ciudadRepo.obtenerSalasCiudad(idCiudad);
-
-        if(salas.isEmpty()) throw new Exception("La ciudad no tiene salas de cine");
-
-        List<Funcion> funciones = new ArrayList<>();
-
-        for (Sala s: salas) {
-            funciones.addAll( salaRepo.obtenerFuncionesSala(s.getId()) );
-        }
-
-        return funciones;
-    }
-
-    @Override
     public List<Ciudad> obtenerCiudades() {
         return ciudadRepo.obtenerCiudades();
     }
@@ -403,6 +386,23 @@ public class ClienteServicioImpl implements ClienteServicio {
             throw new Exception("La funcion no existe en la base de datos");
 
         return entradaRepo.obtenerEntradasCompradasFuncion(funcion.getId());
+    }
+
+    @Override
+    public List<Funcion> filtrarFuncionesEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
+
+        List<Sala> salas = ciudadRepo.obtenerSalasCiudad(idCiudad);
+
+        if(salas.isEmpty()) throw new Exception("La ciudad no tiene salas de cine");
+
+        List<Funcion> funciones = new ArrayList<>();
+
+        for (Sala s: salas) {
+            funciones.addAll( salaRepo.obtenerFuncionesSalaEstado(s.getId(), estado) );
+        }
+
+        return funciones;
     }
 
 }

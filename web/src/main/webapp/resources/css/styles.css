@@ -1,0 +1,80 @@
+.img-logo{
+    max-width: 90px;
+}
+
+.logo-principal {
+    max-width: 50rem;
+}
+
+.img-login{
+    max-width: 120px;
+}
+
+.oculto{
+    display: none;
+}
+
+.form-busqueda{
+    width: 500px;
+}
+
+.navegacion{
+    background-color: #0A0814;
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    font-size: calc(1.325rem + .9vw);
+}
+
+.dialogo{
+    background-color: rgba(16, 14, 25, .9);
+}
+
+.body {
+    background-color: #100E19;
+}
+
+.texto-resaltado {
+    font-family: var(--bs-body-font-family);
+    color: #6B8CE1;
+    font-size: calc(1.325rem + .9vw);
+}
+
+.texto {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: calc(1.12rem + .9vw);
+}
+
+.enlace {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    cursor: pointer;
+}
+
+.elegir-ciudad {
+    background-color: #0A0814;
+    border-radius: 20px;
+    width: 40%;
+}
+
+.seleccion_ciudad {
+    background: #1B1632;
+}
+
+.titulo {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #6B8CE1;
+    font-size: calc(1.325rem + .9vw);
+    text-transform: uppercase;
+    margin: 5px;
+}
+
+.funciones {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: calc(1rem);
+}
+
+
+
+

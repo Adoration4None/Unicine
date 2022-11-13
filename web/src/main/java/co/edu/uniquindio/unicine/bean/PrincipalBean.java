@@ -1,6 +1,11 @@
 package co.edu.uniquindio.unicine.bean;
 
+import co.edu.uniquindio.unicine.entidades.Ciudad;
+import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
 import co.edu.uniquindio.unicine.entidades.Funcion;
+import co.edu.uniquindio.unicine.entidades.Teatro;
+import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
+import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,52 +26,61 @@ import java.util.List;
 @Component
 @ViewScoped
 public class PrincipalBean implements Serializable {
+    @Autowired
+    private ClienteServicio clienteServicio;
 
-    @Value("#{param['city-id']}")
-    private String ciudadParam;
+    @Autowired
+    private AdminTeatroServicio adminTeatroServicio;
 
     @Getter @Setter
     private String nombreCiudad;
 
     @Getter @Setter
-    private String busqueda;
+    private String busquedaPelicula;
 
     @Getter @Setter
-    private List<Funcion> funcionesCiudad;
+    private List<Funcion> funcionesEstrenoCiudad, funcionesPreventaCiudad, funcionesBusqueda;
 
-    @Autowired
-    private ClienteServicio clienteServicio;
+    @Getter @Setter
+    private List<Ciudad> ciudades;
+
+    @Getter @Setter
+    private Ciudad ciudadActual;
+
+    @Getter @Setter
+    private Teatro teatro;
+
+    @Getter @Setter
+    private List<Teatro> teatros;
+
+    @Getter @Setter
+    private boolean ciudadSeleccionada;
 
     @PostConstruct
     public void init() {
-        if(ciudadParam != null && !ciudadParam.equals("")) {
-            try {
-                funcionesCiudad = clienteServicio.filtrarFuncionesCiudad(Integer.valueOf(ciudadParam));
-                nombreCiudad = clienteServicio.obtenerCiudad(Integer.valueOf(ciudadParam)).getNombre();
-            } catch (Exception e) {
-                mostrarError(e);
-            }
+        ciudades = clienteServicio.obtenerCiudades();
+        adminTeatroServicio.listarTeatros();
+    }
+
+    public void seleccionarCiudad(){
+        try {
+            nombreCiudad = clienteServicio.obtenerCiudad( ciudadActual.getId() ).getNombre();
+            funcionesEstrenoCiudad = clienteServicio.filtrarFuncionesEstadoCiudad( ciudadActual.getId(), EstadoPelicula.ESTRENO );
+            funcionesPreventaCiudad = clienteServicio.filtrarFuncionesEstadoCiudad( ciudadActual.getId(), EstadoPelicula.PREVENTA );
+            ciudadSeleccionada = true;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void buscarPelicula() {
-        if(!busqueda.isEmpty()) {
+        if(ciudadActual != null) {
             try {
-                funcionesCiudad = clienteServicio.buscarFunciones(busqueda, Integer.valueOf(ciudadParam));
-                reload();
+                funcionesBusqueda = clienteServicio.buscarFunciones(busquedaPelicula, ciudadActual.getId() );
             } catch (Exception e) {
                 mostrarError(e);
             }
-        }
-    }
-
-    public void reload() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-
-        try {
-            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
-        } catch (IOException e) {
-            mostrarError(e);
         }
     }
 

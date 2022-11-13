@@ -2,7 +2,7 @@ package co.edu.uniquindio.unicine.entidades;
 
 public enum EstadoPelicula {
     ESTRENO,
-    PROXIMA,
+    PREVENTA,
     ULTIMAS_FUNCIONES,
     NO_DISPONIBLE
 }

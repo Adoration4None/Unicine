@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unicine.repo;
 
-import co.edu.uniquindio.unicine.entidades.Funcion;
-import co.edu.uniquindio.unicine.entidades.Sala;
-import co.edu.uniquindio.unicine.entidades.Teatro;
-import co.edu.uniquindio.unicine.entidades.TipoSala;
+import co.edu.uniquindio.unicine.entidades.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +22,7 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
     boolean verificarAsientosDisponibles(int cantidadAsientos);
 
     Sala findByCantidadSillasAndTipoAndTeatro(Integer cantidadSillas, TipoSala tipo, Teatro teatro);
+
+    @Query("select f from Sala s, in (s.funciones) f where s.id = :idSala and f.pelicula.estado = :estadoPelicula")
+    List<Funcion> obtenerFuncionesSalaEstado(Integer idSala, EstadoPelicula estadoPelicula);
 }

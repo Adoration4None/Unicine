@@ -4,6 +4,8 @@ import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,16 +153,14 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if( tiposNoCoinciden(funcion.getTipo(), funcion.getSala().getTipo()) )
             throw new Exception("El tipo de la funcion no corresponde con el tipo de la sala");
 
-        funcion.getSala().agregarFuncion(funcion);
-        salaRepo.save( funcion.getSala() );
-
-        funcion.getHorario().agregarFuncion(funcion);
-        horarioRepo.save( funcion.getHorario() );
-
-        funcion.getPelicula().agregarFuncion(funcion);
-        peliculaRepo.save( funcion.getPelicula() );
+        if( salaOcupadaHorario(funcion.getSala(), funcion.getHorario()) )
+            throw new Exception("La sala seleccionada ya se encuentra ocupada en el horario seleccionado");
 
         return funcionRepo.save(funcion);
+    }
+
+    private boolean salaOcupadaHorario(Sala sala, Horario horario) {
+        return funcionRepo.obtenerFuncionesSalaHorario( sala.getId(), horario.getId() ).size() > 0;
     }
 
     private boolean tiposNoCoinciden(TipoFuncion tipoFuncion, TipoSala tipoSala) {
@@ -218,7 +218,18 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
-    public List<Ciudad> obtenerCiudades() {
+    public Ciudad obtenerCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de ciudad vacio");
+
+        Ciudad ciudadGuardada = ciudadRepo.findById(idCiudad).orElse(null);
+
+        if(ciudadGuardada == null) throw new Exception("La funcion no existe en la base de datos");
+
+        return ciudadGuardada;
+    }
+
+    @Override
+    public List<Ciudad> listarCiudades() {
         return ciudadRepo.findAll();
     }
 
@@ -234,7 +245,5 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
-    public List<Horario> obtenerHorariosDisponibles() {
-        return horarioRepo.obtenerHorariosDisponibles();
-    }
+    public List<Horario> listarHorarios() { return horarioRepo.findAll(); }
 }
