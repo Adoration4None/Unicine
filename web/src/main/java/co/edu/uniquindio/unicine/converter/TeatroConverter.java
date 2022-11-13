@@ -17,11 +17,22 @@ public class TeatroConverter implements Converter<Teatro> {
 
     @Override
     public Teatro getAsObject(FacesContext context, UIComponent component, String value) {
-        return null;
+        Teatro teatro;
+
+        try {
+            teatro = adminTeatroServicio.obtenerTeatro( Integer.valueOf(value) );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return teatro;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Teatro value) {
-        return null;
+        if(value != null)
+            return "" + value.getId();
+
+        return "";
     }
 }

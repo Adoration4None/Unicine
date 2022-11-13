@@ -23,6 +23,7 @@
     font-family: "Marcellus", 'Lato', sans-serif;
     color: #6B8CE1;
     font-size: calc(1.325rem + .9vw);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .dialogo{
@@ -52,9 +53,15 @@
 }
 
 .elegir-ciudad {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
     background-color: #0A0814;
     border-radius: 20px;
     width: 40%;
+    height: 150px;
 }
 
 .seleccion_ciudad {
@@ -72,8 +79,26 @@
 .funciones {
     font-family: "Marcellus", 'Lato', sans-serif;
     color: #D9D9D9;
-    font-size: calc(1rem);
+    font-size: 1rem;
 }
+
+.funcion {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 300px;
+    background: rgba(27, 22, 50, 0.5);
+    border-radius: 16px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8.4px);
+    -webkit-backdrop-filter: blur(8.4px);
+    padding: 5%;
+    margin-bottom: 10%;
+}
+
+
 
 
 

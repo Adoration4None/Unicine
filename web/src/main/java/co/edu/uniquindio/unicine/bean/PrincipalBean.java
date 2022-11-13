@@ -5,21 +5,16 @@ import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Teatro;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
-import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -51,7 +46,7 @@ public class PrincipalBean implements Serializable {
     private Teatro teatro;
 
     @Getter @Setter
-    private List<Teatro> teatros;
+    private List<Teatro> teatrosCiudad;
 
     @Getter @Setter
     private boolean ciudadSeleccionada;
@@ -59,7 +54,6 @@ public class PrincipalBean implements Serializable {
     @PostConstruct
     public void init() {
         ciudades = clienteServicio.obtenerCiudades();
-        adminTeatroServicio.listarTeatros();
     }
 
     public void seleccionarCiudad(){
@@ -69,6 +63,7 @@ public class PrincipalBean implements Serializable {
             funcionesPreventaCiudad = clienteServicio.filtrarFuncionesEstadoCiudad( ciudadActual.getId(), EstadoPelicula.PREVENTA );
             ciudadSeleccionada = true;
 
+            teatrosCiudad = adminTeatroServicio.obtenerTeatrosCiudad( ciudadActual.getId() );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

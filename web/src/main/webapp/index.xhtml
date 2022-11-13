@@ -20,6 +20,39 @@
 <h:body styleClass="body" >
     <header>
         <nav>
+            <div jsf:id="navegacion-inicio" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'navegacion'}">
+                <div class="container-fluid">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
+                            <li>
+                                <a href="/" class="nav-link px-2 link-dark">
+                                    <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav col-12 col-lg-auto justify-content-center">
+                            <li class="mx-1 my-1"> <p:commandButton onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                        </ul>
+
+                        <div class="dropdown text-end mx-3 my-1">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                            </a>
+                            <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div jsf:id="navegacion" class="#{principalBean.ciudadSeleccionada == false ? 'oculto' : 'navegacion'}">
                 <div class="container-fluid">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -37,7 +70,8 @@
                         <h:form styleClass="w-50 ms-auto me-0">
                             <div role="search">
                                 <!--  aqui no me funciono ponerle el tamaño usando la clase -->
-                                <p:inputText styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 50%;" placeholder="¿Que pelicula estas buscando?" required="true" value="#{principalBean.busquedaPelicula}"/>
+                                <p:inputText styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 50%;"
+                                             placeholder="¿Que pelicula estas buscando?" required="true" value="#{principalBean.busquedaPelicula}"/>
 
                                 <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,funciones-estreno,funciones-preventa"
                                                  icon="pi pi-chevron-right" action="#{principalBean.seleccionarCiudad}">
@@ -65,39 +99,6 @@
                     </div>
                 </div>
             </div>
-
-            <div jsf:id="navegacion-inicio" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'navegacion'}">
-                <div class="container-fluid">
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
-                            <li>
-                                <a href="/" class="nav-link px-2 link-dark">
-                                    <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
-                                </a>
-                            </li>
-                        </ul>
-
-                        <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
-                        </ul>
-
-                        <div class="dropdown text-end mx-3 my-1">
-                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
-                            </a>
-                            <ul class="dropdown-menu text-small">
-                                <li><a class="dropdown-item" href="#">New project...</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </nav>
     </header>
 
@@ -114,7 +115,7 @@
                 <div>
                     <h3 class="texto">Selecciona tu ciudad</h3>
 
-                    <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
+                    <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 80%;" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
                         <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
                         <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
                     </p:selectOneMenu>
@@ -138,68 +139,61 @@
 
             <div class="ms-auto me-0 w-50 my-2">
                 <p:outputLabel styleClass="texto-resaltado" for="seleccion_teatro" value="Filtrar por teatro: " />
-                <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;" value="#{principalBean.teatro}" converter="#{teatroConverter}">
+                <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;"
+                                 value="#{principalBean.teatro}" converter="#{teatroConverter}">
                     <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
-                    <f:selectItems value="#{principalBean.teatros}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
+                    <f:selectItems value="#{principalBean.teatrosCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
                 </p:selectOneMenu>
             </div>
 
             <div>
-                <h1 class="titulo my-1">En Estreno</h1>
-                <div jsf:id="funciones-estreno" class="funciones">
+                <h1 class="titulo my-3">En Estreno</h1>
+                <div jsf:id="funciones-estreno">
                     <p:carousel value="#{principalBean.funcionesEstrenoCiudad}" var="funcion" circular="true" autoplayInterval="4000"
-                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
-                        <div>
-                            <div>
-                                <div class="mb-3">
-                                    <p:graphicImage url="https://picfiles.alphacoders.com/166/166769.jpg" width="200" />
-                                </div>
-                                <div>
-                                    <h4 class="mb-1">#{funcion.pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">
-                                        Teatro: #{funcion.sala.teatro.nombre}
-                                    </h6>
-                                    <h6 class="mt-0 mb-3">
-                                        Sala: #{funcion.sala.id}
-                                    </h6>
-                                    <h6 class="mt-0 mb-3">
-                                        <h:outputText value="Precio: #{funcion.precio}">
-                                            <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
-                                        </h:outputText>
-                                    </h6>
-                                </div>
+                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1" containerStyleClass="funciones">
+                        <div class="funcion mx-2">
+                            <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://picfiles.alphacoders.com/166/166769.jpg" />
+                            <div class="align-content-center align-items-center justify-content-center">
+                                <h4 class="mb-1">#{funcion.pelicula.nombre}</h4>
+                                <h6 class="mt-0 mb-3">
+                                    Teatro: #{funcion.sala.teatro.nombre}
+                                </h6>
+                                <h6 class="mt-0 mb-3">
+                                    Sala: #{funcion.sala.id}
+                                </h6>
+                                <h6 class="mt-0 mb-3">
+                                    <h:outputText value="Precio: #{funcion.precio}">
+                                        <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
+                                    </h:outputText>
+                                </h6>
                             </div>
                         </div>
                     </p:carousel>
                 </div>
             </div>
 
-            <hr class="my-5"/>
+            <hr class="my-3"/>
 
             <div>
-                <h1 class="titulo my-1">Preventa</h1>
+                <h1 class="titulo my-3">Preventa</h1>
                 <div jsf:id="funciones-preventa" class="funciones">
                     <p:carousel value="#{principalBean.funcionesPreventaCiudad}" var="funcion" circular="true" autoplayInterval="4000"
-                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
-                        <div>
-                            <div>
-                                <div class="mb-3">
-                                    <p:graphicImage url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" width="200"/>
-                                </div>
-                                <div>
-                                    <h4 class="mb-1">#{funcion.pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">
-                                        Teatro: #{funcion.sala.teatro.nombre}
-                                    </h6>
-                                    <h6 class="mt-0 mb-3">
-                                        Sala: #{funcion.sala.id}
-                                    </h6>
-                                    <h6 class="mt-0 mb-3">
-                                        <h:outputText value="Precio: #{funcion.precio}">
-                                            <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
-                                        </h:outputText>
-                                    </h6>
-                                </div>
+                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1" containerStyleClass="funciones">
+                        <div class="funcion mx-2">
+                            <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
+                            <div class="align-content-center align-items-center justify-content-center">
+                                <h4 class="mb-1">#{funcion.pelicula.nombre}</h4>
+                                <h6 class="mt-0 mb-3">
+                                    Teatro: #{funcion.sala.teatro.nombre}
+                                </h6>
+                                <h6 class="mt-0 mb-3">
+                                    Sala: #{funcion.sala.id}
+                                </h6>
+                                <h6 class="mt-0 mb-3">
+                                    <h:outputText value="Precio: #{funcion.precio}">
+                                        <f:convertNumber type="currency" pattern="¤#0" currencySymbol="$" />
+                                    </h:outputText>
+                                </h6>
                             </div>
                         </div>
                     </p:carousel>
@@ -219,7 +213,7 @@
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                     <h:graphicImage library="img" name="logo.png" width="30px" />
                 </a>
-                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine</span>
+                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine, 2022</span>
             </div>
 
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
