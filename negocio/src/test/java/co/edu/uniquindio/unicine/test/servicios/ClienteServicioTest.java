@@ -15,7 +15,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,7 +160,7 @@ public class ClienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void buscarFunciones() {
         try {
-            List<Funcion> funcionesEncontradas = clienteServicio.buscarFunciones("a", 1);
+            List<Funcion> funcionesEncontradas = clienteServicio.buscarPeliculas("a", 1);
             Assertions.assertNotNull(funcionesEncontradas);
             funcionesEncontradas.forEach(System.out::println);
         } catch (Exception e) {

@@ -57,4 +57,11 @@ public class Pelicula implements Serializable {
     public void agregarFuncion(Funcion funcion) {
         funciones.add(funcion);
     }
+
+    public List<String> getNombresGeneros() {
+        List<String> nombres = new ArrayList<>();
+        generos.forEach( (g) -> nombres.add(g.getNombre()) );
+
+        return nombres;
+    }
 }

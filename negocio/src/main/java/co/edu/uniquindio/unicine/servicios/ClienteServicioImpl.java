@@ -198,11 +198,11 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Funcion> buscarFunciones(String busqueda, Integer idCiudad) throws Exception {
+    public List<Pelicula> buscarPeliculas(String busqueda, Integer idCiudad) throws Exception {
         if(busqueda == null || busqueda.equals("")) throw new Exception("Busqueda vacia");
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("Ciudad vacia");
 
-        return funcionRepo.buscarFunciones(busqueda, idCiudad);
+        return funcionRepo.buscarPeliculas(busqueda, idCiudad);
     }
 
     public Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception {
@@ -389,20 +389,27 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Funcion> filtrarFuncionesEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception {
+    public List<Pelicula> filtrarPeliculasEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception {
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
 
         List<Sala> salas = ciudadRepo.obtenerSalasCiudad(idCiudad);
 
         if(salas.isEmpty()) throw new Exception("La ciudad no tiene salas de cine");
 
-        List<Funcion> funciones = new ArrayList<>();
+        List<Pelicula> peliculas = new ArrayList<>();
 
         for (Sala s: salas) {
-            funciones.addAll( salaRepo.obtenerFuncionesSalaEstado(s.getId(), estado) );
+            peliculas.addAll( salaRepo.obtenerFuncionesSalaEstado(s.getId(), estado) );
         }
 
-        return funciones;
+        return peliculas;
+    }
+
+    @Override
+    public List<Funcion> obtenerFuncionesPelicula(String nombrePelicula) throws Exception {
+        if(nombrePelicula == null || nombrePelicula.isEmpty()) throw new Exception("Pelicula vacia");
+
+        return funcionRepo.obtenerFuncionesPelicula(nombrePelicula);
     }
 
 }
