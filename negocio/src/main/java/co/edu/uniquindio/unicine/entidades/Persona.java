@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Persona implements Serializable {
     // Atributos -----------------------------------------------------------------------------------------
     @Id

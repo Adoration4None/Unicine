@@ -28,6 +28,7 @@ public class BuscarPeliculaBean implements Serializable {
     @Getter @Setter
     private String busqueda;
 
+    @Getter @Setter
     @Value("#{param['q']}")
     private String busquedaParam;
 

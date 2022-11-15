@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AdministradorServicio {
 
-    boolean iniciarSesion(String email, String contrasena) throws Exception;
+    Persona iniciarSesion(String email, String contrasena) throws Exception;
 
     // Gestionar administradores de teatros --------------------------------------------------------------------
     AdministradorTeatro crearAdministrador(AdministradorTeatro administradorTeatro) throws Exception;

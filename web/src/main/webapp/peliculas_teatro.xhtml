@@ -9,13 +9,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="WEB-INF/template.xhtml">
-    <ui:define name="title">#{buscarPeliculaBean.busqueda}</ui:define>
+    <ui:define name="title">Peliculas #{peliculasTeatroBean.teatro.nombre}</ui:define>
 
     <ui:define name="content">
-
-        <div class="container mt-4">
-            <p>#{buscarPeliculaBean.peliculasBusqueda}</p>
-        </div>
 
     </ui:define>
 </ui:composition>

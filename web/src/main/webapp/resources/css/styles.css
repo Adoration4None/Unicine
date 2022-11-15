@@ -22,7 +22,7 @@
     background-color: #0A0814;
     font-family: "Marcellus", 'Lato', sans-serif;
     color: #6B8CE1;
-    font-size: calc(1.325rem + .9vw);
+    font-size: calc(1.325rem);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -88,8 +88,6 @@
 .pelicula {
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     width: 300px;
     background: rgba(27, 22, 50, 0.5);
@@ -114,6 +112,8 @@
     padding: 5%;
     margin-bottom: 10%;
 }
+
+
 
 
 
