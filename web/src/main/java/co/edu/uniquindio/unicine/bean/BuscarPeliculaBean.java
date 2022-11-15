@@ -28,7 +28,7 @@ public class BuscarPeliculaBean implements Serializable {
     @Getter @Setter
     private String busqueda;
 
-    @Value("#{param['q']}")
+    @Value("#{param['q']}") //importarlo desde el factory
     private String busquedaParam;
 
     @Getter @Setter
@@ -37,7 +37,7 @@ public class BuscarPeliculaBean implements Serializable {
     @Getter @Setter
     private List<Pelicula> peliculasBusqueda;
 
-    @PostConstruct
+    @PostConstruct //AL INSTANCIAR EL OBJETO TAMBIEN INSTANCIA LA PELICULA
     public void init() {
 
         if(idCiudad != null && !idCiudad.isEmpty()) {
@@ -56,6 +56,7 @@ public class BuscarPeliculaBean implements Serializable {
 
     public String buscarPelicula() {
         if(busqueda != null && !busqueda.isEmpty())
+            //solo se puede utilizar un ? por url, entonces se utiliza un & que va acompañado de amp; para que Java lo codifique bien, q es solo una "variable" con la busqueda
             return "/resultados_busqueda?faces-redirect=true&amp;city=" + idCiudad + "&amp;q=" + busqueda;
         else
             mostrarError( new Exception("Busqueda vacia. Por favor ingrese una busqueda valida") );

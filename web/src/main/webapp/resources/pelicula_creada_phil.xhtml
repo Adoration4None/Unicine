@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pelicula creafda</title>
+</h:head>
+
+<h:body>
+    <h1>la pelicula fue creada correctamente</h1>
+    <!-- para redireccionar a esta pagina el metodo bean del boton debe de ser de tipo string y retornar este xhtml pero sin la extension+?faces-redirect=true, comillas vacias o null no retornan a ningun lado -->
+    <!-- return = "/admin/pelicula_creada?faces-redirect=true -->
+    <p:panel header="Crear teatro">
+        <h:form>
+            <div class="input-search ui-inputgroup">
+                <p:inputText placeholder="¿Qué película está buscando?" required="true" value="#{busquedaBean.busqueda}" />
+
+                <p:commandButton update="@form" icon="pi pi-search" iconPos="right" action="#{busquedaBean.buscar}" />
+                <!-- pi tiene que ir, ya el pi-search es el nombre del icono en Primefaces -->
+                <!-- protocolo sin estado es el que no sabe qué hizo antes, entonces si se pide lo mismo no verifica sino que vuelve y envia -->
+
+            </div>
+
+            <div class="container">
+                <!-- encierra todo y lo centra -->
+                <h1>En cartelera</h1>
+                <div></div> <!-- para qué este divisor y por que me coloca en color lo del comentario? -->
+            </div>
+            <div class="container">
+                <h1>Próximamente</h1>
+                <p:dialog widgetVar="crear_pelicula" modal="true" header="Crear pelicula" showHeader="fade">
+                    <div>
+                        <p:selectOneMenu id="ciudad_teatro" value="#{buscarPeliculaBean.nombreCiudad}">
+                            <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true"
+                                          itemValue="#{null}"></f:selectItem>
+                            <f:selectItems value="#{buscarPeliculaBean.peliculasBusqueda}" var="pelicula"
+                                           itemLabel="#{pelicula.nombre}" itemValue="pelicula"></f:selectItems>
+                            <!-- la variable var coge cada item, el itemlabel es el valor que se mostrara en el label y el itemvalue lo que retorna al escogerlo -->
+                            <!-- este peliculasbusqueda encuentra las busquedas por el servicio de listar peliculas que tiene el findall del admin en el controlador -->
+                        </p:selectOneMenu>
+                        <!-- hay un p:commandButton value="Crear teatro" action="#{teatroBean.crearTeatro}" icon="pi pi-plus-circle" update="@form,crud_teatro:lista" //esta lista es el nombre del id del datatable/> -->
+                        <!-- crear lista en el controller e inicializarla -->
+                    </div>
+                </p:dialog>
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <!-- el onclick lo que va dentro del parentesis es el widgetvar del p:dialog de arriba -->
+                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success" onclick="PF('crear_pelicula').show()"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <h:form> <!-- todo lo del datatable dentro de un form para que funcione -->
+                    <div>
+                        <!-- en el rowkey deberia de hacerlo con un id ya que creo que con el nombre me dara algun poroblema -->
+                        <!-- en el controller crear una lista de peliculas para que sean la seleccion de la tabla del crud -->
+                        <p:dataTable id="lista" value="#{detallePeliculaBean.funcionesPelicula}" var="pelicula" paginator="true"
+                                     rows="1"
+                                     rowKey="#{detallePeliculaBean.pelicula.nombre}" paginatorPosition="top"
+                                     selection="#{detallePeliculaBean.peliculasSeleccionadas}" rowSelectMode="add">
+
+                            <p:column headerText="Nombre ciudad">
+                                <h:outputText value="#{detallePeliculaBean.nombreCiudad}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Pelicula">
+                                <h:outputText value="#{detallePeliculaBean.pelicula}"></h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </h:form>
+            </div>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>
