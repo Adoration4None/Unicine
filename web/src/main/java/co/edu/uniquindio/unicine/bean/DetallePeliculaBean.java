@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.bean;
 
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.Teatro;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
@@ -39,6 +40,12 @@ public class DetallePeliculaBean implements Serializable {
     private Pelicula pelicula;
 
     @Getter @Setter
+    private List<Teatro> teatrosPeliculaCiudad;
+
+    @Getter @Setter
+    private Teatro teatro;
+
+    @Getter @Setter
     private List<Funcion> funcionesPelicula;
 
     //luego lo borro
@@ -57,5 +64,13 @@ public class DetallePeliculaBean implements Serializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public String comprar(Funcion funcion) {
+        if(funcion != null) {
+            return "/cliente/compra.xhtml?faces-redirect=true&amp;city=" + idCiudad + "&amp;func=" + funcion.getId();
+        }
+
+        return "";
     }
 }

@@ -29,8 +29,14 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     }
 
     @Override
-    public boolean iniciarSesion(String email, String contrasena) {
-        return email.equals(EMAIL_ADMINISTRADOR) && contrasena.equals(CONTRASENA_ADMINISTRADOR);
+    public Persona iniciarSesion(String email, String contrasena) throws Exception {
+        if( (email == null || email.equals("")) || (contrasena == null || contrasena.equals("")) )
+            throw new Exception("Datos incompletos");
+
+        if( !email.equals(EMAIL_ADMINISTRADOR) && !contrasena.equals(CONTRASENA_ADMINISTRADOR) )
+            throw new Exception("Datos de autenticacion incorrectos");
+
+        return new Persona( "1111", "Ricardo Salinas", EMAIL_ADMINISTRADOR, CONTRASENA_ADMINISTRADOR);
     }
 
     // Gestionar administradores de teatros ----------------------------------------------------------------------

@@ -42,14 +42,14 @@ public class ClienteServicioImpl implements ClienteServicio {
     @Override
     public Cliente iniciarSesion(String email, String contrasena) throws Exception {
 
-        if( (email == null || email.equals("")) || (contrasena == null || contrasena.equals("")) )
+        if( email == null || email.equals("") || contrasena == null || contrasena.equals("") )
             throw new Exception("Datos incompletos");
 
         Cliente clienteEncontrado = clienteRepo.findByEmailAndContrasena(email, contrasena);
 
         if (clienteEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
 
-        if( hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
+        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
 
         return clienteEncontrado;
     }

@@ -65,10 +65,8 @@ public class PrincipalBean implements Serializable {
         ciudades = clienteServicio.obtenerCiudades();
 
         imagenesPortada.add("https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
-        imagenesPortada.add("https://pbs.twimg.com/media/EPIBnFtWoAAh_Pm.jpg");
-        imagenesPortada.add("https://www.nacionflix.com/__export/1599603579048/sites/debate/img/2020/09/08/cinemex_renta_sus_salas_de_cine_en_cuxnto_y_para_cuxntas_personas.jpg_242310155.jpg");
-        imagenesPortada.add("https://techplanet.today/storage/posts/2022/07/26/97/Q7ewZp0yYuOJGFijwUJRDsFu5BjtFqQ7kItkb8RW.jpg");
-        imagenesPortada.add("https://cartelescine.files.wordpress.com/2022/08/liloamigococodrilobanner.jpg");
+        imagenesPortada.add("https://pbs.twimg.com/media/FOiDBN7WQAEeIzx.jpg:large");
+        imagenesPortada.add("https://cinematicslant.files.wordpress.com/2017/09/blade-runner-2049-banner.jpg");
 
         if(idCiudadParam != null && !idCiudadParam.isEmpty()) {
             ciudadSeleccionada = true;
@@ -85,17 +83,9 @@ public class PrincipalBean implements Serializable {
         }
     }
 
-    public String seleccionarCiudad(){
-        if(ciudadActual != null)
-            return "/index?faces-redirect=true&amp;city=" + ciudadActual.getId();
-
-        return "";
-    }
-
     public void seleccionarTeatro() {
         if(teatro != null) {
             teatroSeleccionado = true;
-
 
         }
     }

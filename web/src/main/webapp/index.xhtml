@@ -15,15 +15,13 @@
     <h:outputStylesheet name="carousel.css" library="css" />
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">Inicio</ui:define>
 
-    <title>Unicine</title>
-</h:head>
-
-<h:body styleClass="body">
-    <header>
+    <ui:define name="header">
         <nav>
-            <div jsf:id="navegacion-inicio" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'navegacion'}">
-                <div class="container-fluid">
+            <div jsf:id="navegacion-inicio" class="#{seguridadBean.ciudadSeleccionada != null ? 'oculto' : 'navegacion'}">
+                <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                         <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
                             <li>
@@ -34,30 +32,33 @@
                         </ul>
 
                         <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
                         </ul>
 
-                        <div class="dropdown text-end mx-3 my-1">
-                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
-                            </a>
-                            <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
-                                <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
-                                <li><a class="dropdown-item" href="#">Historial de compras</a></li>
-                                <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
-                            </ul>
-                        </div>
+                        <h:form rendered="#{seguridadBean.autenticado}">
+                            <div class="dropdown text-end mx-3 my-1">
+                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                </a>
+                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                    <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                    <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                    <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
+                                </ul>
+                            </div>
+                        </h:form>
                     </div>
 
                 </div>
             </div>
 
-            <div jsf:id="navegacion" class="#{principalBean.ciudadSeleccionada == false ? 'oculto' : 'navegacion'}">
+            <div jsf:id="navegacion" class="#{seguridadBean.ciudadSeleccionada == null ? 'oculto' : 'navegacion'}">
                 <div class="container-fluid">
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                         <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
                             <li>
                                 <a href="/" class="nav-link px-2 link-dark">
@@ -82,293 +83,168 @@
                         </h:form>
 
                         <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
                         </ul>
 
-                        <div class="dropdown text-end mx-3 my-1">
-                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
-                            </a>
-                            <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
-                                <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
-                                <li><a class="dropdown-item" href="#">Historial de compras</a></li>
-                                <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
-                            </ul>
-                        </div>
+                        <h:form rendered="#{seguridadBean.autenticado}">
+                            <div class="dropdown text-end mx-3 my-1">
+                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                </a>
+                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                    <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                    <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                    <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
+                                </ul>
+                            </div>
+                        </h:form>
                     </div>
                 </div>
             </div>
         </nav>
-    </header>
+    </ui:define>
 
+    <ui:define name="content">
+        <div jsf:id="seccion-ciudad" class="#{seguridadBean.ciudadSeleccionada != null ? 'oculto' : 'col-auto align-items-center align-content-center m-3 text-center'}" >
 
-    <div jsf:id="seccion-ciudad" class="#{principalBean.ciudadSeleccionada == true ? 'oculto' : 'col-auto align-items-center align-content-center m-3 text-center'}" >
+            <h:graphicImage library="img" name="logo.png" styleClass="logo-principal my-0" />
 
-        <h:graphicImage library="img" name="logo.png" styleClass="logo-principal my-0" />
+            <h1 class="texto-resaltado">Bienvenido a Unicine</h1>
 
-        <h1 class="texto-resaltado">Bienvenido a Unicine</h1>
+            <h2 class="texto my-3">¿Donde estas?</h2>
+            <div class="elegir-ciudad p-3 m-auto">
+                <h:form>
+                    <div>
+                        <h3 class="texto">Selecciona tu ciudad</h3>
 
-        <h2 class="texto my-3">¿Donde estas?</h2>
-        <div class="elegir-ciudad p-3 m-auto">
-            <h:form>
-                <div>
-                    <h3 class="texto">Selecciona tu ciudad</h3>
+                        <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 80%;" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
+                            <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                            <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
+                        </p:selectOneMenu>
 
-                    <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 80%;" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
-                        <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
-                        <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
-                    </p:selectOneMenu>
+                        <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
+                                         icon="pi pi-chevron-right" action="#{seguridadBean.seleccionarCiudad(principalBean.ciudadActual)}">
+                            <f:ajax render="seccion-funciones" />
+                        </p:commandButton>
 
-                    <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
-                                     icon="pi pi-chevron-right" action="#{principalBean.seleccionarCiudad}">
-                        <f:ajax render="seccion-funciones" />
-                    </p:commandButton>
+                        <p:message for="seleccion_ciudad" showDetail="true"/>
+                    </div>
+                </h:form>
+            </div>
 
-                    <p:message for="seleccion_ciudad" showDetail="true"/>
-                </div>
-            </h:form>
         </div>
 
-    </div>
 
-
-    <div jsf:id="imagenes-inicio" class="#{principalBean.ciudadSeleccionada  == false ? 'oculto' : ''}">
-        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"> </button>
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"> </button>
-                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"> </button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://techplanet.today/storage/posts/2022/07/26/97/Q7ewZp0yYuOJGFijwUJRDsFu5BjtFqQ7kItkb8RW.jpg" alt="cover banner" width="100%" height="100%"/>
-
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1 class="titulo">Las peliculas del momento</h1>
-                            <p style="text-shadow: 2px 2px 5px black;">¡Explora nuestro catalogo con mas de 5 peliculas para todos los gustos!</p>
-                        </div>
-                    </div>
+        <div jsf:id="imagenes-inicio" class="#{seguridadBean.ciudadSeleccionada  == null ? 'oculto' : ''}">
+            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"> </button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"> </button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"> </button>
                 </div>
-                <p:repeat value="#{principalBean.imagenesPortada}" var="imagen">
-                    <div class="carousel-item">
-                        <img src="#{imagen}" alt="cover banner" width="100%" height="100%"/>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://techplanet.today/storage/posts/2022/07/26/97/Q7ewZp0yYuOJGFijwUJRDsFu5BjtFqQ7kItkb8RW.jpg" alt="cover banner" width="100%" height="100%"/>
 
                         <div class="container">
                             <div class="carousel-caption">
-                                <h1 class="titulo">Unicine te espera</h1>
-                                <p style="text-shadow: 2px 2px 5px black;">Disfruta de experiencias inolvidables en los mejores teatros</p>
+                                <h1 class="titulo">Las peliculas del momento</h1>
+                                <p style="text-shadow: 2px 2px 5px black;">¡Explora nuestro catalogo con mas de 5 peliculas para todos los gustos!</p>
                             </div>
                         </div>
                     </div>
-                </p:repeat>
+                    <p:repeat value="#{principalBean.imagenesPortada}" var="imagen">
+                        <div class="carousel-item">
+                            <img src="#{imagen}" alt="cover banner" width="100%" height="100%"/>
 
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"> </span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"> </span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-    </div>
-
-    <div jsf:id="seccion-peliculas" class="#{principalBean.ciudadSeleccionada  == false || principalBean.teatroSeleccionado == true ? 'oculto' : ''}" >
-
-        <div jsf:id="peliculas" class="container-fluid">
-
-            <div class="ms-auto me-0 w-50 my-2 mt-3">
-                <p:outputLabel styleClass="texto-resaltado" for="seleccion_teatro" value="Filtrar por teatro: " />
-                <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;"
-                                 value="#{principalBean.teatro}" converter="#{teatroConverter}">
-                    <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
-                    <f:selectItems value="#{principalBean.teatrosCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
-                    <p:ajax event="change" listener="#{principalBean.seleccionarTeatro}" update="seccion-peliculas,peliculas-teatro" />
-                </p:selectOneMenu>
-            </div>
-
-            <div>
-                <h1 class="titulo my-3">En Estreno</h1>
-                <div jsf:id="peliculas-estreno">
-                    <p:carousel value="#{principalBean.peliculasEstrenoCiudad}" var="pelicula" circular="true" autoplayInterval="4000"
-                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1" containerStyleClass="peliculas">
-                        <div class="pelicula mx-2">
-
-                            <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
-                                <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://picfiles.alphacoders.com/166/166769.jpg" />
-                                <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
-                                <h6 class="mt-0 mb-3">
-                                    <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
-                                        <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
-                                    </p:repeat>
-                                </h6>
-                            </a>
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1 class="titulo">Unicine te espera</h1>
+                                    <p style="text-shadow: 2px 2px 5px black;">Disfruta de experiencias inolvidables en los mejores teatros</p>
+                                </div>
+                            </div>
                         </div>
-                    </p:carousel>
-                </div>
-            </div>
+                    </p:repeat>
 
-            <hr class="my-3 shadow-lg"/>
-
-            <div>
-                <h1 class="titulo my-3">Preventa</h1>
-                <div jsf:id="peliculas-preventa">
-                    <p:carousel value="#{principalBean.peliculasPreventaCiudad}" var="pelicula" circular="true" autoplayInterval="4000"
-                                responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1" containerStyleClass="peliculas">
-                        <div class="pelicula mx-2">
-                            <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
-                                <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
-                                <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
-                                <h6 class="mt-0 mb-3">
-                                    <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
-                                        <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
-                                    </p:repeat>
-                                </h6>
-                            </a>
-                        </div>
-                    </p:carousel>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"> </span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"> </span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
 
         </div>
 
-    </div>
 
+        <div jsf:id="seccion-peliculas" class="#{seguridadBean.ciudadSeleccionada  == null || principalBean.teatroSeleccionado == true ? 'oculto' : ''}" >
 
-    <div jsf:id="peliculas-teatro" class="#{principalBean.teatroSeleccionado == false ? 'oculto' : ''}" >
-        <h1 class="titulo my-3">Disponibles en #{principalBean.teatro.nombre}</h1>
-        <div>
-            <p:carousel value="#{principalBean.peliculasTeatro}" var="pelicula" circular="true" autoplayInterval="4000"
-                        responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1" containerStyleClass="peliculas">
-                <div class="pelicula mx-2">
-                    <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
-                        <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
-                        <h4 class="mb-1">#{pelicula.nombre}</h4>
-                        <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
-                        <h6 class="mt-0 mb-3">
-                            <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
-                                <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
-                            </p:repeat>
-                        </h6>
-                    </a>
+            <div jsf:id="peliculas" class="container">
+
+                <div class="ms-auto me-0 w-50 my-2 mt-3">
+                    <p:outputLabel styleClass="texto-resaltado" for="seleccion_teatro" value="Filtrar por teatro: " />
+                    <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;"
+                                     value="#{principalBean.teatro}" converter="#{teatroConverter}">
+                        <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                        <f:selectItems value="#{principalBean.teatrosCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
+                        <p:ajax event="change" listener="#{principalBean.seleccionarTeatro}" update="seccion-peliculas" />
+                    </p:selectOneMenu>
                 </div>
-            </p:carousel>
-        </div>
-    </div>
 
-    <p:separator styleClass="mt-5" />
+                <div>
+                    <h1 class="titulo my-3 ms-5">En Estreno</h1>
+                    <div jsf:id="peliculas-estreno">
+                        <p:carousel value="#{principalBean.peliculasEstrenoCiudad}" var="pelicula" numVisible="3" numScroll="3" containerStyleClass="peliculas">
+                            <div class="pelicula">
 
-    <div class="container">
+                                <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://picfiles.alphacoders.com/166/166769.jpg" />
+                                    <h4 class="mb-1">#{pelicula.nombre}</h4>
+                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
+                                    <h6 class="mt-0 mb-3">
+                                        <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
+                                            <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
+                                        </p:repeat>
+                                    </h6>
+                                </a>
+                            </div>
+                        </p:carousel>
+                    </div>
+                </div>
 
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <h:graphicImage library="img" name="logo.png" width="30px" />
-                </a>
-                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine, 2022</span>
+                <hr class="my-3 shadow-lg"/>
+
+                <div>
+                    <h1 class="titulo my-3 ms-5">Preventa</h1>
+                    <div jsf:id="peliculas-preventa">
+                        <p:carousel value="#{principalBean.peliculasPreventaCiudad}" var="pelicula" numVisible="3" numScroll="3" containerStyleClass="peliculas">
+                            <div class="pelicula mx-2">
+                                <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
+                                    <h4 class="mb-1">#{pelicula.nombre}</h4>
+                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
+                                    <h6 class="mt-0 mb-3">
+                                        <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
+                                            <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
+                                        </p:repeat>
+                                    </h6>
+                                </a>
+                            </div>
+                        </p:carousel>
+                    </div>
+                </div>
+
             </div>
 
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-twitter"/> </a></li>
-                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-facebook"/> </a></li>
-                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-instagram"/> </a></li>
-            </ul>
-        </footer>
-    </div>
+        </div>
 
-
-    <!-- Dialogos de inicio de sesion y registro -->
-
-    <p:dialog widgetVar="registro" header="Registrarse" modal="true" showEffect="fade" resizable="false" class="dialogo">
-        <h:form>
-            <h:panelGrid columns="3" cellpadding="5">
-                <p:outputLabel for="nombre_cliente" value="Nombres:" />
-                <p:inputText id="nombre_cliente" value="#{registroClienteBean.nombresCliente}" required="true" />
-                <p:message for="nombre_cliente" />
-
-                <p:outputLabel for="apellido_cliente" value="Apellidos:" />
-                <p:inputText id="apellido_cliente" value="#{registroClienteBean.apellidosCliente}" required="true" />
-                <p:message for="apellido_cliente" />
-
-                <p:outputLabel for="cedula_cliente" value="Numero de documento:" />
-                <p:inputText id="cedula_cliente" value="#{registroClienteBean.cliente.cedula}" required="true" />
-                <p:message for="cedula_cliente" />
-
-                <p:outputLabel for="email_cliente" value="Correo electronico:" />
-                <p:inputText id="email_cliente" value="#{registroClienteBean.cliente.email}" required="true"/>
-                <p:message for="email_cliente" />
-
-                <p:outputLabel for="contrasena_cliente" value="Contraseña:" />
-                <p:password id="contrasena_cliente" value="#{registroClienteBean.cliente.contrasena}" required="true" toggleMask="true"/>
-                <p:message for="contrasena_cliente" />
-
-                <p:outputLabel for="confirmacion_contrasena_cliente" value="Confirmar contraseña:" />
-                <p:password id="confirmacion_contrasena_cliente" value="#{registroClienteBean.confirmacionContrasena}" required="true" toggleMask="true"/>
-                <p:message for="confirmacion_contrasena_cliente" />
-
-                <p:outputLabel for="celular_cliente" value="Telefono celular:" />
-                <p:inputText id="celular_cliente" value="#{registroClienteBean.cliente.telefonoCelular}" />
-                <p:message for="celular_cliente" />
-
-                <p:outputLabel for="fijo_cliente" value="Telefono fijo:" />
-                <p:inputText id="fijo_cliente" value="#{registroClienteBean.cliente.telefonoFijo}" />
-                <p:message for="fijo_cliente" />
-
-                <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
-                <p:datePicker id="fecha_nacimiento_cliente" value="#{registroClienteBean.cliente.fechaNacimiento}" />
-            </h:panelGrid>
-
-            <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" update="@form" />
-            <p:growl for="mensaje_registro" showDetail="true"/>
-        </h:form>
-    </p:dialog>
-
-    <p:dialog widgetVar="login" header="Inicio de Sesion" modal="true" showEffect="fade" resizable="false">
-            <span class="me-1 my-auto border-end">
-                <h:graphicImage library="img" name="logo2.png" styleClass="img-login" />
-            </span>
-
-        <span>
-                <h3>Iniciar Sesion en Unicine</h3>
-
-                <h:form>
-                    <h:panelGrid columns="1" cellpadding="3">
-                        <p:commandButton icon="logo-google.svg" value="Continuar con Google" action="#{loginClienteBean.iniciarSesionGoogle}" update="@form" />
-
-                        <p:separator />
-
-                        <span class="ui-float-label">
-                            <p:inputText id="correo_login" value="#{loginClienteBean.emailCliente}"/>
-                            <p:outputLabel for="correo_login" value="Correo electronico:"/>
-                        </span>
-
-                        <span class="ui-float-label">
-                            <p:password id="contrasena_login" value="#{loginClienteBean.contrasenaCliente}"/>
-                            <p:outputLabel for="contrasena_login" value="Contraseña:"/>
-                        </span>
-
-                    </h:panelGrid>
-
-                    <p:commandButton value="Iniciar Sesion" action="#{loginClienteBean.iniciarSesion}" update="@form" />
-
-                    <p:separator />
-
-                    <p>¿Eres nuevo? <span onclick="PF('registro').show()" class="enlace">Registrate</span> </p>
-                    <p:growl for="mensaje_login" showDetail="true"/>
-                </h:form>
-            </span>
-
-    </p:dialog>
-
-    <p:growl for="mensaje_bean" showDetail="true"/>
-
-</h:body>
+    </ui:define>
+</ui:composition>
 </html>
