@@ -11,19 +11,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet name="styles.css" library="css"/>
-    <h:outputStylesheet name="bootstrap.min.css" library="css" />
-    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
 
-<ui:composition template="WEB-INF/template.xhtml">
-    <ui:define name="title">#{buscarPeliculaBean.busqueda}</ui:define>
-
-    <ui:define name="content">
-
-        <div class="container mt-4">
-            <p>#{buscarPeliculaBean.peliculasBusqueda}</p>
-        </div>
-
-    </ui:define>
-</ui:composition>
+    <div class="container mt-4">
+        <p>#{buscarPeliculaBean.peliculasBusqueda}</p>
+    </div>
 </h:head>
+
+<h:body>
+    <h1>Pagina de resultados</h1>
+
+    <div id="barra_nav">
+        <ul>
+            <!-- sE HACE CON RUTAS RELATIVAS Y SLASH AL INICIO -->
+            <li> <a href="/crear_pelicula.xhtml">CREAR Y BUSCAR PELICULA</a></li>
+        </ul>
+    </div>
+</h:body>
 </html>

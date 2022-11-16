@@ -12,4 +12,3 @@ public class WebApplication {
         SpringApplication.run(WebApplication.class, args);
     }
 }
-//aqui el webapplication corre normal

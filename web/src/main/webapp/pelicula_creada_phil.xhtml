@@ -10,7 +10,7 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pelicula creafda</title>
+    <title>Pelicula creada</title>
 </h:head>
 
 <h:body>
@@ -18,11 +18,12 @@
     <!-- para redireccionar a esta pagina el metodo bean del boton debe de ser de tipo string y retornar este xhtml pero sin la extension+?faces-redirect=true, comillas vacias o null no retornan a ningun lado -->
     <!-- return = "/admin/pelicula_creada?faces-redirect=true -->
     <p:panel header="Crear teatro">
-        <h:form>
+        <h:form id="hola">
             <div class="input-search ui-inputgroup">
-                <p:inputText placeholder="¿Qué película está buscando?" required="true" value="#{busquedaBean.busqueda}" />
+                <p:inputText placeholder="¿Qué película está buscando?" required="true"
+                             value="#{busquedaBean.busqueda}"/>
 
-                <p:commandButton update="@form" icon="pi pi-search" iconPos="right" action="#{busquedaBean.buscar}" />
+                <p:commandButton update="@form" icon="pi pi-search" iconPos="right" action="#{busquedaBean.buscar}"/>
                 <!-- pi tiene que ir, ya el pi-search es el nombre del icono en Primefaces -->
                 <!-- protocolo sin estado es el que no sabe qué hizo antes, entonces si se pide lo mismo no verifica sino que vuelve y envia -->
 
@@ -52,17 +53,20 @@
                 <p:toolbar>
                     <p:toolbarGroup>
                         <!-- el onclick lo que va dentro del parentesis es el widgetvar del p:dialog de arriba -->
-                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success" onclick="PF('crear_pelicula').show()"/>
+                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" onclick="PF('crear_pelicula').show()"/>
+                        <p:commandButton id="btn_borrar" value="Borrar" icon="pi pi-trash"  styleClass="ui-button-danger"  />
+                        <!--p:commandButton id="btn_borrar" value="Borrar" icon="pi pi-trash" diabled="#{principalBean.teatrosSeleccionados.size()=0}" styleClass="ui-button-danger" action="#{principalBean.eliminarTeatros}" update="hola:lista"/-->
                     </p:toolbarGroup>
                 </p:toolbar>
                 <h:form> <!-- todo lo del datatable dentro de un form para que funcione -->
                     <div>
                         <!-- en el rowkey deberia de hacerlo con un id ya que creo que con el nombre me dara algun poroblema -->
                         <!-- en el controller crear una lista de peliculas para que sean la seleccion de la tabla del crud -->
-                        <p:dataTable id="lista" value="#{detallePeliculaBean.funcionesPelicula}" var="pelicula" paginator="true"
-                                     rows="1"
-                                     rowKey="#{detallePeliculaBean.pelicula.nombre}" paginatorPosition="top"
-                                     selection="#{detallePeliculaBean.peliculasSeleccionadas}" rowSelectMode="add">
+                        <p:dataTable id="lista" value="#{detallePeliculaBean.funcionesPelicula}" var="pelicula" paginator="true" rows="1" rowKey="#{detallePeliculaBean.pelicula.nombre}" paginatorPosition="top" selection="#{detallePeliculaBean.peliculasSeleccionadas}" rowSelectMode="add">
+
+
+
+                            <p:column selectionMode="multiple" exportable="false"/>
 
                             <p:column headerText="Nombre ciudad">
                                 <h:outputText value="#{detallePeliculaBean.nombreCiudad}"></h:outputText>

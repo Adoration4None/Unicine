@@ -1,6 +1,10 @@
 .img-logo{
     max-width: 90px;
 }
+.img-icon{
+    max-width: 30px;
+    margin-left: 10px;
+}
 
 .logo-principal {
     max-width: 50rem;

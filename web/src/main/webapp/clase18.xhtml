@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Resultado</title>
+    <h:outputStylesheet name="styles.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
+</h:head>
+<h:body>
+    <h:form id="form_datatable">
+        <p:dataTable id="datatable_prueba" value="#{usuarioBean.clientes}" var="cliente" paginator="true" rows="2"
+                     rowKey="#{cliente.cedula}" paginatorPosition="bottom"
+                     selection="#{usuarioBean.clientesSeleccionados}">
+           <p:column selectionMode="multiple" exportable="false"/>
+            <p:column headerText="Cedula">
+                <h:outputText value="#{cliente.cedula}"/>
+            </p:column>
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{cliente.nombreCompleto}"/>
+            </p:column>
+
+            <p:column headerText="Email">
+                <h:outputText value="#{cliente.email}"/>
+            </p:column>
+
+            <p:column headerText="Contrasena">
+                <h:outputText value="#{cliente.contrasena}"/>
+            </p:column>
+
+            <p:column headerText="">
+                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(cliente)}"
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+    <div class="container">
+        <div>
+            <h1>En cartelera</h1>
+            <div>
+                <p:selectOneMenu id="selector_18" value="#{usuarioBean.cliente.estado}" converter="#{ciudadConverter }">
+                    <!--se crea un converter para que coja el widget como un objeto para el sql/-->
+                    <!--con una funcion para traer como objeto y otra como string/-->
+                    <!--f:selectItems value="#{usuarioBean.clientes}" var="usuario" itemLabel="#{usuario.nombre}" itemValue="#{usuario}"/-->
+                    <f:selectItem itemLabel="Select One" noSelectionOption="true" itemValue="#{null}"/>
+                    <f:selectItem itemLabel="Option1" itemValue="Option1" var="ciudad"/>
+                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+                </p:selectOneMenu>
+            </div>
+        </div>
+        <div>
+            <h1>Proximamente</h1>
+            <div></div>
+        </div>
+    </div>
+
+</h:body>
+</html>

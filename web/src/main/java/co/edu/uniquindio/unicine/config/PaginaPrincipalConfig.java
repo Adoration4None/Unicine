@@ -10,8 +10,7 @@ public class PaginaPrincipalConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index.xhtml");
+        registry.addViewController("/").setViewName("crear_pelicula.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
-    //aquí tengo todo normal y cambié la ruta a la de un xhtml que tengo para solo hacer pruebas y comentarios porque el indez no me reconoce algunas cosas, es el siguiente
 }

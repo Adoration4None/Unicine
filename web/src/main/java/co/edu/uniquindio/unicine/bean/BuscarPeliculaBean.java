@@ -30,7 +30,6 @@ public class BuscarPeliculaBean implements Serializable {
 
     @Value("#{param['q']}") //importarlo desde el factory
     @Getter @Setter
-    @Value("#{param['q']}")
     private String busquedaParam;
 
     @Getter @Setter
