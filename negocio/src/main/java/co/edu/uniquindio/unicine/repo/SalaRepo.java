@@ -23,6 +23,6 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
 
     Sala findByCantidadSillasAndTipoAndTeatro(Integer cantidadSillas, TipoSala tipo, Teatro teatro);
 
-    @Query("select f from Sala s, in (s.funciones) f where s.id = :idSala and f.pelicula.estado = :estadoPelicula")
-    List<Funcion> obtenerFuncionesSalaEstado(Integer idSala, EstadoPelicula estadoPelicula);
+    @Query("select f.pelicula from Sala s, in (s.funciones) f where s.id = :idSala and f.pelicula.estado = :estadoPelicula")
+    List<Pelicula> obtenerFuncionesSalaEstado(Integer idSala, EstadoPelicula estadoPelicula);
 }

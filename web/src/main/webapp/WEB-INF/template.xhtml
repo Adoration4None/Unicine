@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css" />
+    <h:outputStylesheet name="carousel.css" library="css" />
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+
+    <title>Unicine | <ui:insert name="title"> </ui:insert></title>
+</h:head>
+
+<h:body styleClass="body">
+    <header>
+        <ui:insert name="header">
+            <nav>
+                <div jsf:id="navegacion" class="#{seguridadBean.ciudadSeleccionada == null ? 'oculto' : 'navegacion'}">
+                    <div class="container-fluid">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
+                            <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="../index.xhtml?city=#{seguridadBean.ciudadSeleccionada.id}" class="nav-link px-2 link-dark">
+                                        <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                    </a>
+                                </li>
+                                <li class="mx-1 my-1 align-items-center">
+                                    <h:form styleClass="texto-resaltado">
+                                        <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1"
+                                                         action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
+                                    </h:form>
+                                </li>
+                            </ul>
+
+                            <h:form styleClass="w-50 ms-auto me-0">
+                                <div role="search">
+                                    <!--  aqui no me funciono ponerle el tamaño usando la clase -->
+                                    <p:inputText styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 50%;"
+                                                 placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
+
+                                    <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form"
+                                                     icon="pi pi-chevron-right" action="#{buscarPeliculaBean.buscarPelicula}">
+                                    </p:commandButton>
+                                </div>
+                            </h:form>
+
+                            <ul class="nav col-12 col-lg-auto justify-content-center">
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                                <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            </ul>
+
+                            <h:form rendered="#{seguridadBean.autenticado}">
+                                <div class="dropdown text-end mx-3 my-1">
+                                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    </a>
+                                    <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                        <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                        <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
+                                        <li><hr /></li>
+                                        <li class="dropdown-item">
+                                            <i class="pi pi-power-off" />
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </ui:insert>
+    </header>
+
+
+    <div id="contenido">
+        <ui:insert name="content"> </ui:insert>
+    </div>
+
+
+    <p:separator styleClass="mt-5" />
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <h:graphicImage library="img" name="logo.png" width="30px" />
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine, 2022</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-twitter"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-facebook"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-instagram"/> </a></li>
+            </ul>
+        </footer>
+    </div>
+
+
+    <!-- Dialogos de inicio de sesion y registro -->
+
+    <p:dialog widgetVar="registro" header="Registrarse" modal="true" showEffect="fade" resizable="false" class="dialogo" rendered="#{!seguridadBean.autenticado}">
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nombre_cliente" value="Nombres:" />
+                <p:inputText id="nombre_cliente" value="#{registroClienteBean.nombresCliente}" required="true" />
+                <p:message for="nombre_cliente" />
+
+                <p:outputLabel for="apellido_cliente" value="Apellidos:" />
+                <p:inputText id="apellido_cliente" value="#{registroClienteBean.apellidosCliente}" required="true" />
+                <p:message for="apellido_cliente" />
+
+                <p:outputLabel for="cedula_cliente" value="Numero de documento:" />
+                <p:inputText id="cedula_cliente" value="#{registroClienteBean.cliente.cedula}" required="true" />
+                <p:message for="cedula_cliente" />
+
+                <p:outputLabel for="email_cliente" value="Correo electronico:" />
+                <p:inputText id="email_cliente" value="#{registroClienteBean.cliente.email}" required="true"/>
+                <p:message for="email_cliente" />
+
+                <p:outputLabel for="contrasena_cliente" value="Contraseña:" />
+                <p:password id="contrasena_cliente" value="#{registroClienteBean.cliente.contrasena}" required="true" toggleMask="true"/>
+                <p:message for="contrasena_cliente" />
+
+                <p:outputLabel for="confirmacion_contrasena_cliente" value="Confirmar contraseña:" />
+                <p:password id="confirmacion_contrasena_cliente" value="#{registroClienteBean.confirmacionContrasena}" required="true" toggleMask="true"/>
+                <p:message for="confirmacion_contrasena_cliente" />
+
+                <p:outputLabel for="celular_cliente" value="Telefono celular:" />
+                <p:inputText id="celular_cliente" value="#{registroClienteBean.cliente.telefonoCelular}" />
+                <p:message for="celular_cliente" />
+
+                <p:outputLabel for="fijo_cliente" value="Telefono fijo:" />
+                <p:inputText id="fijo_cliente" value="#{registroClienteBean.cliente.telefonoFijo}" />
+                <p:message for="fijo_cliente" />
+
+                <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
+                <p:datePicker id="fecha_nacimiento_cliente" value="#{registroClienteBean.cliente.fechaNacimiento}" />
+            </h:panelGrid>
+
+            <p:commandButton value="Registrar" action="#{registroClienteBean.registrarCliente}" oncomplete="PF('registro').hide()" update="@form" />
+            <p:growl for="mensaje_registro" showDetail="true"/>
+        </h:form>
+    </p:dialog>
+
+    <p:dialog widgetVar="login" header="Inicio de Sesion" modal="true" showEffect="fade" resizable="false" rendered="#{!seguridadBean.autenticado}">
+        <span class="me-1 my-auto border-end">
+            <h:graphicImage library="img" name="logo2.png" styleClass="img-login" />
+        </span>
+
+        <span>
+            <h3>Iniciar Sesion en Unicine</h3>
+
+            <h:form>
+                <h:panelGrid columns="1" cellpadding="3">
+                    <p:commandButton icon="logo-google.svg" value="Continuar con Google" action="#{seguridadBean.iniciarSesionGoogle}" update="@form" />
+
+                    <p:separator />
+
+                    <span>
+                        <p:outputLabel for="correo_login" value="Correo electronico:"/>
+                        <p:inputText id="correo_login" value="#{seguridadBean.email}"/>
+                    </span>
+
+                    <span>
+                        <p:outputLabel for="contrasena_login" value="Contraseña:"/>
+                        <p:password id="contrasena_login" value="#{seguridadBean.contrasena}"/>
+                    </span>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Iniciar Sesion" action="#{seguridadBean.iniciarSesionCliente}" update="@form" />
+
+                <p:separator />
+
+                <p>¿Eres nuevo? <span onclick="PF('registro').show(); PF('login').hide()" class="enlace">Registrate</span> </p>
+                <p:growl for="mensaje_login" showDetail="true"/>
+            </h:form>
+        </span>
+
+    </p:dialog>
+
+    <p:growl for="mensaje_bean" showDetail="true"/>
+
+</h:body>
+</html>

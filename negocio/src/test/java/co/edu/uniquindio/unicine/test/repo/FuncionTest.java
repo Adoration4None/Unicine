@@ -38,7 +38,7 @@ public class FuncionTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void buscarFunciones() {
-        List<Funcion> funciones = funcionRepo.buscarFunciones("A", 1);
+        List<Funcion> funciones = funcionRepo.buscarPeliculas("A", 1);
 
         Assertions.assertNotNull(funciones);
         funciones.forEach(System.out::println);

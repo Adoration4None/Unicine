@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">#{detallePeliculaBean.pelicula.nombre}</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1 class="titulo my-4">#{detallePeliculaBean.pelicula.nombre}</h1>
+
+            <div class="row">
+                <div class="col-4" style="color: #D9D9D9; font-size: 1rem;">
+                    <div class="detalle-pelicula mx-2 p-3">
+                        <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
+                        <h4 class="mt-0 mb-3">#{detallePeliculaBean.pelicula.nombre}</h4>
+                        <h6 class="mt-0 mb-3">Reparto: #{detallePeliculaBean.pelicula.reparto}</h6>
+                        <h6 class="mt-0 mb-3">Estado: #{detallePeliculaBean.pelicula.estado}</h6>
+                        <h6 class="mt-0 mb-3">Generos:
+                            <p:repeat value="#{detallePeliculaBean.pelicula.nombresGeneros}" var="genero">
+                                <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
+                            </p:repeat>
+                        </h6>
+                    </div>
+                </div>
+
+                <div class="col-8" style="color: #D9D9D9; font-size: 1rem;">
+                    <h2 class="texto-resaltado">Sinopsis</h2>
+                    <h6 class="mt-0 mb-3">#{detallePeliculaBean.pelicula.sinopsis}</h6>
+                    <p:commandButton value="VER TRAILER" onclick="PF('trailer').show()" style="border-radius: 66px; color: #100E19;" />
+
+                    <h5 class="texto-resaltado mt-3">Funciones</h5>
+                    <div class="mb-3">
+                        <p:outputLabel styleClass="texto" for="seleccion_teatro" value="Filtrar por teatro: " />
+                        <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 30%;"
+                                         value="#{detallePeliculaBean.teatro}" converter="#{teatroConverter}">
+                            <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                            <f:selectItems value="#{detallePeliculaBean.teatrosPeliculaCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
+                            <p:ajax event="change" listener="#{principalBean.seleccionarTeatro}" update="detalle-funciones" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div jsf:id="detalle-funciones">
+
+                        <p:accordionPanel value="#{detallePeliculaBean.funcionesPelicula}" var="funcion">
+                            <p:tab title="#{funcion.horario.fecha} | #{funcion.horario.hora}" titleStyle="background: #1B1632; border: transparent; color: #D9D9D9">
+                                <div>
+                                    <div>
+                                        <div>Teatro: #{funcion.sala.teatro.nombre}</div>
+                                        <div>#{funcion.sala.teatro.direccion}</div>
+                                        <div>Sala: #{funcion.sala.id}</div>
+                                        <p:chip label="#{funcion.tipo}" styleClass="text-bg-dark"/>
+                                    </div>
+                                    <div class="product-list-action">
+                                        <h:form>
+                                            <h:outputText value="#{funcion.precio}" styleClass="product-price">
+                                                <f:convertNumber currencySymbol="$" type="currency"/>
+                                            </h:outputText>
+                                            <p:commandButton styleClass="me-0 ms-auto" value="COMPRAR" action="#{detallePeliculaBean.comprar(funcion)}" />
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Dialogo de trailer -->
+
+        <p:dialog widgetVar="trailer" modal="true" showEffect="fade" resizable="false" style="background: rgba(10, 8, 20, 0.9);">
+            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/kE8lM3tAeGg" title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true">
+            </iframe>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>
+
+</html>

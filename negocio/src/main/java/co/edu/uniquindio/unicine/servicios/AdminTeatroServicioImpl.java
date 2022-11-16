@@ -37,6 +37,9 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public AdministradorTeatro iniciarSesion(String email, String contrasena) throws Exception {
+        if( (email == null || email.equals("")) || (contrasena == null || contrasena.equals("")) )
+            throw new Exception("Datos incompletos");
+
         AdministradorTeatro administradorTeatroEncontrado = adminTeatroRepo.findByEmailAndContrasena(email, contrasena);
 
         if(administradorTeatroEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
@@ -246,4 +249,15 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public List<Horario> listarHorarios() { return horarioRepo.findAll(); }
+
+
+    // Otras consultas -----------------------------------------------------------------------------------------
+    @Override
+    public List<Teatro> obtenerTeatrosCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+
+        return teatroRepo.obtenerTeatrosCiudad(idCiudad);
+    }
+
+
 }

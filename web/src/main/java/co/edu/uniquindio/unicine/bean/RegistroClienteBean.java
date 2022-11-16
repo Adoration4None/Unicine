@@ -32,9 +32,13 @@ public class RegistroClienteBean implements Serializable {
     @Autowired
     private ClienteServicio clienteServicio;
 
+    @Getter @Setter
+    private boolean registroExitoso;
+
     @PostConstruct
     public void init() {
         cliente = new Cliente();
+        registroExitoso = false;
     }
 
     public void registrarCliente() {
@@ -43,8 +47,9 @@ public class RegistroClienteBean implements Serializable {
         if( cliente.getContrasena().equals(confirmacionContrasena) ) {
             try {
                 clienteServicio.registrar(cliente);
+                registroExitoso = true;
 
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro Exitoso", "Tu cuenta se ha registrado exitosamente!");
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro Exitoso", "Activa tu cuenta ingresando al enlace enviado a tu correo electronico");
                 FacesContext.getCurrentInstance().addMessage("mensaje_registro", fm);
             }
             catch (Exception e) {

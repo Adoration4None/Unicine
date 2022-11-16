@@ -56,4 +56,6 @@ public interface AdminTeatroServicio {
     Horario crearHorario(Horario horario) throws Exception;
 
     List<Horario> listarHorarios();
+
+    List<Teatro> obtenerTeatrosCiudad(Integer idCiudad) throws Exception;
 }
