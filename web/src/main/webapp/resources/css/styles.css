@@ -6,6 +6,11 @@
     max-width: 50rem;
 }
 
+.icono-admin {
+    width: 24px;
+    height: 24px;
+}
+
 .img-login{
     max-width: 120px;
 }
@@ -66,6 +71,18 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+.login-admin {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: #0A0814;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
 .seleccion_ciudad {
     background: #1B1632;
 }
@@ -112,6 +129,7 @@
     padding: 5%;
     margin-bottom: 10%;
 }
+
 
 
 

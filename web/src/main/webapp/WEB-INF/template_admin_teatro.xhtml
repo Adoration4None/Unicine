@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css" />
+    <h:outputStylesheet name="carousel.css" library="css" />
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+
+    <title>Unicine | <ui:insert name="title"> </ui:insert></title>
+</h:head>
+
+<h:body styleClass="body">
+    <header>
+        <ui:insert name="header">
+            <nav>
+                <div jsf:id="navegacion" class="navegacion">
+                    <div class="container-fluid">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
+                            <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="../admin_teatro/index_admin_teatro.xhtml" class="nav-link px-2 link-dark">
+                                        <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <ul class="nav col-12 col-lg-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                        <h:graphicImage library="img" name="store.png" styleClass="bi d-block mx-auto mb-1 icono-admin" />
+                                        Gestionar teatros
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                        <h:graphicImage library="img" name="tv.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
+                                        Gestionar funciones
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                        <h:graphicImage library="img" name="layers.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
+                                        Gestionar salas
+                                    </a>
+                                </li>
+                                <li class="mx-3"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            </ul>
+
+                            <h:form rendered="#{seguridadBean.autenticado}">
+                                <div class="dropdown text-end mx-3 my-1">
+                                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    </a>
+                                    <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del administrador</a></li>
+                                        <li class="dropdown-item">
+                                            <i class="pi pi-power-off" />
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </ui:insert>
+    </header>
+
+
+    <div id="contenido">
+        <ui:insert name="content"> </ui:insert>
+    </div>
+
+
+    <p:separator styleClass="mt-5" />
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <h:graphicImage library="img" name="logo.png" width="30px" />
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine, 2022</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-twitter"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-facebook"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-instagram"/> </a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <p:growl for="mensaje_admin_teatro" showDetail="true"/>
+</h:body>
+</html>

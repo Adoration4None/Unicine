@@ -49,6 +49,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         if (clienteEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
 
+        if( clienteEncontrado.getEstado() == EstadoPersona.INACTIVO ) throw new Exception("Cliente inactivo. Por favor active su cuenta");
+
         if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
 
         return clienteEncontrado;

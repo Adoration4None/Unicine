@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
+import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
 import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.Persona;
@@ -51,6 +52,7 @@ public class SeguridadBean implements Serializable {
     @PostConstruct
     public void init() {
         autenticado = false;
+        tipoSesion = -1;
     }
 
     public String iniciarSesionCliente() {
@@ -61,23 +63,13 @@ public class SeguridadBean implements Serializable {
                 tipoSesion = 2;
                 autenticado = true;
                 cliente = (Cliente) personaIngresada;
-                return "/index?faces-redirect=true";
+
+                if(ciudadSeleccionada != null)
+                    return "/index?faces-redirect=true&amp;city=" + ciudadSeleccionada.getId();
+                else
+                    return "/index?faces-redirect=true";
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    public String iniciarSesionAdminTeatro() {
-        try {
-            personaIngresada = adminTeatroServicio.iniciarSesion(email, contrasena);
-            tipoSesion = 1;
-            autenticado = true;
-
-            return "/index?faces-redirect=true";
         } catch (Exception e) {
             mostrarError(e);
         }
@@ -85,13 +77,27 @@ public class SeguridadBean implements Serializable {
         return "";
     }
 
-    public String iniciarSesionAdministrador() {
+    public String iniciarSesionAdmins() {
         try {
             personaIngresada = administradorServicio.iniciarSesion(email, contrasena);
-            tipoSesion = 0;
-            autenticado = true;
 
-            return "/index?faces-redirect=true";
+            if(personaIngresada != null) {
+                tipoSesion = 0;
+                autenticado = true;
+
+                return "/admin/index_admin?faces-redirect=true";
+            }
+            else {
+                personaIngresada = adminTeatroServicio.iniciarSesion(email, contrasena);
+
+                if(personaIngresada != null) {
+                    tipoSesion = 1;
+                    autenticado = true;
+
+                    return "/admin_teatro/index_admin_teatro?faces-redirect=true";
+                }
+            }
+
         } catch (Exception e) {
             mostrarError(e);
         }
@@ -111,11 +117,16 @@ public class SeguridadBean implements Serializable {
     public String seleccionarCiudad(Ciudad ciudad){
         if(ciudad != null) {
             ciudadSeleccionada = ciudad;
+
             return "/index?faces-redirect=true&amp;city=" + ciudad.getId();
         }
 
-
         return "";
+    }
+
+    public String restablecerCiudad() {
+        ciudadSeleccionada = null;
+        return "/index?faces-redirect=true";
     }
 
     private void mostrarError(Exception e) {

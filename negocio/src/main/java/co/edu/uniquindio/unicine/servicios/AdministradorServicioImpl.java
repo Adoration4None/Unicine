@@ -34,7 +34,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
             throw new Exception("Datos incompletos");
 
         if( !email.equals(EMAIL_ADMINISTRADOR) && !contrasena.equals(CONTRASENA_ADMINISTRADOR) )
-            throw new Exception("Datos de autenticacion incorrectos");
+            return null;
 
         return new Persona( "1111", "Ricardo Salinas", EMAIL_ADMINISTRADOR, CONTRASENA_ADMINISTRADOR);
     }
