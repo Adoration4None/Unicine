@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -45,13 +46,21 @@ public class ClienteServicioImpl implements ClienteServicio {
         if( email == null || email.equals("") || contrasena == null || contrasena.equals("") )
             throw new Exception("Datos incompletos");
 
-        Cliente clienteEncontrado = clienteRepo.findByEmailAndContrasena(email, contrasena);
+        Cliente clienteEncontrado = clienteRepo.findByEmail(email);
 
-        if (clienteEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
+        if (clienteEncontrado == null) throw new Exception("El correo ingresado no existe");
 
-        if( clienteEncontrado.getEstado() == EstadoPersona.INACTIVO ) throw new Exception("Cliente inactivo. Por favor active su cuenta");
+        if( clienteEncontrado.getEstado() == EstadoPersona.INACTIVO )
+            throw new Exception("Cliente inactivo. Por favor active su cuenta a traves del enlace enviado a su correo electronico");
 
-        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
+        // Comprobar contraseña encriptada
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+
+        if( !spe.checkPassword(contrasena, clienteEncontrado.getContrasena() ) )
+            throw new Exception("La contraseña es incorrecta");
+
+        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) )
+            enviarCuponCumpleanios(clienteEncontrado);
 
         return clienteEncontrado;
     }
@@ -79,6 +88,10 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         if ( emailExiste(cliente.getEmail()) )
             throw new Exception("El correo que intenta registrar ya existe");
+
+        // Encriptacion de contraseña
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        cliente.setContrasena( spe.encryptPassword( cliente.getContrasena() ) );
 
         // Setteo del estado inactivo para mayor seguridad
         cliente.setEstado(EstadoPersona.INACTIVO);
