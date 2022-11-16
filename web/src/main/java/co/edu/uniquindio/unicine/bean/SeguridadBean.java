@@ -110,8 +110,13 @@ public class SeguridadBean implements Serializable {
     }
 
     public String cerrarSesion() {
+        int tipoSesion = getTipoSesion();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/index?faces-redirect=true";
+
+        if(tipoSesion == 2)
+            return "/index?faces-redirect=true";
+
+        return "/login_admin?faces-redirect=true";
     }
 
     public String seleccionarCiudad(Ciudad ciudad){

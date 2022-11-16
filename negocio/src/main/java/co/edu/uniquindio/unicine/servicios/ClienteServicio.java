@@ -10,7 +10,7 @@ public interface ClienteServicio {
 
     Cliente registrar(Cliente cliente) throws Exception;
 
-    Cliente activarCuenta(Cliente cliente) throws Exception;
+    Cliente activarCuenta(String email, String fecha) throws Exception;
 
     Cliente actualizar(Cliente cliente) throws Exception;
 

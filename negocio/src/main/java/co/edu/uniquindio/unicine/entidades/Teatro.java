@@ -29,6 +29,7 @@ public class Teatro implements Serializable {
     @NonNull
     private String direccion;
 
+    @Lob
     private String imagen;
 
     // Relaciones -------------------------------------------------------------------

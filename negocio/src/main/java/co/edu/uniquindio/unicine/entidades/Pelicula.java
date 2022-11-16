@@ -22,10 +22,12 @@ public class Pelicula implements Serializable {
     @NonNull
     private String nombre;
 
+    @Lob
     @Column(nullable = false)
     @NonNull
     private String imagen;
 
+    @Lob
     @Column(nullable = false)
     @NonNull
     private String trailer;

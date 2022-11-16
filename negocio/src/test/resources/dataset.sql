@@ -1,9 +1,9 @@
 INSERT INTO cliente VALUES
-                        ("1223", "a123", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram",   null,        "344990", null),
-                        ("1235", "b123", "diam.proin@google.couk",   "ACTIVO",   "ruta foto 2", "Ian Horn",      null,        null,     "7556"),
-                        ("2345", "c123", "nisi@icloud.ca",           "INACTIVO", "ruta foto 3", "Ivor Randolph", null,        "33322",  "7665"),
-                        ("9876", "d123", "dignissim@google.edu",     "INACTIVO", "ruta foto 4", "Kirsten Reese", "1980-02-28", null,    null),
-                        ("3344", "e123", "curabitur@google.couk",    "ACTIVO",   "ruta foto 5", "Reagan Romero", "1991-06-27", null,    null);
+                        ("1223", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram",   null,        "344990", null),
+                        ("1235", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "diam.proin@google.couk",   "ACTIVO",   "ruta foto 2", "Ian Horn",      null,        null,     "7556"),
+                        ("2345", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "nisi@icloud.ca",           "INACTIVO", "ruta foto 3", "Ivor Randolph", null,        "33322",  "7665"),
+                        ("9876", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dignissim@google.edu",     "INACTIVO", "ruta foto 4", "Kirsten Reese", "1980-02-28", null,    null),
+                        ("3344", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "curabitur@google.couk",    "ACTIVO",   "ruta foto 5", "Reagan Romero", "1991-06-27", null,    null);
 
 INSERT INTO ciudad VALUES
                        (1, "Quindio", "Armenia"),
@@ -15,11 +15,11 @@ INSERT INTO ciudad VALUES
                        (7, "Antioquia", "Armenia");
 
 INSERT INTO administrador_teatro VALUES
-                        ("2454", "QWL22XGI4SX", "virginiaingram@outlook.couk", "ACTIVO",   "ruta foto 1", "Virginia Ingram"),
-                        ("3346", "JFV33PHQ0HH", "lewisgood@outlook.ca",        "ACTIVO",   "ruta foto 2", "Lewis Good"),
-                        ("9503", "BRQ58RPZ6FC", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley"),
-                        ("4508", "GFHTR5YU9IJ", "samu@edmodo.edu.co",          "ACTIVO",   "ruta foto 4", "Samuel García"),
-                        ("7621", "DTR8UY6IS32", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez");
+                        ("2454", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "virginiaingram@outlook.couk", "ACTIVO",   "ruta foto 1", "Virginia Ingram"),
+                        ("3346", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "lewisgood@outlook.ca",        "ACTIVO",   "ruta foto 2", "Lewis Good"),
+                        ("9503", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley"),
+                        ("4508", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "samu@edmodo.edu.co",          "ACTIVO",   "ruta foto 4", "Samuel García"),
+                        ("7621", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez");
 
 INSERT INTO teatro VALUES
                        (1, "Calle 3 #5",                     "ruta foto 1", "Multiplex Unicentro",   "2454", 1),
