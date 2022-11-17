@@ -1,5 +1,6 @@
 /.idea/
 /negocio/build/
+/web/build/
 *.class
 /.gradle/
 /src/

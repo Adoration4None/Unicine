@@ -2,10 +2,14 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,11 +49,21 @@ public class ClienteServicioImpl implements ClienteServicio {
         if( email == null || email.equals("") || contrasena == null || contrasena.equals("") )
             throw new Exception("Datos incompletos");
 
-        Cliente clienteEncontrado = clienteRepo.findByEmailAndContrasena(email, contrasena);
+        Cliente clienteEncontrado = clienteRepo.findByEmail(email);
 
-        if (clienteEncontrado == null) throw new Exception("Datos de autenticacion incorrectos");
+        if (clienteEncontrado == null) throw new Exception("El correo ingresado no existe");
 
-        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) ) enviarCuponCumpleanios(clienteEncontrado);
+        if( clienteEncontrado.getEstado() == EstadoPersona.INACTIVO )
+            throw new Exception("Cliente inactivo. Por favor active su cuenta a traves del enlace enviado a su correo electronico");
+
+        // Comprobar contraseña encriptada
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+
+        if( !spe.checkPassword(contrasena, clienteEncontrado.getContrasena() ) )
+            throw new Exception("La contraseña es incorrecta");
+
+        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) )
+            enviarCuponCumpleanios(clienteEncontrado);
 
         return clienteEncontrado;
     }
@@ -78,13 +92,16 @@ public class ClienteServicioImpl implements ClienteServicio {
         if ( emailExiste(cliente.getEmail()) )
             throw new Exception("El correo que intenta registrar ya existe");
 
+        // Encriptacion de contraseña
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        cliente.setContrasena( spe.encryptPassword( cliente.getContrasena() ) );
+
         // Setteo del estado inactivo para mayor seguridad
         cliente.setEstado(EstadoPersona.INACTIVO);
 
         Cliente guardado = clienteRepo.save(cliente);
 
         enviarConfirmacion(guardado);
-        enviarCuponBienvenida(guardado);
 
         return guardado;
     }
@@ -94,15 +111,24 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     private void enviarConfirmacion(Cliente cliente) {
-        String mensaje = "Hola, " + cliente.getNombreCompleto() + "! Acaba de crear su cuenta en Unicine. " +
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Bogota"));
+
+        String param1 = textEncryptor.encrypt( cliente.getEmail() );
+        String param2 = textEncryptor.encrypt( "" + zdt.toInstant().toEpochMilli() );
+
+        String mensaje = "¡Hola, " + cliente.getNombreCompleto() + "! Acaba de crear su cuenta en Unicine. " +
                 "Antes de hacer uso de nuestros servicios, por favor confirme su correo electronico a traves del siguiente enlace: " +
-                "https://bit.ly/3s7ETPZ";
+                "http://localhost:8080/activar_cuenta.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Confirmacion E-mail Unicine", mensaje, cliente.getEmail());
     }
 
     private void enviarCuponBienvenida(Cliente cliente) {
-        String mensaje = "Disfruta ahora mismo un cupon de bienvenida totalmente gratis " +
+        String mensaje = "¡Disfruta ahora mismo un cupon de bienvenida totalmente gratis " +
                 "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
                 "https://bit.ly/3s7ETPZ";
@@ -111,14 +137,26 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public Cliente activarCuenta(Cliente cliente) throws Exception {
-        if(cliente == null) throw new Exception("No hay cliente al cual activar cuenta");
-        if( !emailExiste(cliente.getEmail()) ) throw new Exception("El cliente no existe en la base de datos");
+    public Cliente activarCuenta(String email, String fecha) throws Exception {
+        email = email.replaceAll(" ", "+");
+        fecha = fecha.replaceAll(" ", "+");
 
-        cliente.setEstado(EstadoPersona.ACTIVO);
-        clienteRepo.save(cliente);
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
 
-        return cliente;
+        String emailDesencriptado = textEncryptor.decrypt(email);
+        String fechaDescencriptada = textEncryptor.decrypt(fecha);
+
+        Cliente clienteEncontrado = clienteRepo.findByEmail(emailDesencriptado);
+
+        if(clienteEncontrado == null) throw new Exception("El cliente no existe");
+
+        clienteEncontrado.setEstado(EstadoPersona.ACTIVO);
+        clienteRepo.save(clienteEncontrado);
+
+        enviarCuponBienvenida(clienteEncontrado);
+
+        return clienteEncontrado;
     }
 
     @Override

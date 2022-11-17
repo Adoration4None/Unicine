@@ -24,6 +24,7 @@ public class Confiteria implements Serializable {
     @Column(length = 50, nullable = false, unique = true)
     private String nombre;
 
+    @Lob
     @Column(nullable = false)
     private String imagen;
 

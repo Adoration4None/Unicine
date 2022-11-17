@@ -47,8 +47,11 @@
                                     <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
                                     <li><a class="dropdown-item" href="#">Historial de compras</a></li>
                                     <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
+                                    <li><hr /></li>
+                                    <li class="dropdown-item">
+                                        <i class="pi pi-power-off" />
+                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                    </li>
                                 </ul>
                             </div>
                         </h:form>
@@ -62,12 +65,15 @@
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                         <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
                             <li>
-                                <a href="/" class="nav-link px-2 link-dark">
+                                <a href="index.xhtml?city=#{seguridadBean.ciudadSeleccionada.id}" class="nav-link px-2 link-dark">
                                     <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
                                 </a>
                             </li>
                             <li class="mx-1 my-1 align-items-center">
-                                #{principalBean.nombreCiudad}
+                                <h:form>
+                                    <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" update=""
+                                                     action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
+                                </h:form>
                             </li>
                         </ul>
 
@@ -77,7 +83,7 @@
                                 <p:inputText styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 50%;"
                                              placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
 
-                                <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form"
+                                <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
                                                  icon="pi pi-chevron-right" action="#{buscarPeliculaBean.buscarPelicula}">
                                 </p:commandButton>
                             </div>
@@ -98,8 +104,11 @@
                                     <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
                                     <li><a class="dropdown-item" href="#">Historial de compras</a></li>
                                     <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="pi pi-power-off" /> Cerrar sesion</a></li>
+                                    <li><hr /></li>
+                                    <li class="dropdown-item">
+                                        <i class="pi pi-power-off" />
+                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                    </li>
                                 </ul>
                             </div>
                         </h:form>
