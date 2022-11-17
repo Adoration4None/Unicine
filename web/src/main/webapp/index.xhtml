@@ -71,7 +71,6 @@
 
                         <h:form styleClass="w-50 ms-auto me-0">
                             <div role="search">
-                                <!--  aqui no me funciono ponerle el tamaño usando la clase -->
                                 <p:inputText styleClass="mx-2 busqueda"
                                              placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
 
@@ -210,7 +209,6 @@
                                 <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
                                     <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
                                             <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
@@ -232,7 +230,6 @@
                                 <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
                                     <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
                                             <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>

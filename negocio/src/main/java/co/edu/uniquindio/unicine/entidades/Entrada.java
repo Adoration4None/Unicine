@@ -8,12 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Entrada implements Serializable {
+    private static final Float PRECIO_BASE = 8000.0f;
+
     // Atributos --------------------------------------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,14 @@ public class Entrada implements Serializable {
 
     @Column(nullable = false)
     @PositiveOrZero
-    @NonNull
     private Integer filaAsiento;
 
     @Column(nullable = false)
     @PositiveOrZero
-    @NonNull
     private Integer columnaAsiento;
+
+    @Column(nullable = false)
+    private Float precio = PRECIO_BASE;
 
     // Relaciones -------------------------------------------------------------------------------------------
     @ManyToOne
@@ -43,5 +45,12 @@ public class Entrada implements Serializable {
     public Entrada(@NonNull Integer filaAsiento, @NonNull Integer columnaAsiento) {
         this.filaAsiento = filaAsiento;
         this.columnaAsiento = columnaAsiento;
+    }
+
+    public Float calcularPrecio() {
+        if( sala.getTipo() == TipoSala.SALA_3D ) precio += (precio * 0.25f);
+        if( sala.getTipo() == TipoSala.SALA_XD ) precio += (precio * 0.5f);
+
+        return precio;
     }
 }

@@ -71,7 +71,7 @@ public class Compra implements Serializable {
         total += obtenerTotalEntradas();
 
         if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
-        if(this.cuponCliente != null) total -= (total * this.cuponCliente.obtenerPorcentajeDescuento());
+        if(this.cuponCliente != null) total -= (total * this.cuponCliente.obtenerPorcentajeDescuento()/100);
 
         this.valorTotal = total;
         return this.valorTotal;
@@ -84,7 +84,13 @@ public class Compra implements Serializable {
     }
 
     public float obtenerTotalEntradas() {
-        return this.funcion.getPrecio() * entradas.size();
+        float total = 0;
+
+        for(Entrada e : entradas) {
+            total += e.calcularPrecio();
+        }
+
+        return total;
     }
 
     public void agregarCompraConfiteria(CompraConfiteria compraConfiteria) {

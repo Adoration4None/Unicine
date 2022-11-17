@@ -35,24 +35,26 @@
 
                             <ul class="nav col-12 col-lg-auto justify-content-center align-items-center">
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="store.png" styleClass="bi d-block mx-auto mb-1 icono-admin" />
                                         Gestionar teatros
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="tv.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
                                         Gestionar funciones
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="layers.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
                                         Gestionar salas
                                     </a>
                                 </li>
-                                <li class="mx-3"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                                <li class="mx-3">
+                                    <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" />
+                                </li>
                             </ul>
 
                             <h:form rendered="#{seguridadBean.autenticado}">
@@ -64,7 +66,7 @@
                                         <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del administrador</a></li>
                                         <li class="dropdown-item">
                                             <i class="pi pi-power-off" />
-                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
                                         </li>
                                     </ul>
                                 </div>

@@ -25,6 +25,14 @@ public class Sala implements Serializable {
     @NonNull
     private Integer cantidadSillas;
 
+    @Column(nullable = false)
+    @NonNull
+    private Integer filas;
+
+    @Column(nullable = false)
+    @NonNull
+    private Integer columnas;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     @NonNull
@@ -43,8 +51,4 @@ public class Sala implements Serializable {
     @NonNull
     private Teatro teatro;
 
-    // Metodos -------------------------------------------------------------------
-    public void agregarFuncion(Funcion funcion) {
-        funciones.add(funcion);
-    }
 }

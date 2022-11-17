@@ -110,20 +110,7 @@ body {
     -webkit-backdrop-filter: blur(8.4px);
     padding: 5%;
     margin-bottom: 10%;
-}
-
-.detalle-pelicula {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    width: 300px;
-    background: rgba(27, 22, 50, 0.5);
-    border-radius: 16px;
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8.4px);
-    -webkit-backdrop-filter: blur(8.4px);
-    padding: 5%;
-    margin-bottom: 10%;
+    color: #D9D9D9
 }
 
 .ui-selectonemenu.selector {
@@ -140,7 +127,7 @@ body {
     width: 60%;
 }
 
-.ui-button.boton {
+.ui-button.boton{
     background: #6B8CE1;
     color: #0A0814;
     border-radius: 50px;
@@ -206,6 +193,36 @@ body {
     background: rgba(10, 8, 20, 0.9);
 }
 
+.texto-barra-admin {
+    font-size: 12px !important;
+}
+
+.texto-normal {
+    color: #D9D9D9;
+    font-size: 1rem;
+}
+
+body .ui-accordion {
+    border: none !important;
+}
+
+.ui-accordion-header {
+    background: #1B1632 !important;
+    border: none !important;
+    color: #D9D9D9 !important;
+}
+
+.ui-accordion-content {
+    border: none; !important;
+    color: #0A0814 !important;
+}
+
+.precio {
+    font-family: var(--bs-body-font-family);
+    color: #6B8CE1;
+    font-weight: bold;
+    font-size: 1.325rem;
+}
 
 
 
