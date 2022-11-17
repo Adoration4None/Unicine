@@ -20,7 +20,9 @@
         <p:dataTable id="datatable_prueba" value="#{usuarioBean.clientes}" var="cliente" paginator="true" rows="2"
                      rowKey="#{cliente.cedula}" paginatorPosition="bottom"
                      selection="#{usuarioBean.clientesSeleccionados}">
+
            <p:column selectionMode="multiple" exportable="false"/>
+
             <p:column headerText="Cedula">
                 <h:outputText value="#{cliente.cedula}"/>
             </p:column>
@@ -38,31 +40,46 @@
             </p:column>
 
             <p:column headerText="">
-                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(cliente)}"
+                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(cliente)}"/>
             </p:column>
 
         </p:dataTable>
     </h:form>
-    <div class="container">
-        <div>
-            <h1>En cartelera</h1>
-            <div>
-                <p:selectOneMenu id="selector_18" value="#{usuarioBean.cliente.estado}" converter="#{ciudadConverter }">
-                    <!--se crea un converter para que coja el widget como un objeto para el sql/-->
-                    <!--con una funcion para traer como objeto y otra como string/-->
-                    <!--f:selectItems value="#{usuarioBean.clientes}" var="usuario" itemLabel="#{usuario.nombre}" itemValue="#{usuario}"/-->
-                    <f:selectItem itemLabel="Select One" noSelectionOption="true" itemValue="#{null}"/>
-                    <f:selectItem itemLabel="Option1" itemValue="Option1" var="ciudad"/>
-                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
-                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
-                </p:selectOneMenu>
-            </div>
-        </div>
-        <div>
-            <h1>Proximamente</h1>
-            <div></div>
-        </div>
-    </div>
+
+    <p:dialog id="crear" widgetVar="crear_pelicula" modal="true" header="Crear pelicula" showEffect="fade">
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nombre_pelicula" value="Nombre:"/>
+                <p:inputText id="nombre_pelicula" value="#{peliculaBean.pelicula.nombre}" required="true"/>
+                <p:message for="nombre_pelicula"/>
+
+                <p:outputLabel for="estado_pelicula" value="Estado:"/>
+                <p:inputText id="estado_pelicula" value="#{peliculaBean.pelicula.estado}" required="true"/>
+                <p:message for="estado_pelicula"/>
+
+                <p:outputLabel for="imagen_pelicula" value="Imagen:"/>
+                <p:inputText id="imagen_pelicula" value="#{peliculaBean.pelicula.imagen}" required="true"/>
+                <p:message for="imagen_pelicula"/>
+
+                <p:outputLabel for="reparto_pelicula" value="Reparto:"/>
+                <p:inputTextarea id="reparto_pelicula" rows="3" value="#{peliculaBean.pelicula.reparto}" required="true"/>
+                <p:message for="reparto_pelicula"/>
+
+                <p:outputLabel for="sinopsis_pelicula" value="Sinopsis:"/>
+                <p:inputTextarea id="sinopsis_pelicula" rows="3" value="#{peliculaBean.pelicula.sinopsis}" required="true"/>
+                <p:message for="sinopsis_pelicula"/>
+
+                <p:outputLabel for="trailer_pelicula" value="Trailer:"/>
+                <p:inputText id="trailer_pelicula" value="#{peliculaBean.pelicula.trailer}" required="true"/>
+                <p:message for="trailer_pelicula"/>
+            </h:panelGrid>
+            <p:commandButton icon="pi pi-spin pi-spinner" action="#{peliculaBean.crearPelicula()}" value="CREAR" update="@form"/>
+            <!-- el update debería de tener un @form,id_form_datatable:lista_datatable para actuzlizar el datatable -->
+            <!-- sirven para hacer mensajes y notificaciones de mensajes -->
+            <!-- qué es el for="mensaje_bean" de abajo? -->
+            <p:growl for="mensaje_bean" showDetail="true"/>
+        </h:form>
+    </p:dialog>
 
 </h:body>
 </html>
