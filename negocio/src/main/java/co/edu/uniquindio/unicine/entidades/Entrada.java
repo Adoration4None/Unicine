@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -38,4 +38,10 @@ public class Entrada implements Serializable {
     @ManyToOne
     @ToString.Exclude
     private Compra compra;
+
+    @Builder
+    public Entrada(@NonNull Integer filaAsiento, @NonNull Integer columnaAsiento) {
+        this.filaAsiento = filaAsiento;
+        this.columnaAsiento = columnaAsiento;
+    }
 }

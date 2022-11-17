@@ -5,3 +5,4 @@
 /src/
 /negocio/src/main/resources/application.properties
 /web/src/main/resources/application.properties
+/web/build

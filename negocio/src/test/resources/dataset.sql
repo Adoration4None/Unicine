@@ -1,9 +1,9 @@
 INSERT INTO cliente VALUES
                         ("1223", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram",   null,        "344990", null),
-                        ("1235", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "diam.proin@google.couk",   "ACTIVO",   "ruta foto 2", "Ian Horn",      null,        null,     "7556"),
-                        ("2345", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "nisi@icloud.ca",           "INACTIVO", "ruta foto 3", "Ivor Randolph", null,        "33322",  "7665"),
-                        ("9876", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dignissim@google.edu",     "INACTIVO", "ruta foto 4", "Kirsten Reese", "1980-02-28", null,    null),
-                        ("3344", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "curabitur@google.couk",    "ACTIVO",   "ruta foto 5", "Reagan Romero", "1991-06-27", null,    null);
+                        ("1235", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "diam.proin@google.couk",   "ACTIVO",   "https://memeguy.com/photos/images/just-some-random-profile-photo-on-okcupid-136668.png", "Ian Horn",      null,        null,     "7556"),
+                        ("2345", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "nisi@icloud.ca",           "INACTIVO", "https://www.ourteennetwork.com/cacheimagenes/px750-278415131.jpg", "Ivor Randolph", null,        "33322",  "7665"),
+                        ("9876", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dignissim@google.edu",     "INACTIVO", "https://i.pinimg.com/originals/d8/88/f8/d888f8242970ff9ac5ab7e8dcc3ab824.jpg", "Kirsten Reese", "1980-02-28", null,    null),
+                        ("3344", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "curabitur@google.couk",    "ACTIVO",   "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "Reagan Romero", "1991-06-27", null,    null);
 
 INSERT INTO ciudad VALUES
                        (1, "Quindio", "Armenia"),
@@ -22,11 +22,11 @@ INSERT INTO administrador_teatro VALUES
                         ("7621", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez");
 
 INSERT INTO teatro VALUES
-                       (1, "Calle 3 #5",                     "ruta foto 1", "Multiplex Unicentro",   "2454", 1),
-                       (2, "Carrera 22 #33-12",              "ruta foto 2", "Cineplaza",             "3346", 2),
-                       (3, "Carrera 23 - 12",                "ruta foto 3", "Multicines AstorPlaza", "7621", 3),
-                       (4, "Al lado del Ara de Las Acacias", "ruta foto 4", "Portal del Circaso",    "9503", 5),
-                       (5, "Sidney, Bogotá Cr 15 - 19",      "ruta foto 5", "Arboleda Theaters",     "4508", 4);
+                       (1, "Calle 3 #5",                     "https://www.money.com.bo/wp-content/uploads/2020/09/cine.jpg", "Multiplex Unicentro",   "2454", 1),
+                       (2, "Carrera 22 #33-12",              "https://img.ecartelera.com/noticias/42700/42728-m.jpg", "Cineplaza",             "3346", 2),
+                       (3, "Carrera 23 - 12",                "https://www.oregonlive.com/resizer/HTL5G5X0T978-f6X979beLAazbI=/1280x0/smart/advancelocal-adapter-image-uploads.s3.amazonaws.com/image.oregonlive.com/home/olive-media/width2048/img/ent_impact_tvfilm/photo/cinema-21-marquee-61a584c883868fbd.jpg", "Multicines AstorPlaza", "7621", 3),
+                       (4, "Al lado del Ara de Las Acacias", "https://img.ecartelera.com/noticias/42700/42728-m.jpg", "Portal del Circaso",    "9503", 5),
+                       (5, "Sidney, Bogotá Cr 15 - 19",      "https://www.money.com.bo/wp-content/uploads/2020/09/cine.jpg", "Arboleda Theaters",     "4508", 4);
 
 INSERT INTO sala VALUES
                     -- id, # sillas, tipo, teatro
@@ -47,16 +47,16 @@ INSERT INTO sala VALUES
                         (8, "Comedia");
 
 INSERT INTO pelicula VALUES
-                         ("One Piece Film: Red", "ESTRENO",           "ruta imagen", "Actores de voz",   "Piratas",           "ruta trailer"),
-                         ("Fast & Furious 10",   "PREVENTA",          "ruta imagen", "Actores",          "Carros y bala",     "ruta trailer"),
-                         ("Taxi Driver",         "ESTRENO",           "ruta imagen", "Actores",          "Taxi, accion",      "ruta trailer"),
-                         ("The Batman",          "ULTIMAS_FUNCIONES", "ruta imagen", "Actores",          "Otra de Batman",    "ruta trailer" ),
-                         ("The Truman Show",     "PREVENTA",          "ruta imagen", "actores de voice", "Comedia Dramatica", "ruta trailer"),
-                         ("Lilo Lilo Cocodrilo", "PREVENTA",          "ruta imagen", "Actores",          "Cocodrilo chistoso", "ruta trailer");
+                         ("One Piece Film: Red", "ESTRENO",           "https://ogre.natalie.mu/media/news/eiga/2022/0608/onepiecefilmred_poster202206.jpg?imwidth=750&imdensity=1",                                                   "Actores de voz",   "Piratas",           "https://www.youtube-nocookie.com/embed/kE8lM3tAeGg"),
+                         ("Fast and Furious 10", "PREVENTA",          "http://www.cinepsis.fr/wp-content/uploads/2014/11/fast-furious-poster-big-new-fast-furious-7-poster-brings-the-awesome-previous-6-posters-bring-the-sad.jpeg", "Actores",          "Carros y bala",     "https://www.youtube.com/embed/inW3uM3j5G4"),
+                         ("Taxi Driver",         "ESTRENO",           "https://image.tmdb.org/t/p/original/9l2kF2lTcLb4LtSMh5MU0dZEjQK.jpg",                                                                                          "Actores",          "Taxi, accion",      "https://www.youtube.com/embed/T5IligQP7Fo"),
+                         ("The Batman",          "ULTIMAS_FUNCIONES", "https://wallpapercave.com/wp/wp7245952.jpg",                                                                                                                   "Actores",          "Otra de Batman",    "https://www.youtube.com/embed/fWQrd6cwJ0A" ),
+                         ("The Truman Show",     "PREVENTA",          "https://image.tmdb.org/t/p/original/vuza0WqY239yBXOadKlGwJsZJFE.jpg",                                                                                          "actores de voice", "Comedia Dramatica", "https://www.youtube.com/embed/dlnmQbPGuls"),
+                         ("Lilo Lilo Cocodrilo", "PREVENTA",          "https://www.sonypictures.com.mx/sites/mexico/files/2022-08/LLC_1400x2100.jpg",                                                                                 "Actores",          "Cocodrilo chistoso", "https://www.youtube.com/embed/JZckRZLzmU4");
 
 INSERT INTO pelicula_generos VALUES
                          ("One Piece Film: Red", 5),
-                         ("Fast & Furious 10", 3),
+                         ("Fast and Furious 10", 3),
                          ("Taxi Driver", 3),
                          ("The Batman", 3),
                          ("The Truman Show", 8),
@@ -77,11 +77,11 @@ INSERT INTO funcion VALUES
                     --  id, precio,  tipo,      horario,     pelicula,           sala
                         (1, 15000, "FUNCION_3D",    2,     "One Piece Film: Red",  2),
                         (2, 17000, "FUNCION_2D",    8,     "Taxi Driver",          4),
-                        (3, 20000, "FUNCION_XD",    6,     "Fast & Furious 10",    3),
+                        (3, 20000, "FUNCION_XD",    6,     "Fast and Furious 10",    3),
                         (4, 12500, "FUNCION_3D",    7,     "The Truman Show",      5),
                         (5, 6000,  "FUNCION_XD",    1,     "The Batman",           1),
                         (6, 10000, "FUNCION_3D",    6,     "Lilo Lilo Cocodrilo",  2),
-                        (7, 20000, "FUNCION_XD",    8,     "Fast & Furious 10",    5);
+                        (7, 20000, "FUNCION_XD",    8,     "Fast and Furious 10",    5);
 
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA", "Cupon de bienvenida",                       "2022-10-05", "Hola Mundo",      5000),
@@ -117,11 +117,11 @@ INSERT INTO entrada VALUES
                         (7,    4,     9,    null,   4);
 
 INSERT INTO confiteria VALUES
-                           (1, "Cafe helado",                                                "AGOTADO",    "ruta imagen 3", "Granizado de cafe",   50000, 3),
-                           (2, "Gaseosa Postobon de tamarindo con sal y limon",              "DISPONIBLE", "ruta imagen 1", "Tamarindo michelado",  6000, 6),
-                           (3, "Brownie con azucar glass y fresas",                          "AGOTADO",    "ruta imagen 2", "Brownie especial",     5000, 47),
-                           (4, "Perro caliente con aji, papas, salsas y salchicha Ranchera", "DISPONIBLE", "ruta imagen 6", "HotDog de la night",  30000, 12),
-                           (5, "Hamburguesa con papas",                                      "DISPONIBLE", "ruta imagen 5", "Hamburguesa",         10000, 15);
+                           (1, "Cafe helado",                                                "AGOTADO",    "https://okdiario.com/img/recetas/2016/10/25/cafe-helado-vietnamita.jpg", "Granizado de cafe",   50000, 3),
+                           (2, "Gaseosa Postobon de tamarindo con sal y limon",              "DISPONIBLE", "https://www.quericony.com/wp-content/uploads/2022/04/DSC00102-scaled.jpg", "Tamarindo michelado",  6000, 6),
+                           (3, "Brownie con azucar glass y fresas",                          "AGOTADO",    "https://iambaker.net/wp-content/uploads/2017/02/brownie-valentine-day.jpg", "Brownie especial",     5000, 47),
+                           (4, "Perro caliente con aji, papas, salsas y salchicha Ranchera", "DISPONIBLE", "https://fastlife.fastshop.com.br/wp-content/uploads/2018/07/shutterstock_306116708.jpg", "HotDog de la night",  30000, 12),
+                           (5, "Hamburguesa con papas",                                      "DISPONIBLE", "https://s-i.huffpost.com/gen/1130209/images/o-BURGERS-facebook.jpg", "Hamburguesa",         10000, 15);
 
 INSERT INTO compra_confiteria VALUES
                                -- id, precio, unidades compradas, comestible, compra

@@ -13,15 +13,19 @@
     <ui:define name="content">
         <div class="container">
             <div class="card">
-                <h:form>
-                    <p:selectManyButton value="#{compraBean.asientosEscogidos}">
-                        <f:selectItem itemLabel="Option 1" itemValue="Option 1"/>
-                        <f:selectItem itemLabel="Option 2" itemValue="Option 2"/>
-                        <f:selectItem itemLabel="Option 3" itemValue="Option 3"/>
-                    </p:selectManyButton>
-                </h:form>
+                <p:repeat value="#{compraBean.matriz}" var="fila">
+                    <div class="fila-matriz" >
+                        <p:repeat value="#{fila}" var="entrada">
+                            <div class="item-silla d-inline-block" style="border: 1px solid" >
+                                <h:form>
+                                    <p>#{entrada.filaAsiento} #{entrada.columnaAsiento} </p>
+                                    <p:ajax event="click" listener="#{compraBean.guadarSilla(entrada.filaAsiento, entrada.columnaAsiento)}" />
+                                </h:form>
+                            </div>
+                        </p:repeat>
+                    </div>
+                </p:repeat>
             </div>
-
 
         </div>
     </ui:define>
