@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
+import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
 import co.edu.uniquindio.unicine.entidades.Cliente;
 import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
@@ -26,16 +27,9 @@ public class PeliculaBean implements Serializable {
     @Autowired
     private AdministradorServicio administradorServicio;
 
-    @Autowired
-    private ClienteServicio clienteServicio;
-
     @Getter
     @Setter
     private Pelicula pelicula;
-
-    @Getter
-    @Setter
-    private String mensajeExito;
 
     @Getter
     @Setter
@@ -45,10 +39,7 @@ public class PeliculaBean implements Serializable {
     @Getter @Setter
     private String busqueda;
 
-    private boolean editar;
-    @Getter
-    @Setter
-    private String idCiudad;
+    private Boolean editar;
 
     @Getter @Setter
     private List<Pelicula> peliculasBusqueda;
@@ -62,44 +53,49 @@ public class PeliculaBean implements Serializable {
     public void init(){
         pelicula = new Pelicula();
         editar=false;
-        peliculasBusqueda = new ArrayList<>();
+        peliculasSeleccionadas = new ArrayList<>();
         peliculas = administradorServicio.listarPeliculas();
     }
-    public String crearPelicula(){
+    public void crearPelicula(){
         try {
-            pelicula.setEstado(EstadoPelicula.PREVENTA);
-            administradorServicio.crearPelicula(pelicula);
-            //aqui debe de ir un pelicula=new Pelicula(); para actualizar el datatable
-            mensajeExito= "Felicitaciones, has creado una pelicula exitosamente \n "+pelicula.toString();
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de pelicula exitoso");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
-            return "pagina_exito2?faces-redirect=true";
+            if(!editar){
+                Pelicula peli = administradorServicio.crearPelicula(pelicula);
+                peliculas.add(peli);
+                pelicula = new Pelicula();
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de pelicula exitoso");
+                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            }
+            else{
+                administradorServicio.actualizarPelicula(pelicula);
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula actualizada");
+                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            }
+
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
             FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
         }
-        return null;
     }
 
-    public void showMessage(){
-        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "pelicula creada exitosamente", pelicula.toString());
-        FacesContext.getCurrentInstance().addMessage("mensaje_exito", facesMsg);
-    }
+//    public void showMessage(){
+//        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "pelicula creada exitosamente", pelicula.toString());
+//        FacesContext.getCurrentInstance().addMessage("mensaje_exito", facesMsg);
+//    }
 
-    public String buscarPelicula() {
-        if (busqueda != null && !busqueda.isEmpty()) {
-            try {
-                peliculasBusqueda = clienteServicio.buscarPeliculas(busqueda, Integer.valueOf(idCiudad));
-                //solo se puede utilizar un ? por url, entonces se utiliza un & que va acompañado de amp; para que Java lo codifique bien, q es solo una "variable" con la busqueda
-                return "/busqueda_resultados?faces-redirect=true&amp;city="+busqueda;
-            } catch (Exception e) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
-            }
-
-        }
-        return "";
-    }
+//    public String buscarPelicula() {
+//        if (busqueda != null && !busqueda.isEmpty()) {
+//            try {
+//                peliculasBusqueda = clienteServicio.buscarPeliculas(busqueda, Integer.valueOf(idCiudad));
+//                //solo se puede utilizar un ? por url, entonces se utiliza un & que va acompañado de amp; para que Java lo codifique bien, q es solo una "variable" con la busqueda
+//                return "/busqueda_resultados?faces-redirect=true&amp;city="+busqueda;
+//            } catch (Exception e) {
+//                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+//                FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
+//            }
+//
+//        }
+//        return "";
+//    }
 
     public void eliminarPelicula(){
         try{
@@ -108,9 +104,11 @@ public class PeliculaBean implements Serializable {
                peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula eliminada");
+            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
         } catch (Exception e){
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
         }
     }
 
@@ -122,11 +120,21 @@ public class PeliculaBean implements Serializable {
         }
     }
 
-    public void seleccionarPelicula(Pelicula p){
+    public void seleccionarPelicula(Pelicula pelicula){
         this.pelicula = pelicula;
         editar=true;
-
     }
 
+    public void botonAgregarEditar() {
+        this.pelicula = new Pelicula();
+        editar = false;
+    }
 
+    public String getMensajeCrear() {
+        return editar ? "Actualizar pelicula" : "Crear pelicula";
+    }
+
+    public String getMensaje2Crear() {
+        return editar ? "Actualizar" : "Crear";
+    }
 }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Resultado</title>
+    <h:outputStylesheet name="styles.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+    <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
+</h:head>
+<h:body>
+    <h:form id="form_datatable">
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{peliculaBean.botonAgregarEditar}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
+                <p:commandButton id="btn_borrar" value="#{peliculaBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{peliculaBean.eliminarPelicula()}" update="form_datatable:datatable_crud_pelicula,@this"/>
+            </p:toolbarGroup>
+        </p:toolbar>
+
+        <p:dataTable id="datatable_crud_pelicula" value="#{peliculaBean.peliculas}" var="movie" paginator="true" rows="10" rowKey="#{movie.nombre}"
+                     paginatorPosition="bottom" rowSelectMode="add" selection="#{peliculaBean.peliculasSeleccionadas}">
+            <p:column selectionMode="multiple" exportable="false"/>
+
+            <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
+            <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{movie.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Imagen">
+                <h:outputText value="#{movie.imagen}"/>
+            </p:column>
+
+            <p:column headerText="Reparto">
+                <h:outputText value="#{movie.reparto}"/>
+            </p:column>
+
+            <p:column headerText="Sinopsis">
+                <h:outputText value="#{movie.sinopsis}"/>
+            </p:column>
+
+            <p:column headerText="Trailer">
+                <h:outputText value="#{movie.trailer}"/>
+            </p:column>
+
+            <p:column headerText="">
+                <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(movie)}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+    <p:dialog id="dialog_crear" widgetVar="crear_pelicula" modal="true" header="#{peliculaBean.mensajeCrear}" showEffect="fade">
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nombre_movie" value="Nombre:"/>
+                <p:inputText id="nombre_movie" value="#{peliculaBean.pelicula.nombre}" required="true"/>
+                <p:message for="nombre_movie"/>
+
+                <p:outputLabel for="trailer_movie" value="Trailer:"/>
+                <p:inputText id="trailer_movie" value="#{peliculaBean.pelicula.trailer}" required="true"/>
+                <p:message for="trailer_movie"/>
+
+                <p:outputLabel for="sinopsis_movie" value="Sinopsis:"/>
+                <p:inputText id="sinopsis_movie" value="#{peliculaBean.pelicula.sinopsis}" required="true"/>
+                <p:message for="sinopsis_movie"/>
+
+                <p:outputLabel for="imagen_movie" value="Imagen:"/>
+                <p:fileUpload id="imagen_movie" value="#{peliculaBean.pelicula.imagen}" mode="simple" skinSimple="true" required="true"/>
+                <p:message for="imagen_movie"/>
+
+                <p:outputLabel for="reparto_movie" value="Reparto:"/>
+                <p:inputText id="reparto_movie" rows="3" value="#{peliculaBean.pelicula.reparto}" required="true"/>
+                <p:message for="reparto_movie"/>
+
+            </h:panelGrid>
+            <p:commandButton icon="pi pi-save" action="#{peliculaBean.crearPelicula}" value="#{peliculaBean.mensaje2Crear}" update="form_datatable:datatable_crud_pelicula"/>
+            <p:growl id="mensaje_bean" showDetail="true"/>
+        </h:form>
+    </p:dialog>
+
+</h:body>
+</html>

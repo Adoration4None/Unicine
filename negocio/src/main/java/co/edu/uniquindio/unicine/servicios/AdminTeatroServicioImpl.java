@@ -239,6 +239,25 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
+    public void eliminarCiudad(Integer idCiudad) throws Exception {
+        Optional<Ciudad> ciudadGuardada = ciudadRepo.findById(idCiudad);
+
+        if(ciudadGuardada.isEmpty()) throw new Exception("La ciudad no existe");
+
+        ciudadRepo.delete(ciudadGuardada.get());
+    }
+
+    @Override
+    public Ciudad actualizarCiudad(Ciudad ciudad) throws Exception {
+        Optional<Ciudad> ciudadGuardada = ciudadRepo.findById(ciudad.getId());
+
+        if(ciudadGuardada.isEmpty()) throw new Exception("La ciudad no existe");
+
+        return ciudadRepo.save(ciudad);
+    }
+
+
+    @Override
     public List<Ciudad> listarCiudades() {
         return ciudadRepo.findAll();
     }
@@ -256,6 +275,24 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     @Override
     public List<Horario> listarHorarios() { return horarioRepo.findAll(); }
+
+    @Override
+    public void eliminarHorario(Integer idHorario) throws Exception {
+        Optional<Horario> horarioGuardado = horarioRepo.findById(idHorario);
+
+        if(horarioGuardado.isEmpty()) throw new Exception("El horario no existe");
+
+        horarioRepo.delete(horarioGuardado.get());
+    }
+
+    @Override
+    public Horario actualizarHorario(Horario horario) throws Exception {
+        Optional<Horario> horarioGuardado = horarioRepo.findById(horario.getId());
+
+        if(horarioGuardado.isEmpty()) throw new Exception("El horario no existe");
+
+        return horarioRepo.save(horario);
+    }
 
 
     // Otras consultas -----------------------------------------------------------------------------------------

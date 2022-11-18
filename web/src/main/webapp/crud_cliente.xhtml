@@ -16,21 +16,23 @@
     <h:outputScript name="bootstrap.bundle.min.js" library="js"/>
 </h:head>
 <h:body>
-    <p:toolbar>
-        <p:toolbarGroup>
-            <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" onclick="PF('crear_cliente').show()" />
-            <p:commandButton value="Borrar" icon="pi pi-trash" styleClass="ui-button-danger" action="#{usuarioBean.eliminarClientes}"/>
-            <!--le colocamos el update form,idform:iddatatable-->
-
-            <!--hay unos rows unselected y selected y no sé qué del datatable que van con el id de este boton para actuzalizarlo-->
-        </p:toolbarGroup>
-    </p:toolbar>
     <h:form id="form_datatable">
-        <p:dataTable id="datatable_prueba" value="#{usuarioBean.clientes}" var="cliente" paginator="true" rows="10"
-                     rowKey="#{cliente.cedula}" paginatorPosition="bottom"
-                     selection="#{usuarioBean.clientesSeleccionados}">
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{usuarioBean.botonAgregarEditar}" oncomplete="PF('crear_cliente').show()" update="dialog_crear"/>
+                <p:commandButton id="btn_borrar" value="#{usuarioBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{usuarioBean.clientesSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{usuarioBean.eliminarClientes}" update="form_datatable:datatable_crud_cliente,@this"/>
+            </p:toolbarGroup>
+        </p:toolbar>
 
-           <p:column selectionMode="multiple" exportable="false"/>
+        <p:dataTable id="datatable_crud_cliente" value="#{usuarioBean.clientes}" var="cliente" paginator="true" rows="10" rowKey="#{cliente.cedula}"
+                     paginatorPosition="bottom" rowSelectMode="add" selection="#{usuarioBean.clientesSeleccionados}">
+            <p:column selectionMode="multiple" exportable="false"/>
+
+            <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
+            <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
+            <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
 
             <p:column headerText="Cedula">
                 <h:outputText value="#{cliente.cedula}"/>
@@ -48,14 +50,18 @@
                 <h:outputText value="#{cliente.contrasena}"/>
             </p:column>
 
+            <p:column headerText="Contrasena">
+                <h:outputText value="#{cliente.contrasena}"/>
+            </p:column>
+
             <p:column headerText="">
-                <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{usuarioBean.seleccionarCliente(cliente)}"/>
+                <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{usuarioBean.seleccionarCliente(cliente)}" oncomplete="PF('crear_cliente').show()" update="dialog_crear"/>
             </p:column>
 
         </p:dataTable>
     </h:form>
 
-    <p:dialog id="crear" widgetVar="crear_cliente" modal="true" header="Crear cliente" showEffect="fade">
+    <p:dialog id="dialog_crear" widgetVar="crear_cliente" modal="true" header="#{usuarioBean.mensajeCrear}" showEffect="fade">
         <h:form>
             <h:panelGrid columns="3" cellpadding="5">
                 <p:outputLabel for="nombre_cliente" value="Nombre:"/>
@@ -75,24 +81,12 @@
                 <p:message for="confir_cliente"/>
 
                 <p:outputLabel for="email_cliente" value="Email:"/>
-                <p:inputTextarea id="email_cliente" rows="3" value="#{usuarioBean.cliente.email}" required="true"/>
+                <p:inputText id="email_cliente" rows="3" value="#{usuarioBean.cliente.email}" required="true"/>
                 <p:message for="email_cliente"/>
 
-                <p:outputLabel for="ciudad_teatro" value="Estado: "/>
-
-                <p:selectOneMenu id="ciudad_teatro" value="#{usuarioBean.cliente.estado}" converter="#{ciudadConverter}">
-                    <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true" itemValue="#{null}"/>
-                    <f:selectItems value="#{teatroBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
-                </p:selectOneMenu>
-
-                <p:message for="ciudad_teatro"/>
-
             </h:panelGrid>
-            <p:commandButton icon="pi pi-spin pi-spinner" action="#{usuarioBean.registrarUsuario()}" value="CREAR" update="@form"/>
-            <!-- el update debería de tener un @form,id_form_datatable:lista_datatable para actuzlizar el datatable -->
-            <!-- sirven para hacer mensajes y notificaciones de mensajes -->
-            <!-- qué es el for="mensaje_bean" de abajo? -->
-            <p:growl for="mensaje_bean" showDetail="true"/>
+            <p:commandButton icon="pi pi-spin pi-spinner" action="#{usuarioBean.registrarUsuario}" value="#{usuarioBean.mensajeCrear}" update="form_datatable:datatable_crud_cliente"/>
+            <p:growl id="mensaje_bean" showDetail="true"/>
         </h:form>
     </p:dialog>
 

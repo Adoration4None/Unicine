@@ -233,6 +233,24 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     }
 
     @Override
+    public Genero actualizarGenero(Genero genero) throws Exception {
+        Optional<Genero> generoGuardado = generoRepo.findById(genero.getId());
+
+        if(generoGuardado.isEmpty()) throw new Exception("El genero no existe");
+
+        return generoRepo.save(genero);
+    }
+
+    @Override
+    public void eliminarGenero(Integer idGenero) throws Exception {
+        Optional<Genero> generoGuardado = generoRepo.findById(idGenero);
+
+        if(generoGuardado.isEmpty()) throw new Exception("El genero no existe");
+
+        generoRepo.delete(generoGuardado.get());
+    }
+
+    @Override
     public List<Genero> obtenerGeneros() {
         return generoRepo.findAll();
     }

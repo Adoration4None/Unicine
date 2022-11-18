@@ -49,11 +49,19 @@ public interface AdminTeatroServicio {
 
     Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
 
+    void eliminarCiudad(Integer idCiudad) throws Exception;
+
+    Ciudad actualizarCiudad(Ciudad ciudad) throws Exception;
+
     List<Ciudad> listarCiudades();
 
 
     // Opciones de horario ------------------------------------------------------------------------------------
     Horario crearHorario(Horario horario) throws Exception;
+
+    void eliminarHorario(Integer idHorario) throws Exception;
+
+    Horario actualizarHorario(Horario horario) throws Exception;
 
     List<Horario> listarHorarios();
 

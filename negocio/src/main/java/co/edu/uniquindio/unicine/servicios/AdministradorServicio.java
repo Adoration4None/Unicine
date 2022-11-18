@@ -60,5 +60,9 @@ public interface AdministradorServicio {
     // Opciones de genero de pelicula -------------------------------------------------------------------------
     Genero crearGenero(Genero genero) throws Exception;
 
+    Genero actualizarGenero(Genero genero) throws Exception;
+
+    public void eliminarGenero(Integer idGenero) throws Exception;
+
     List<Genero> obtenerGeneros();
 }

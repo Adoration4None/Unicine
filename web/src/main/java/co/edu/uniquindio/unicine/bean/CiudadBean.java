@@ -1,0 +1,110 @@
+package co.edu.uniquindio.unicine.bean;
+
+import co.edu.uniquindio.unicine.entidades.Ciudad;
+import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@ViewScoped
+public class CiudadBean implements Serializable {
+    @Autowired
+    private AdminTeatroServicio adminTeatroServicio;
+
+    @Getter
+    @Setter
+    private Ciudad ciudad;
+
+    @Getter
+    @Setter
+    private List<Ciudad> ciudades;
+
+    @Getter
+    @Setter
+    private List<Ciudad> ciudadesSeleccionadas;
+
+    private Boolean editar;
+
+    public void CiudadBean(AdminTeatroServicio adminTeatroServicio) {
+        this.adminTeatroServicio = adminTeatroServicio;
+    }
+
+    @PostConstruct
+    public void init() {
+        editar = false;
+        ciudad = new Ciudad();
+        ciudades = adminTeatroServicio.listarCiudades();
+        ciudadesSeleccionadas = new ArrayList<>();
+    }
+
+    public void crearCiudad() {
+        try {
+            if (!editar) {
+                Ciudad city = adminTeatroServicio.crearCiudad(ciudad);
+                ciudades.add(city);
+                ciudad = new Ciudad();
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de ciudad exitoso");
+                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            } else {
+                adminTeatroServicio.actualizarCiudad(ciudad);
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad actualizada");
+                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            }
+
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+        }
+    }
+
+    public void eliminarCiudades() {
+        try {
+            for (Ciudad city : ciudadesSeleccionadas) {
+                adminTeatroServicio.eliminarCiudad(city.getId());
+                ciudades.remove(city);
+            }
+            ciudadesSeleccionadas.clear();
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad eliminada");
+            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+        }
+    }
+
+    public String getTextoBtnBorrar() {
+        if (ciudadesSeleccionadas.size() == 0) {
+            return "Borrar";
+        } else {
+            return ciudadesSeleccionadas.size() == 1 ? "Borrar 1 elemento" : "Borrar " + ciudadesSeleccionadas.size() + " elementos";
+        }
+    }
+
+    public String getMensajeCrear() {
+        return editar ? "Actualizar ciudad" : "Crear ciudad";
+    }
+
+    public String getMensaje2Crear() {
+        return editar ? "Actualizar" : "Crear";
+    }
+
+    public void botonAgregarEditar() {
+        this.ciudad = new Ciudad();
+        editar = false;
+    }
+
+    public void seleccionarCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+        editar = true;
+    }
+}
