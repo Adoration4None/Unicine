@@ -110,7 +110,26 @@ body {
     -webkit-backdrop-filter: blur(8.4px);
     padding: 5%;
     margin-bottom: 10%;
-    color: #D9D9D9
+    color: #D9D9D9;
+}
+
+.confiteria {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: 1rem;
+}
+
+.comestible {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 200px;
+    height: 400px;
+    background: rgba(27, 22, 50, 0.5);
+    border-radius: 16px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8.4px);
+    -webkit-backdrop-filter: blur(8.4px);
 }
 
 .ui-selectonemenu.selector {
@@ -223,6 +242,9 @@ body .ui-accordion {
     font-weight: bold;
     font-size: 1.325rem;
 }
+
+
+
 
 
 
