@@ -91,6 +91,7 @@ public class PeliculaBean implements Serializable {
                peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();
+            peliculas = administradorServicio.listarPeliculas();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e){

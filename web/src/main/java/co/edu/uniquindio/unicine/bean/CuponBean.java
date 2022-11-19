@@ -90,6 +90,7 @@ public class CuponBean implements Serializable {
                 cupones.remove(cup);
             }
             cuponesSeleccionados.clear();
+            cupones = administradorServicio.listarCupones();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Cupon eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

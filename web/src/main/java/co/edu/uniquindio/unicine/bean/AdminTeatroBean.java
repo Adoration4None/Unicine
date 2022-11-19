@@ -76,6 +76,7 @@ public class AdminTeatroBean implements Serializable {
                 administradores.remove(admin);
             }
             administradoresSeleccionados.clear();
+            administradores = administradorServicio.listarAdministradores();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Administrador eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

@@ -99,6 +99,7 @@ public class FuncionBean implements Serializable {
                 funciones.remove(fun);
             }
             funcionesSeleccionadas.clear();
+            funciones = administradorTeatroServicio.listarFunciones();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Funcion eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

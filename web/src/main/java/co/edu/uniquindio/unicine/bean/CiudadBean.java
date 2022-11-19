@@ -58,6 +58,7 @@ public class CiudadBean implements Serializable {
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 adminTeatroServicio.actualizarCiudad(ciudad);
+                ciudades = adminTeatroServicio.listarCiudades();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad actualizada");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }

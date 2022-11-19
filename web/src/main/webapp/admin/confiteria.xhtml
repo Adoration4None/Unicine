@@ -14,11 +14,11 @@
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{comestibleBean.botonAgregarEditar}" oncomplete="PF('crear_comestible').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{comestibleBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{comestibleBean.comestiblesSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{comestibleBean.eliminarComestibles}" update="form_datatable:datatable_crud_confiteria,@this"/>
+                    <p:commandButton id="btn_borrar" value="#{comestibleBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{comestibleBean.comestiblesSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{comestibleBean.eliminarComestibles}" update="form_datatable:datatable_crud_comestible,@this"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable id="datatable_crud_confiteria" value="#{comestibleBean.comestibles}" var="comida" paginator="true" rows="10" rowKey="#{comida.id}"
+            <p:dataTable id="datatable_crud_comestible" value="#{comestibleBean.comestibles}" var="comida" paginator="true" rows="10" rowKey="#{comida.id}"
                          paginatorPosition="bottom" rowSelectMode="add" selection="#{comestibleBean.comestiblesSeleccionados}">
                 <p:column selectionMode="multiple" exportable="false"/>
 
@@ -66,6 +66,7 @@
         <p:dialog id="dialog_crear" widgetVar="crear_comestible" modal="true" header="#{comestibleBean.mensajeCrear}" showEffect="fade">
             <h:form>
                 <h:panelGrid columns="3" cellpadding="5">
+
                     <p:outputLabel for="nombre_comestible" value="Nombre:"/>
                     <p:inputText id="nombre_comestible" value="#{comestibleBean.comestible.nombre}" required="true"/>
                     <p:message for="nombre_comestible"/>
@@ -91,11 +92,11 @@
                         <f:selectItem itemLabel="Seleccione un estado" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{comestibleBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
                     </p:selectOneMenu>
+                    <p:message for="estado_comestible"/>
 
                 </h:panelGrid>
-                <p:commandButton icon="pi pi-save" action="#{comestibleBean.crearComestible}" value="#{comestibleBean.mensaje2Crear}" update="form_datatable:datatable_crud_confiteria"/>
+                <p:commandButton icon="pi pi-save" action="#{comestibleBean.crearComestible}" value="#{comestibleBean.mensaje2Crear}" update="form_datatable:datatable_crud_comestible"/>
                 <p:growl id="mensaje_bean" showDetail="true"/>
-
             </h:form>
         </p:dialog>
     </ui:define>

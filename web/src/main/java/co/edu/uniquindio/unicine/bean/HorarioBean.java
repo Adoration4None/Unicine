@@ -60,6 +60,7 @@ public class HorarioBean implements Serializable {
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 adminTeatroServicio.actualizarHorario(horario);
+                horarios = adminTeatroServicio.listarHorarios();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Horario actualizado");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);            }
 

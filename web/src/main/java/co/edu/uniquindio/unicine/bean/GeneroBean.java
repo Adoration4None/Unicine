@@ -77,6 +77,7 @@ public class GeneroBean implements Serializable {
                 generos.remove(gen);
             }
             generosSeleccionados.clear();
+            generos = administradorServicio.obtenerGeneros();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Genero eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

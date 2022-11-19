@@ -83,6 +83,7 @@ public class ComestibleBean implements Serializable {
                 comestibles.remove(comestible);
             }
             comestiblesSeleccionados.clear();
+            comestibles = administradorServicio.listarConfiteria();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Comestible eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
