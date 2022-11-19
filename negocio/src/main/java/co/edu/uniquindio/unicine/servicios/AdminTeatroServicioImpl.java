@@ -62,7 +62,6 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if(teatroRepo.findByNombreAndDireccionAndCiudad(teatro.getNombre(), teatro.getDireccion(), teatro.getCiudad()) != null)
             throw new Exception("El teatro ya existe");
 
-        teatro.getCiudad().agregarTeatro(teatro);
         ciudadRepo.save( teatro.getCiudad() );
 
         return teatroRepo.save(teatro);
