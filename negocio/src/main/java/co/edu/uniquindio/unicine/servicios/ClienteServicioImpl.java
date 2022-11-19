@@ -289,10 +289,19 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     private void enviarConfirmacionCompra(Cliente cliente, Compra compra) {
-        String mensaje = "Has realizado una compra exitosa! Detalles: " +
-                         " \n " +
-                        "Subtotal confiteria: " + compra.obtenerTotalConfiteria() + "\n" +
-                        "Subtotal entradas: " + compra.obtenerTotalEntradas();
+        String mensaje = "¡Has realizado una compra!     " +
+                         " | ID de la compra: " + compra.getId() +
+                         " | Cantidad de entradas: " + compra.getEntradas().size() +
+                         " | Subtotal entradas: $" + compra.obtenerTotalEntradas() +
+                         " | Pelicula: " + compra.getFuncion().getPelicula().getNombre() +
+                         " | Sala: " + compra.getFuncion().getSala().getNumero() +
+                         " | Teatro: " + compra.getFuncion().getSala().getTeatro().getNombre() + " " + compra.getFuncion().getSala().getTeatro().getCiudad().getNombre() +
+                         " | Direccion: " + compra.getFuncion().getSala().getTeatro().getDireccion() +
+                         " | Subtotal confiteria: $" + compra.obtenerTotalConfiteria() +
+                         " | Fecha y hora de la funcion: " + compra.getFuncion().getHorario().getFecha().toString() + " " + compra.getFuncion().getHorario().getHora().toString() + "\n" +
+                         " || VALOR TOTAL: $" + compra.getValorTotal() + " ||      " +
+                         " ----------------------- " +
+                         " Puedes verla en tu historial de compras: https://bit.ly/3s7ETPZ";
 
         emailServicio.enviarEmail("Confirmacion Compra", mensaje, cliente.getEmail());
     }
