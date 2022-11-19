@@ -29,13 +29,12 @@ public class Ciudad implements Serializable {
     @NonNull
     private String departamento;
 
-    // Relacion ------------------------------------------------------------
+    // Relaciones ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude
     private List<Teatro> teatros = new ArrayList<>();
 
-    // Metodos ------------------------------------------------------------
-    public void agregarTeatro(Teatro teatro) {
-        teatros.add(teatro);
-    }
+    @OneToOne
+    private AdministradorTeatro administrador;
+
 }

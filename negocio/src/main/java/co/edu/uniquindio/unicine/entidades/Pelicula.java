@@ -17,8 +17,11 @@ import java.util.List;
 public class Pelicula implements Serializable {
     // Atributos ---------------------------------------------------------
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(length = 50)
+    private Integer id;
+
+    @Column(length = 50, nullable = false)
     @NonNull
     private String nombre;
 
@@ -56,9 +59,6 @@ public class Pelicula implements Serializable {
     private List<Funcion> funciones = new ArrayList<>();
 
     // Metodos ---------------------------------------------------------
-    public void agregarFuncion(Funcion funcion) {
-        funciones.add(funcion);
-    }
 
     public List<String> getNombresGeneros() {
         List<String> nombres = new ArrayList<>();
