@@ -1,7 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
-import co.edu.uniquindio.unicine.entidades.Ciudad;
-import co.edu.uniquindio.unicine.entidades.Genero;
+import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,47 +18,57 @@ import java.util.List;
 
 @Component
 @ViewScoped
-public class GeneroBean implements Serializable {
+public class SalaBean implements Serializable {
+
     @Autowired
-    private AdministradorServicio administradorServicio;
+    private AdminTeatroServicio administradorTeatroServicio;
 
     @Getter
     @Setter
-    private Genero genero;
+    private Sala sala;
 
     @Getter
     @Setter
-    private List<Genero> generos;
+    private List<Sala> salas;
 
     @Getter
     @Setter
-    private List<Genero> generosSeleccionados;
+    private List<Sala> salasSeleccionadas;
 
     private Boolean editar;
 
-    public GeneroBean(AdministradorServicio administradorServicio) {
-        this.administradorServicio = administradorServicio;
+    @Getter
+    @Setter
+    private List<Teatro> teatros;
+
+    @Getter @Setter
+    private TipoSala[] tipos;
+
+    public SalaBean(AdminTeatroServicio administradorTeatroServicio) {
+        this.administradorTeatroServicio = administradorTeatroServicio;
     }
 
     @PostConstruct
     public void init() {
         editar = false;
-        genero = new Genero();
-        generos = administradorServicio.obtenerGeneros();
-        generosSeleccionados = new ArrayList<>();
+        sala = new Sala();
+        teatros = administradorTeatroServicio.listarTeatros();
+        salas = administradorTeatroServicio.listarSalas();
+        tipos = TipoSala.values();
+        salasSeleccionadas = new ArrayList<>();
     }
 
-    public void crearGenero() {
+    public void crearSala() {
         try {
             if (!editar) {
-                Genero gen = administradorServicio.crearGenero(genero);
-                generos.add(gen);
-                genero = new Genero();
-                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de genero exitoso");
+                Sala sal = administradorTeatroServicio.crearSala(sala);
+                salas.add(sal);
+                sala = new Sala();
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de sala exitoso");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
-                administradorServicio.actualizarGenero(genero);
-                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Genero actualizado");
+                administradorTeatroServicio.actualizarSala(sala);
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Sala actualizada");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
 
@@ -70,14 +78,14 @@ public class GeneroBean implements Serializable {
         }
     }
 
-    public void eliminarGeneros() {
+    public void eliminarSala() {
         try {
-            for (Genero gen : generosSeleccionados) {
-                administradorServicio.eliminarGenero(gen.getId());
-                generos.remove(gen);
+            for (Sala sal: salasSeleccionadas) {
+                administradorTeatroServicio.eliminarTeatro(sal.getId());
+                salas.remove(sal);
             }
-            generosSeleccionados.clear();
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Genero eliminado");
+            salasSeleccionadas.clear();
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Sala eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
@@ -86,15 +94,15 @@ public class GeneroBean implements Serializable {
     }
 
     public String getTextoBtnBorrar() {
-        if (generosSeleccionados.size() == 0) {
+        if (salasSeleccionadas.size() == 0) {
             return "Borrar";
         } else {
-            return generosSeleccionados.size() == 1 ? "Borrar 1 elemento" : "Borrar " + generosSeleccionados.size() + " elementos";
+            return salasSeleccionadas.size() == 1 ? "Borrar 1 elemento" : "Borrar " + salasSeleccionadas.size() + " elementos";
         }
     }
 
     public String getMensajeCrear() {
-        return editar ? "Actualizar genero" : "Crear genero";
+        return editar ? "Actualizar sala" : "Crear sala";
     }
 
     public String getMensaje2Crear() {
@@ -102,12 +110,12 @@ public class GeneroBean implements Serializable {
     }
 
     public void botonAgregarEditar() {
-        this.genero = new Genero();
+        this.sala = new Sala();
         editar = false;
     }
 
-    public void seleccionarGenero(Genero genero) {
-        this.genero = genero;
+    public void seleccionarSala(Sala sala) {
+        this.sala = sala;
         editar = true;
     }
 }

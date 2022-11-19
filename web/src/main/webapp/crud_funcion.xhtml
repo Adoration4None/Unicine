@@ -38,10 +38,6 @@
                 <h:outputText value="#{fun.id}"/>
             </p:column>
 
-            <p:column headerText="Precio">
-                <h:outputText value="#{fun.precio}"/>
-            </p:column>
-
             <p:column headerText="Tipo">
                 <h:outputText value="#{fun.tipo}"/>
             </p:column>
@@ -92,10 +88,6 @@
                     <f:selectItem itemLabel="Seleccione una pelicula" noSelectionOption="true" itemValue="#{null}"/>
                     <f:selectItems value="#{funcionBean.peliculas}" var="peli" itemLabel="#{peli.nombre}" itemValue="#{peli}"/>
                 </p:selectOneMenu>
-
-                <p:outputLabel for="precio_funcion" value="Precio:"/>
-                <p:inputText id="precio_funcion" value="#{funcionBean.funcion.precio}" required="true"/>
-                <p:message for="precio_funcion"/>
 
             </h:panelGrid>
             <p:commandButton icon="pi pi-save" action="#{funcionBean.crearFuncion}" value="#{funcionBean.mensaje2Crear}" update="form_datatable:datatable_crud_funcion"/>
