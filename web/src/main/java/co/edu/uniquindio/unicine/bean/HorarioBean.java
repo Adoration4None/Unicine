@@ -6,6 +6,7 @@ import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -56,17 +57,15 @@ public class HorarioBean implements Serializable {
                 horarios.add(hora);
                 horario = new Horario();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de horario exitoso");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 adminTeatroServicio.actualizarHorario(horario);
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Horario actualizado");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
-            }
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);            }
 
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
-        }
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);        }
     }
 
     public void eliminarHorarios() {
@@ -77,11 +76,9 @@ public class HorarioBean implements Serializable {
             }
             horariosSeleccionados.clear();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Horario eliminado");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
-        } catch (Exception e) {
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);        } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
-        }
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);        }
     }
 
     public String getTextoBtnBorrar() {

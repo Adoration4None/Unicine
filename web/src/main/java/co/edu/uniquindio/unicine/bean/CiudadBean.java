@@ -4,6 +4,7 @@ import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,16 +55,16 @@ public class CiudadBean implements Serializable {
                 ciudades.add(city);
                 ciudad = new Ciudad();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de ciudad exitoso");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 adminTeatroServicio.actualizarCiudad(ciudad);
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad actualizada");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
 
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
 
@@ -75,10 +76,10 @@ public class CiudadBean implements Serializable {
             }
             ciudadesSeleccionadas.clear();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad eliminada");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
 

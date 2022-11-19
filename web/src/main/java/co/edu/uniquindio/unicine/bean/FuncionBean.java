@@ -5,6 +5,7 @@ import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -78,31 +79,31 @@ public class FuncionBean implements Serializable {
                 funciones.add(fun);
                 funcion = new Funcion();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de funcion exitoso");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 administradorTeatroServicio.actualizarFuncion(funcion);
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Funcion actualizada");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
 
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
 
     public void eliminarFunciones() {
         try {
             for (Funcion fun: funcionesSeleccionadas) {
-                administradorTeatroServicio.eliminarTeatro(fun.getId());
+                administradorTeatroServicio.eliminarFuncion(fun.getId());
                 funciones.remove(fun);
             }
             funcionesSeleccionadas.clear();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Funcion eliminada");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
 

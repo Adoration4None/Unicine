@@ -63,11 +63,7 @@
 
     <p:dialog id="dialog_crear" widgetVar="crear_teatro" modal="true" header="#{teatroBean.mensajeCrear}" showEffect="fade">
         <h:form>
-            <h:panelGrid columns="1" cellpadding="5">
-
-                <p:outputLabel for="nombre_teatro" value="Nombre:"/>
-                <p:inputText id="nombre_teatro" value="#{teatroBean.teatro.nombre}" required="true"/>
-                <p:message for="nombre_teatro"/>
+            <h:panelGrid columns="3" cellpadding="5">
 
                 <p:outputLabel for="direccion_teatro" value="Direccion:"/>
                 <p:inputText id="direccion_teatro" value="#{teatroBean.teatro.direccion}" required="true"/>
@@ -84,6 +80,10 @@
                     <f:selectItems value="#{teatroBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
                 </p:selectOneMenu>
                 <p:message for="ciudad_teatro"/>
+
+                <p:outputLabel for="nombre_teatro" value="Nombre:"/>
+                <p:inputText id="nombre_teatro" value="#{teatroBean.teatro.nombre}" required="true"/>
+                <p:message for="nombre_teatro"/>
 
             </h:panelGrid>
             <p:commandButton icon="pi pi-save" action="#{teatroBean.crearTeatro}" value="#{teatroBean.mensaje2Crear}" update="form_datatable:datatable_crud_teatro"/>

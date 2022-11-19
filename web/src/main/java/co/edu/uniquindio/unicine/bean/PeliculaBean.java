@@ -8,6 +8,7 @@ import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -48,9 +49,13 @@ public class PeliculaBean implements Serializable {
     private List<Pelicula> peliculasSeleccionadas;
 
     @Getter @Setter
+    private EstadoPelicula[] estados;
+
+    @Getter @Setter
     private List<Pelicula> peliculas;
     @PostConstruct
     public void init(){
+        estados = EstadoPelicula.values();
         pelicula = new Pelicula();
         editar=false;
         peliculasSeleccionadas = new ArrayList<>();
@@ -59,43 +64,24 @@ public class PeliculaBean implements Serializable {
     public void crearPelicula(){
         try {
             if(!editar){
+                pelicula.setImagen("miau");
                 Pelicula peli = administradorServicio.crearPelicula(pelicula);
                 peliculas.add(peli);
                 pelicula = new Pelicula();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de pelicula exitoso");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
             else{
                 administradorServicio.actualizarPelicula(pelicula);
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula actualizada");
-                FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
 
         } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
-
-//    public void showMessage(){
-//        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "pelicula creada exitosamente", pelicula.toString());
-//        FacesContext.getCurrentInstance().addMessage("mensaje_exito", facesMsg);
-//    }
-
-//    public String buscarPelicula() {
-//        if (busqueda != null && !busqueda.isEmpty()) {
-//            try {
-//                peliculasBusqueda = clienteServicio.buscarPeliculas(busqueda, Integer.valueOf(idCiudad));
-//                //solo se puede utilizar un ? por url, entonces se utiliza un & que va acompañado de amp; para que Java lo codifique bien, q es solo una "variable" con la busqueda
-//                return "/busqueda_resultados?faces-redirect=true&amp;city="+busqueda;
-//            } catch (Exception e) {
-//                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-//                FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);
-//            }
-//
-//        }
-//        return "";
-//    }
 
     public void eliminarPelicula(){
         try{
@@ -105,10 +91,10 @@ public class PeliculaBean implements Serializable {
             }
             peliculasSeleccionadas.clear();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula eliminada");
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e){
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("mensaje_bean", facesMsg);
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
 

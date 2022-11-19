@@ -54,6 +54,10 @@
                 <h:outputText value="#{movie.trailer}"/>
             </p:column>
 
+            <p:column headerText="Trailer">
+                <h:outputText value="#{movie.estado}"/>
+            </p:column>
+
             <p:column headerText="">
                 <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(movie)}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
             </p:column>
@@ -83,6 +87,12 @@
                 <p:outputLabel for="reparto_movie" value="Reparto:"/>
                 <p:inputText id="reparto_movie" rows="3" value="#{peliculaBean.pelicula.reparto}" required="true"/>
                 <p:message for="reparto_movie"/>
+
+                <p:outputLabel for="estado_pelicula" value="Estado:"/>
+                <p:selectOneMenu id="estado_pelicula" value="#{peliculaBean.pelicula.estado}">
+                    <f:selectItem itemLabel="Seleccione un estado" noSelectionOption="true" itemValue="#{null}"/>
+                    <f:selectItems value="#{peliculaBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
+                </p:selectOneMenu>
 
             </h:panelGrid>
             <p:commandButton icon="pi pi-save" action="#{peliculaBean.crearPelicula}" value="#{peliculaBean.mensaje2Crear}" update="form_datatable:datatable_crud_pelicula"/>
