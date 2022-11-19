@@ -33,24 +33,25 @@
                         </ul>
 
                         <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
-                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
                         </ul>
 
                         <h:form rendered="#{seguridadBean.autenticado}">
                             <div class="dropdown text-end mx-3 my-1">
                                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                         alt="mdo" width="32" height="32" class="rounded-circle" />
                                 </a>
-                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
                                     <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
                                     <li><a class="dropdown-item" href="#">Historial de compras</a></li>
                                     <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
                                     <li><hr /></li>
                                     <li class="dropdown-item">
                                         <i class="pi pi-power-off" />
-                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
                                     </li>
                                 </ul>
                             </div>
@@ -71,43 +72,42 @@
                             </li>
                             <li class="mx-1 my-1 align-items-center">
                                 <h:form>
-                                    <p:commandButton style="background: transparent; border: transparent; color: #6B8CE1" update=""
-                                                     action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
+                                    <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
                                 </h:form>
                             </li>
                         </ul>
 
                         <h:form styleClass="w-50 ms-auto me-0">
                             <div role="search">
-                                <!--  aqui no me funciono ponerle el tamaño usando la clase -->
-                                <p:inputText styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 50%;"
+                                <p:inputText styleClass="mx-2 busqueda"
                                              placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
 
-                                <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
+                                <p:commandButton styleClass="boton-circular"
                                                  icon="pi pi-chevron-right" action="#{buscarPeliculaBean.buscarPelicula}">
                                 </p:commandButton>
                             </div>
                         </h:form>
 
                         <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" style="background: transparent; border: transparent; color: #6B8CE1" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
-                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
                         </ul>
 
                         <h:form rendered="#{seguridadBean.autenticado}">
                             <div class="dropdown text-end mx-3 my-1">
                                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                         alt="mdo" width="32" height="32" class="rounded-circle" />
                                 </a>
-                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
                                     <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
                                     <li><a class="dropdown-item" href="#">Historial de compras</a></li>
                                     <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
                                     <li><hr /></li>
                                     <li class="dropdown-item">
                                         <i class="pi pi-power-off" />
-                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
                                     </li>
                                 </ul>
                             </div>
@@ -131,12 +131,12 @@
                     <div>
                         <h3 class="texto">Selecciona tu ciudad</h3>
 
-                        <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-2" style="background: #1B1632; border-radius: 20px; border: transparent; width: 80%;" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
+                        <p:selectOneMenu id="seleccion_ciudad" styleClass="mx-2 selector select-ciudad" value="#{principalBean.ciudadActual}" required="true" converter="#{ciudadConverter}">
                             <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
                             <f:selectItems value="#{principalBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}, #{ciudad.departamento}" itemValue="#{ciudad}"/>
                         </p:selectOneMenu>
 
-                        <p:commandButton style="border-radius: 50%; background-color: transparent;" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
+                        <p:commandButton styleClass="boton-circular" update="@form,seccion-peliculas,seccion-ciudad,navegacion-inicio,navegacion"
                                          icon="pi pi-chevron-right" action="#{seguridadBean.seleccionarCiudad(principalBean.ciudadActual)}">
                             <f:ajax render="seccion-funciones" />
                         </p:commandButton>
@@ -163,7 +163,7 @@
                         <div class="container">
                             <div class="carousel-caption">
                                 <h1 class="titulo">Las peliculas del momento</h1>
-                                <p style="text-shadow: 2px 2px 5px black;">¡Explora nuestro catalogo con mas de 5 peliculas para todos los gustos!</p>
+                                <p class="texto-sombreado">¡Explora nuestras carteleras con mas de 5 peliculas para todos los gustos!</p>
                             </div>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                             <div class="container">
                                 <div class="carousel-caption">
                                     <h1 class="titulo">Unicine te espera</h1>
-                                    <p style="text-shadow: 2px 2px 5px black;">Disfruta de experiencias inolvidables en los mejores teatros</p>
+                                    <p class="texto-sombreado">Disfruta de experiencias inolvidables en los mejores teatros</p>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
 
                 <div class="ms-auto me-0 w-50 my-2 mt-3">
                     <p:outputLabel styleClass="texto-resaltado" for="seleccion_teatro" value="Filtrar por teatro: " />
-                    <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3" style="background: #1B1632; border-radius: 20px; border: transparent; width: 60%;"
+                    <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3 selector select-teatro"
                                      value="#{principalBean.teatro}" converter="#{teatroConverter}">
                         <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
                         <f:selectItems value="#{principalBean.teatrosCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
@@ -215,9 +215,8 @@
                             <div class="pelicula">
 
                                 <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://picfiles.alphacoders.com/166/166769.jpg" />
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
                                             <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
@@ -237,9 +236,8 @@
                         <p:carousel value="#{principalBean.peliculasPreventaCiudad}" var="pelicula" numVisible="3" numScroll="3" containerStyleClass="peliculas">
                             <div class="pelicula mx-2">
                                 <a href="detalle_pelicula.xhtml?city=#{principalBean.idCiudadParam}&amp;mov=#{pelicula.nombre}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="https://image.tmdb.org/t/p/original/iqR0M1ln7Kobjp9liUj2Q7mtQZG.jpg" />
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
-                                    <h6 class="mt-0 mb-3">#{pelicula.sinopsis}</h6>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
                                             <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>

@@ -110,10 +110,17 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if( salaRepo.findByCantidadSillasAndTipoAndTeatro(sala.getCantidadSillas(), sala.getTipo(), sala.getTeatro()) != null )
             throw new Exception("La sala ya existe");
 
+        if( cantidadSillasInvalida(sala) )
+            throw new Exception("Las filas y las columnas de la sala no coinciden con su cantidad de sillas");
+
         sala.getTeatro().agregarSala(sala);
         teatroRepo.save( sala.getTeatro() );
 
         return salaRepo.save(sala);
+    }
+
+    private boolean cantidadSillasInvalida(Sala sala) {
+        return sala.getCantidadSillas() == sala.getFilas() * sala.getColumnas();
     }
 
     @Override
@@ -122,6 +129,9 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         Optional<Sala> salaGuardada = salaRepo.findById(sala.getId());
 
         if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
+
+        if( cantidadSillasInvalida(sala) )
+            throw new Exception("Las filas y las columnas de la sala no coinciden con su cantidad de sillas");
 
         return salaRepo.save(sala);
     }
@@ -188,6 +198,12 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         if(funcionGuardada.isEmpty()) throw new Exception("La funcion no existe");
 
+        if( tiposNoCoinciden(funcion.getTipo(), funcion.getSala().getTipo()) )
+            throw new Exception("El tipo de la funcion no corresponde con el tipo de la sala");
+
+        if( salaOcupadaHorario(funcion.getSala(), funcion.getHorario()) )
+            throw new Exception("La sala seleccionada ya se encuentra ocupada en el horario seleccionado");
+
         return funcionRepo.save(funcion);
     }
 
@@ -233,7 +249,7 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         Ciudad ciudadGuardada = ciudadRepo.findById(idCiudad).orElse(null);
 
-        if(ciudadGuardada == null) throw new Exception("La funcion no existe en la base de datos");
+        if(ciudadGuardada == null) throw new Exception("La ciudad no existe en la base de datos");
 
         return ciudadGuardada;
     }

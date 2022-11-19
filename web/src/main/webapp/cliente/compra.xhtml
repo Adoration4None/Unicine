@@ -12,16 +12,96 @@
 
     <ui:define name="content">
         <div class="container">
-            <div class="card">
-                <h:form>
-                    <p:selectManyButton value="#{compraBean.asientosEscogidos}">
-                        <f:selectItem itemLabel="Option 1" itemValue="Option 1"/>
-                        <f:selectItem itemLabel="Option 2" itemValue="Option 2"/>
-                        <f:selectItem itemLabel="Option 3" itemValue="Option 3"/>
-                    </p:selectManyButton>
-                </h:form>
+            <h1 class="titulo mt-3">Completa tu compra</h1>
+
+            <div class="login-admin py-4 my-3">
+                <h2 class="texto-resaltado my-4">Selecciona los asientos que deseas ocupar</h2>
+                <p:repeat value="#{compraBean.matriz}" var="fila">
+                    <div class="fila-matriz" >
+                        <p:repeat value="#{fila}" var="entrada">
+                            <div class="casilla-asiento d-inline-block" >
+                                <h:form>
+                                    <p:selectBooleanButton styleClass="my-sm-1" onLabel="#{entrada.filaAsiento} #{entrada.columnaAsiento}" offLabel="#{entrada.filaAsiento} #{entrada.columnaAsiento}"/>
+                                    <p:ajax event="click" listener="#{compraBean.guadarSilla(entrada.filaAsiento, entrada.columnaAsiento)}" update="resumen-compra" />
+                                </h:form>
+                            </div>
+                        </p:repeat>
+                    </div>
+                </p:repeat>
             </div>
 
+            <div class="login-admin my-3">
+                <h2 class="texto-resaltado my-4">Agrega algo para comer</h2>
+                <p:carousel value="#{compraBean.confiteria}" var="comestible" numVisible="3" numScroll="3" containerStyleClass="confiteria" styleClass="w-75">
+                    <div class="comestible mx-2 flex-column">
+                        <h:form>
+                            <div>
+                                <p:graphicImage styleClass="img-fluid rounded-2 imagen-snack mb-2 shadow-lg" url="#{comestible.imagen}" />
+                            </div>
+
+                            <div>
+                                <h4 class="mb-1 mx-2">#{comestible.nombre}</h4>
+                                <h6 class="mb-1 mx-2">#{comestible.descripcion}</h6>
+                                <h:outputText value="#{comestible.precio}" styleClass="precio mx-2 mt-3">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                            </div>
+
+                            <div class="text-center align-items-end">
+                                <div class="d-inline-flex">
+                                    <p:commandButton icon="pi pi-minus" styleClass="rounded-button ui-button-outlined" action="#{compraBean.quitarComestible(comestible)}" update="cantidad,resumen-compra" />
+                                    <p jsf:id="cantidad" class="ms-3 me-3 mt-2">#{compraBean.unidadesCompradas}</p>
+                                    <p:commandButton icon="pi pi-plus" styleClass="rounded-button ui-button-outlined" action="#{compraBean.agregarComestible(comestible)}" update="cantidad, resumen-compra" />
+                                </div>
+                            </div>
+                        </h:form>
+
+                    </div>
+                </p:carousel>
+            </div>
+
+            <div jsf:id="resumen-compra" class="login-admin my-3">
+                <h2 class="texto-resaltado my-4">Resumen</h2>
+
+                <div>
+                    <h:outputLabel for="entradas-resumen" styleClass="texto" value="Entradas compradas: #{compraBean.seleccionadas.size().toString()}" />
+                    <p:dataTable id="entradas-resumen" var="entrada" value="#{compraBean.seleccionadas}" styleClass="w-50" stripedRows="true">
+                        <p:column headerText="Ubicacion asiento">
+                            <h:outputText value="#{entrada.filaAsiento} #{entrada.columnaAsiento}" />
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{entrada.precio}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p><strong>Total entradas: </strong> #{compraBean.valorTotalEntradas}</p>
+                </div>
+
+                <div>
+                    <h:outputLabel for="confiteria-resumen" styleClass="texto" value="Confiteria comprada: #{compraBean.comprasConfiteria.size().toString()}" />
+                    <p:dataTable id="confiteria-resumen" var="compraConfiteria" value="#{compraBean.comprasConfiteria}" styleClass="w-50" stripedRows="true">
+                        <p:column headerText="Comestible">
+                            <h:outputText value="#{compraConfiteria.comestible.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{compraConfiteria.precio}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{compraConfiteria.unidadesCompradas}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p><strong>Total confiteria:</strong> #{compraBean.valorTotalConfiteria}</p>
+                </div>
+
+                <div>
+                    <p class="texto"><strong>Valor total:</strong> #{compraBean.valorTotal}</p>
+                </div>
+
+            </div>
 
         </div>
     </ui:define>

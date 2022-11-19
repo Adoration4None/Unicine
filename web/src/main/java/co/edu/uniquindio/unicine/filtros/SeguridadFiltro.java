@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+//@Component
 public class SeguridadFiltro implements Filter {
 
     private static final String PAGINA_INICIO_CLIENTE      = "/index.xhtml";
