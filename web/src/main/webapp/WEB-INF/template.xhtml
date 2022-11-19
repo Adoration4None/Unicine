@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet name="styles.css" library="css" />
+
     <h:outputStylesheet name="carousel.css" library="css" />
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputScript name="bootstrap.bundle.min.js" library="js" />
@@ -27,13 +28,13 @@
                         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                             <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
                                 <li>
-                                    <a href="index.xhtml?city=#{seguridadBean.ciudadSeleccionada.id}" class="nav-link px-2 link-dark">
+                                    <a href="/index.xhtml?city=#{seguridadBean.ciudadSeleccionada.id}" class="nav-link px-2 link-dark">
                                         <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
                                     </a>
                                 </li>
                                 <li class="mx-1 my-1 align-items-center">
                                     <h:form>
-                                        <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
+                                        <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{seguridadBean.ciudadSeleccionada.nombre}"/>
                                     </h:form>
                                 </li>
                             </ul>

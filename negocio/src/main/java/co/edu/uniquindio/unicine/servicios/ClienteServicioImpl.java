@@ -257,60 +257,22 @@ public class ClienteServicioImpl implements ClienteServicio {
         return funcionRepo.buscarPeliculas(busqueda, idCiudad);
     }
 
-    public List<Entrada> verificarEntradas(Funcion funcion, List<Entrada> entradas) {
-        try {
-            List<Entrada> entradasCompradas = obtenerEntradasCompradas(funcion);
-            List<Entrada> entradasNoDisponibles = new ArrayList<>();
-
-            for(Entrada e : entradasCompradas) {
-                if( entradas.contains(e) ) entradasNoDisponibles.add(e);
-            }
-
-            System.out.println("Entradas no disponibles: " + entradasNoDisponibles.toString());
-            return entradasNoDisponibles;
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public Compra registrarCompra(Compra compra) throws Exception {
         if(compra == null) throw new Exception("No hay compra para registrar");
 
-        List<Entrada> entradasNoDisponibles = verificarEntradas(compra.getFuncion(), compra.getEntradas());
-        if( entradasNoDisponibles.size() > 0 )
-            throw new Exception( mensajeEntradasNoDisponibles(entradasNoDisponibles) );
-
-        guardarEntradas( compra.getEntradas() );
-//        if(compra.getComprasConfiteria() != null && !compra.getComprasConfiteria().isEmpty())
-//            compraConfiteriaRepo.saveAll( compra.getComprasConfiteria() );
-
         compra.setFechaCompra( LocalDateTime.now() );
         compra.calcularValorTotal();
+
         compraRepo.save(compra);
+        entradaRepo.saveAll( compra.getEntradas() );
+        compraConfiteriaRepo.saveAll(compra.getComprasConfiteria() );
 
         if( primeraCompra(compra.getCliente()) ) enviarCuponPrimeraCompra(compra.getCliente());
 
         enviarConfirmacionCompra(compra.getCliente(), compra);
 
         return compra;
-    }
-
-    private void guardarEntradas(List<Entrada> entradas) {
-        for (Entrada e : entradas) {
-            entradaRepo.save(e);
-        }
-    }
-
-    private String mensajeEntradasNoDisponibles(List<Entrada> entradas) {
-        StringBuilder mensaje = new StringBuilder("Ya estan ocupados los asientos: ");
-
-        for(Entrada e : entradas) {
-            mensaje.append(e.getFilaAsiento()).append("-").append(e.getColumnaAsiento()).append(", ");
-        }
-
-        return mensaje.substring( 0, mensaje.length()-1 );
     }
 
     private boolean primeraCompra(Cliente cliente) {
@@ -439,6 +401,13 @@ public class ClienteServicioImpl implements ClienteServicio {
         if(cliente == null) throw new Exception("Cliente vacio");
         if(estadoCupon == null) throw new Exception("Estado del cupon vacio");
         return cuponClienteRepo.obtenerCuponesClienteEstado(cliente.getCedula(), estadoCupon);
+    }
+
+    @Override
+    public Compra obtenerCompra(Integer idCompra) throws Exception {
+        if(idCompra == null || idCompra.equals(0)) throw new Exception("ID de compra vacio");
+
+        return compraRepo.findById(idCompra).orElse(null);
     }
 
 }

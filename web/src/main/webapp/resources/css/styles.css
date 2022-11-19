@@ -251,6 +251,16 @@ body .ui-accordion {
     font-size: 1.325rem;
 }
 
+.fondo-detalle-compra {
+    background: #1B1632;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.texto-oscuro {
+    color: #0A0814;
+}
+
 
 
 

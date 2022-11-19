@@ -33,6 +33,9 @@ public class CompraBean implements Serializable {
     @Value("#{param['func']}")
     private String idFuncion;
 
+    @Value("#{seguridadBean.ciudadSeleccionada.id}")
+    private String idCiudad;
+
     @Value(value = "#{seguridadBean.cliente}")
     @Getter @Setter
     private Cliente cliente;
@@ -51,6 +54,9 @@ public class CompraBean implements Serializable {
 
     @Getter @Setter
     private List<Entrada> seleccionadas;
+
+    @Getter @Setter
+    private List<Entrada> entradasCompradas;
 
     @Getter @Setter
     private List<CompraConfiteria> comprasConfiteria;
@@ -93,13 +99,16 @@ public class CompraBean implements Serializable {
         valorTotalEntradas = 0.0f;
         valorTotal = 0.0f;
 
-        compra.setFuncion(funcion);
         compra.setCliente(cliente);
 
         if(idFuncion != null && !idFuncion.isEmpty()) {
             try {
                 cuponesCliente = clienteServicio.obtenerCuponesClienteEstado(cliente, EstadoCupon.DISPONIBLE);
                 funcion = adminTeatroServicio.obtenerFuncion( Integer.valueOf(idFuncion) );
+                entradasCompradas = clienteServicio.obtenerEntradasCompradas(funcion);
+                System.out.println(entradasCompradas.toString());
+
+                compra.setFuncion(funcion);
                 int filas = funcion.getSala().getFilas();
                 int columnas = funcion.getSala().getColumnas();
 
@@ -128,6 +137,13 @@ public class CompraBean implements Serializable {
                     seleccionadas.remove(i);
                     repetida = true;
                 }
+            }
+        }
+
+        for(int i = 0; i < entradasCompradas.size(); i++) {
+            if( entradasCompradas.get(i).getFilaAsiento() == fila && entradasCompradas.get(i).getColumnaAsiento() == columna ) {
+                mostrarError( new Exception("La silla " + entradasCompradas.get(i).getFilaAsiento() + "-" + entradasCompradas.get(i).getColumnaAsiento() + " ya esta ocupada") );
+                repetida = true;
             }
         }
 
@@ -227,7 +243,7 @@ public class CompraBean implements Serializable {
         compra.setCuponCliente(cupon);
     }
 
-    public void finalizarCompra(){
+    public String finalizarCompra(){
         if(seleccionadas.size() == 0) mostrarError( new Exception("Debes comprar al menos una entrada") );
         if(metodoPago == null) mostrarError( new Exception("Debes seleccionar un metodo de pago") );
         if(cupon != null && cupon.getEstado() != EstadoCupon.DISPONIBLE )
@@ -241,9 +257,12 @@ public class CompraBean implements Serializable {
 
         try {
             clienteServicio.registrarCompra(compra);
+            return "/cliente/detalle-compra?faces-redirect=true&amp;b=" + compra.getId();
         } catch (Exception e) {
-            e.printStackTrace();
+            mostrarError(e);
         }
+
+        return "";
     }
 
     private void mostrarError(Exception e) {
