@@ -107,8 +107,6 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     @Override
     public Sala crearSala(Sala sala) throws Exception {
         if(sala == null) throw new Exception("No hay sala para crear");
-        if( salaRepo.findByCantidadSillasAndTipoAndTeatro(sala.getCantidadSillas(), sala.getTipo(), sala.getTeatro()) != null )
-            throw new Exception("La sala ya existe");
 
         if( cantidadSillasInvalida(sala) )
             throw new Exception("Las filas y las columnas de la sala no coinciden con su cantidad de sillas");
@@ -120,7 +118,7 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     private boolean cantidadSillasInvalida(Sala sala) {
-        return sala.getCantidadSillas() == sala.getFilas() * sala.getColumnas();
+        return sala.getCantidadSillas() != sala.getFilas() * sala.getColumnas();
     }
 
     @Override

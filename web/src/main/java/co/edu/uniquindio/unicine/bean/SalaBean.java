@@ -81,7 +81,7 @@ public class SalaBean implements Serializable {
     public void eliminarSala() {
         try {
             for (Sala sal: salasSeleccionadas) {
-                administradorTeatroServicio.eliminarTeatro(sal.getId());
+                administradorTeatroServicio.eliminarSala(sal.getId());
                 salas.remove(sal);
             }
             salasSeleccionadas.clear();

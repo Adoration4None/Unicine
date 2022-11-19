@@ -1,7 +1,9 @@
 package co.edu.uniquindio.unicine.bean;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
+import co.edu.uniquindio.unicine.entidades.CriterioCupon;
 import co.edu.uniquindio.unicine.entidades.Cupon;
+import co.edu.uniquindio.unicine.entidades.EstadoConfiteria;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +39,10 @@ public class CuponBean implements Serializable {
     @Setter
     private List<Cupon> cuponesSeleccionados;
 
+    @Getter
+    @Setter
+    private CriterioCupon[] criterios;
+
     private Boolean editar;
 
     private LocalDate fecha;
@@ -47,6 +53,7 @@ public class CuponBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        criterios = CriterioCupon.values();
         fecha = LocalDate.now();
         editar = false;
         cupon = new Cupon();

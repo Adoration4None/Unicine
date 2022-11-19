@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../WEB-INF/template_admin.xhtml">
+    <ui:define name="content">
+        <h:form id="form_datatable">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{horarioBean.botonAgregarEditar}" oncomplete="PF('crear_horario').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{horarioBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{horarioBean.horariosSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{horarioBean.eliminarHorarios}" update="form_datatable:datatable_crud_horario,@this"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable id="datatable_crud_horario" value="#{horarioBean.horarios}" var="hora" paginator="true" rows="10" rowKey="#{hora.id}"
+                         paginatorPosition="bottom" rowSelectMode="add" selection="#{horarioBean.horariosSeleccionados}">
+                <p:column selectionMode="multiple" exportable="false"/>
+
+                <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
+                <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
+                <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
+                <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
+                <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{hora.id}"/>
+                </p:column>
+
+                <p:column headerText="Fecha">
+                    <h:outputText value="#{hora.fecha}"/>
+                </p:column>
+
+                <p:column headerText="Hora">
+                    <h:outputText value="#{hora.hora}"/>
+                </p:column>
+
+                <p:column headerText="">
+                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{horarioBean.seleccionarHorario(hora)}" oncomplete="PF('crear_horario').show()" update="dialog_crear"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="dialog_crear" widgetVar="crear_horario" modal="true" header="#{horarioBean.mensajeCrear}" showEffect="fade">
+            <h:form>
+                <h:panelGrid columns="3" cellpadding="5">
+
+                    <p:outputLabel for="hora_horario" value="Hora:"/>
+                    <p:datePicker id="hora_horario" value="#{horarioBean.horario.hora}" timeOnly="true" pattern="HH:mm"/>
+                    <p:message for="hora_horario"/>
+
+                    <p:outputLabel for="fecha_horario" value="Fecha:"/>
+                    <p:datePicker id="fecha_horario" value="#{horarioBean.horario.fecha}" monthNavigator="true" yearNavigator="true" />
+                    <p:message for="fecha_horario"/>
+
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" action="#{horarioBean.crearHorario}" value="#{horarioBean.mensaje2Crear}" update="form_datatable:datatable_crud_horario"/>
+                <p:growl id="mensaje_bean" showDetail="true"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+</html>

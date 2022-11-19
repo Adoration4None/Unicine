@@ -10,7 +10,7 @@ public class PaginaPrincipalConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("crud_cupon.xhtml");
+        registry.addViewController("/").setViewName("hhbbhjh.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }
