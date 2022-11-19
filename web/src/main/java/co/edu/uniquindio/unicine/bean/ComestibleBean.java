@@ -31,11 +31,13 @@ public class ComestibleBean implements Serializable {
     @Setter
     private List<Confiteria> comestibles;
 
-    private List<EstadoConfiteria> estadosConfiteria;
-
     @Getter
     @Setter
     private List<Confiteria> comestiblesSeleccionados;
+
+    @Getter
+    @Setter
+    private EstadoConfiteria[] estados;
 
     private Boolean editar;
 
@@ -45,6 +47,7 @@ public class ComestibleBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        estados = EstadoConfiteria.values();
         editar = false;
         comestible = new Confiteria();
         comestibles = administradorServicio.listarConfiteria();
@@ -54,7 +57,6 @@ public class ComestibleBean implements Serializable {
     public void crearComestible() {
         try {
             if (!editar) {
-                comestible.setEstado(EstadoConfiteria.DISPONIBLE);
                 comestible.setImagen("mi");
                 Confiteria comida = administradorServicio.crearComestible(comestible);
                 comestibles.add(comida);

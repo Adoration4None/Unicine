@@ -82,7 +82,7 @@
 
                 <p:selectOneMenu id="ciudad_teatro" value="#{usuarioBean.cliente.estado}" converter="#{ciudadConverter}">
                     <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true" itemValue="#{null}"/>
-                    <f:selectItems value="#{teatroBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
+                    <f:selectItems value="#{funcionBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
                 </p:selectOneMenu>
 
                 <p:message for="ciudad_teatro"/>

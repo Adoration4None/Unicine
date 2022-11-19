@@ -63,7 +63,7 @@
 
     <p:dialog id="dialog_crear" widgetVar="crear_teatro" modal="true" header="#{teatroBean.mensajeCrear}" showEffect="fade">
         <h:form>
-            <h:panelGrid columns="3" cellpadding="5">
+            <h:panelGrid columns="1" cellpadding="5">
 
                 <p:outputLabel for="nombre_teatro" value="Nombre:"/>
                 <p:inputText id="nombre_teatro" value="#{teatroBean.teatro.nombre}" required="true"/>
@@ -83,7 +83,6 @@
                     <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true" itemValue="#{null}"/>
                     <f:selectItems value="#{teatroBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}"/>
                 </p:selectOneMenu>
-
                 <p:message for="ciudad_teatro"/>
 
             </h:panelGrid>

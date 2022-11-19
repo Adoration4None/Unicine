@@ -13,6 +13,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,15 @@ public class CuponBean implements Serializable {
 
     private Boolean editar;
 
+    private LocalDate fecha;
+
     public CuponBean(AdministradorServicio administradorServicio) {
         this.administradorServicio = administradorServicio;
     }
 
     @PostConstruct
     public void init() {
+        fecha = LocalDate.now();
         editar = false;
         cupon = new Cupon();
         cupones = administradorServicio.listarCupones();
@@ -51,6 +56,7 @@ public class CuponBean implements Serializable {
     public void crearCupon() {
         try {
             if (!editar) {
+                cupon.setFechaVencimiento(fecha);
                 Cupon cup = administradorServicio.crearCupon(cupon);
                 cupones.add(cup);
                 cupon = new Cupon();

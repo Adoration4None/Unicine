@@ -92,6 +92,12 @@
                 <p:inputText id="unidades_comestible" value="#{comestibleBean.comestible.unidades}" required="true"/>
                 <p:message for="unidades_comestible"/>
 
+                <p:outputLabel for="estado_comestible" value="Estado:"/>
+                <p:selectOneMenu id="estado_comestible" value="#{comestibleBean.comestible.estado}">
+                    <f:selectItem itemLabel="Seleccione un estado" noSelectionOption="true" itemValue="#{null}"/>
+                    <f:selectItems value="#{comestibleBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
+                </p:selectOneMenu>
+
             </h:panelGrid>
             <p:commandButton icon="pi pi-save" action="#{comestibleBean.crearComestible}" value="#{comestibleBean.mensaje2Crear}" update="form_datatable:datatable_crud_confiteria"/>
             <p:growl id="mensaje_bean" showDetail="true"/>

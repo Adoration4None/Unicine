@@ -294,6 +294,17 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         return horarioRepo.save(horario);
     }
 
+    @Override
+    public Horario obtenerHorario(Integer idHorario) throws Exception {
+        if(idHorario == null || idHorario.equals(0)) throw new Exception("ID de horario vacio");
+
+        Horario horarioGuardado = horarioRepo.findById(idHorario).orElse(null);
+
+        if(horarioGuardado == null) throw new Exception("El horario no existe en la base de datos");
+
+        return horarioGuardado;
+    }
+
 
     // Otras consultas -----------------------------------------------------------------------------------------
     @Override
