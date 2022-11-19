@@ -45,6 +45,10 @@ public class DetallePeliculaBean implements Serializable {
     @Getter @Setter
     private List<Funcion> funcionesPelicula;
 
+    //luego lo borro
+    @Getter @Setter
+    private List<Pelicula> peliculasSeleccionadas;
+
     @PostConstruct
     public void init() {
 
