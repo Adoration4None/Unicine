@@ -38,9 +38,10 @@ public class CompraConfiteria implements Serializable {
     @NonNull
     private Confiteria comestible;
 
-    // Metodos ---------------------------------------------------------------------------------------------
+    public int actualizarUnidadesCompradas(char operacion) {
+        if(operacion == '-') unidadesCompradas--;
+        if(operacion == '+') unidadesCompradas++;
 
-    public void actualizarUnidades() {
-        comestible.setUnidades(comestible.getUnidades() - unidadesCompradas);
+        return unidadesCompradas;
     }
 }

@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,13 +21,16 @@ public class Entrada implements Serializable {
 
     @Column(nullable = false)
     @PositiveOrZero
-    @NonNull
     private Integer filaAsiento;
 
     @Column(nullable = false)
     @PositiveOrZero
-    @NonNull
     private Integer columnaAsiento;
+
+    private Float precio;
+
+    @Column(nullable = false)
+    private Float precioBase;
 
     // Relaciones -------------------------------------------------------------------------------------------
     @ManyToOne
@@ -38,4 +40,23 @@ public class Entrada implements Serializable {
     @ManyToOne
     @ToString.Exclude
     private Compra compra;
+
+    @Builder
+    public Entrada(@NonNull Integer filaAsiento, @NonNull Integer columnaAsiento, @NonNull Float precioBase) {
+        this.filaAsiento = filaAsiento;
+        this.columnaAsiento = columnaAsiento;
+        this.precioBase = precioBase;
+    }
+
+    public Float calcularPrecio() {
+        this.precio = precioBase + getRecargo();
+        return precio;
+    }
+
+    public float getRecargo() {
+        if( sala.getTipo() == TipoSala.SALA_3D ) return precioBase * 0.25f;
+        if( sala.getTipo() == TipoSala.SALA_XD ) return precioBase * 0.5f;
+
+        return 0f;
+    }
 }

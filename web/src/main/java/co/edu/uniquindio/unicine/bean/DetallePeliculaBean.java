@@ -30,11 +30,8 @@ public class DetallePeliculaBean implements Serializable {
     @Value("#{param['mov']}")
     private String nombrePelicula;
 
-    @Value("#{param['city']}")
-    private String idCiudad;
-
-    @Getter @Setter
-    private String nombreCiudad;
+    @Value(value = "#{seguridadBean.ciudadSeleccionada.id}")
+    private Integer idCiudad;
 
     @Getter @Setter
     private Pelicula pelicula;
@@ -55,7 +52,6 @@ public class DetallePeliculaBean implements Serializable {
             try {
                 pelicula = administradorServicio.obtenerPelicula(nombrePelicula);
                 funcionesPelicula = clienteServicio.obtenerFuncionesPelicula(nombrePelicula);
-                nombreCiudad = clienteServicio.obtenerCiudad( Integer.valueOf(idCiudad) ).getNombre();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -64,7 +60,7 @@ public class DetallePeliculaBean implements Serializable {
 
     public String comprar(Funcion funcion) {
         if(funcion != null) {
-            return "/cliente/compra.xhtml?faces-redirect=true&amp;city=" + idCiudad + "&amp;func=" + funcion.getId();
+            return "/cliente/compra.xhtml?faces-redirect=true&amp;func=" + funcion.getId();
         }
 
         return "";

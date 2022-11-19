@@ -18,7 +18,7 @@
     <title>Unicine | <ui:insert name="title"> </ui:insert></title>
 </h:head>
 
-<h:body styleClass="body">
+<h:body>
     <header>
         <ui:insert name="header">
             <nav>
@@ -35,36 +35,38 @@
 
                             <ul class="nav col-12 col-lg-auto justify-content-center align-items-center">
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="store.png" styleClass="bi d-block mx-auto mb-1 icono-admin" />
                                         Gestionar teatros
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="tv.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
                                         Gestionar funciones
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link text-secondary" style="font-size: 12px">
+                                    <a href="#" class="nav-link text-secondary texto-barra-admin">
                                         <h:graphicImage library="img" name="layers.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
                                         Gestionar salas
                                     </a>
                                 </li>
-                                <li class="mx-3"> <h:outputLabel rendered="#{seguridadBean.autenticado}" style="color: #6B8CE1;" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                                <li class="mx-3">
+                                    <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" />
+                                </li>
                             </ul>
 
                             <h:form rendered="#{seguridadBean.autenticado}">
                                 <div class="dropdown text-end mx-3 my-1">
                                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                                        <h:graphicImage library="img" name="person.png" styleClass="rounded-circle" width="32" height="32" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
                                         <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del administrador</a></li>
                                         <li class="dropdown-item">
                                             <i class="pi pi-power-off" />
-                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" style="background: transparent; border: transparent; color: #6B8CE1"/>
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
                                         </li>
                                     </ul>
                                 </div>

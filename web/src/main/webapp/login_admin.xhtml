@@ -18,7 +18,7 @@
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                         <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
                             <li>
-                                <a href="../admin/login_admin.xhtml" class="nav-link px-2 link-dark">
+                                <a href="login_admin.xhtml" class="nav-link px-2 link-dark">
                                     <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
                                 </a>
                             </li>
@@ -46,12 +46,12 @@
                 <h:form class="align-items-center justify-content-center mx-0">
                     <h:panelGrid columns="1" cellpadding="3">
                         <p:outputLabel for="correo_login" value="Correo electronico:" styleClass="texto"/>
-                        <p:inputText id="correo_login" value="#{seguridadBean.email}" style="background: #1B1632; border: transparent"/>
+                        <p:inputText id="correo_login" value="#{seguridadBean.email}" styleClass="input"/>
 
                         <p:outputLabel for="contrasena_login" value="Contraseña:" styleClass="texto mt-3"/>
-                        <p:password id="contrasena_login" value="#{seguridadBean.contrasena}" style="background: #1B1632; border: transparent"/>
+                        <p:password id="contrasena_login" value="#{seguridadBean.contrasena}" styleClass="input"/>
 
-                        <p:commandButton styleClass="my-4" value="Iniciar Sesion" action="#{seguridadBean.iniciarSesionAdmins}" update="@form" />
+                        <p:commandButton styleClass="boton my-4" value="Iniciar Sesion" action="#{seguridadBean.iniciarSesionAdmins}" update="@form" />
                     </h:panelGrid>
                 </h:form>
             </div>

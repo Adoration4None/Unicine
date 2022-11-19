@@ -24,9 +24,6 @@ public class Funcion implements Serializable {
     @Column(length = 10, nullable = false)
     private TipoFuncion tipo;
 
-    @Column(nullable = false)
-    private Float precio;
-
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
@@ -43,20 +40,11 @@ public class Funcion implements Serializable {
 
     // Constructor -----------------------------------------------------------------
     @Builder
-    public Funcion(TipoFuncion tipo, Float precioBase, Pelicula pelicula, Sala sala, Horario horario) {
+    public Funcion(TipoFuncion tipo, Pelicula pelicula, Sala sala, Horario horario) {
         this.tipo = tipo;
-        this.precio = precioBase;
         this.pelicula = pelicula;
         this.sala = sala;
         this.horario = horario;
-
-        this.precio += completarPrecioSegunTipo();
-    }
-
-    private Float completarPrecioSegunTipo() {
-        if(this.tipo == TipoFuncion.FUNCION_2D) return 0f;
-        if(this.tipo == TipoFuncion.FUNCION_3D) return this.precio * 0.25f;
-        return this.precio * 0.5f;
     }
 
 }

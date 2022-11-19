@@ -11,7 +11,139 @@
     <ui:define name="title">Detalle compra</ui:define>
 
     <ui:define name="content">
+        <div class="container my-5">
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <div class="invoice-container">
+                                <div class="invoice-header">
 
+                                    <!-- Row start -->
+                                    <div class="row gutters">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <p:graphicImage library="img" name="logo2.png" width="80" />
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <address class="text-right">
+                                                Unicine<br />
+                                                Armenia, Quindio<br />
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <!-- Row end -->
+
+                                    <!-- Row start -->
+                                    <div class="row gutters">
+                                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                                            <div class="invoice-details">
+                                                <address>
+                                                    #{detalleCompraBean.compra.cliente.nombreCompleto}<br />
+                                                    #{detalleCompraBean.compra.cliente.email}<br/>
+                                                    #{seguridadBean.ciudadSeleccionada.nombre}
+                                                </address>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                                            <div class="invoice-details">
+                                                <div class="invoice-num">
+                                                    <div>ID de compra - 00#{detalleCompraBean.compra.id}</div>
+                                                    <div>#{detalleCompraBean.compra.fechaCompra.dayOfMonth}/#{detalleCompraBean.compra.fechaCompra.month}/#{detalleCompraBean.compra.fechaCompra.year} #{detalleCompraBean.compra.fechaCompra.hour}:#{detalleCompraBean.compra.fechaCompra.minute}:#{detalleCompraBean.compra.fechaCompra.second}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row end -->
+
+                                </div>
+
+                                <div class="invoice-body">
+
+                                    <!-- Row start -->
+                                    <div class="row gutters">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table m-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Items</th>
+                                                        <th>ID</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Sub Total</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <p:repeat value="#{detalleCompraBean.compra.entradas}" var="entrada">
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="texto-oscuro">Entrada</h6>
+                                                                <p class="m-0 text-muted">
+                                                                    Asiento #{entrada.filaAsiento}-#{entrada.columnaAsiento} <br/>
+                                                                    Sala #{entrada.compra.funcion.sala.numero},
+                                                                    #{entrada.compra.funcion.sala.teatro.nombre},
+                                                                    #{entrada.compra.funcion.sala.teatro.ciudad.nombre},
+                                                                    #{entrada.compra.funcion.sala.teatro.direccion} <br/>
+                                                                    Pelicula: #{entrada.compra.funcion.pelicula.nombre} <br/>
+                                                                    Fecha: #{entrada.compra.funcion.horario.fecha.toString()}
+                                                                    Hora: #{entrada.compra.funcion.horario.hora.toString()}
+                                                                </p>
+                                                            </td>
+                                                            <td>00#{entrada.id}</td>
+                                                            <td>1</td>
+                                                            <td>$#{entrada.precio}</td>
+                                                        </tr>
+                                                    </p:repeat>
+                                                    <p:repeat value="#{detalleCompraBean.compra.comprasConfiteria}" var="confiteria">
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="texto-oscuro">#{confiteria.comestible.nombre}</h6>
+                                                                <p class="m-0 text-muted">
+                                                                    #{confiteria.comestible.descripcion}
+                                                                </p>
+                                                            </td>
+                                                            <td>000#{confiteria.id}</td>
+                                                            <td>#{confiteria.unidadesCompradas}</td>
+                                                            <td>$#{confiteria.precio * confiteria.unidadesCompradas}</td>
+                                                        </tr>
+                                                    </p:repeat>
+                                                    <tr>
+                                                        <h6 class="texto-oscuro">Metodo de pago:</h6>
+                                                        <p>#{detalleCompraBean.compra.metodoPago}</p>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td colspan="2">
+                                                            <p>
+                                                                Cupon #{detalleCompraBean.compra.cuponCliente.cupon.nombre}<br/>
+                                                            </p>
+                                                            <h5 class="text-success"><strong>Valor Total</strong></h5>
+                                                        </td>
+                                                        <td>
+                                                            <p>
+                                                                -#{detalleCompraBean.compra.cuponCliente.cupon.porcentajeDescuento}%<br/>
+                                                            </p>
+                                                            <h5 class="text-success"><strong>$#{detalleCompraBean.compra.valorTotal}</strong></h5>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Row end -->
+
+                                </div>
+
+                                <div class="invoice-footer">
+                                    Gracias por su compra.
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
 

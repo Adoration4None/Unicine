@@ -24,17 +24,11 @@ public interface ClienteServicio {
 
     Compra redimirCupon(Integer idCuponCliente, Compra compra) throws Exception;
 
+    CuponCliente obtenerCuponCliente(Integer idCuponCliente) throws Exception;
+
     List<Pelicula> buscarPeliculas(String busqueda, Integer idCiudad) throws Exception;
 
-    Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception;
-
-    Compra asignarAsientosCompra(Compra compra, List<Entrada> entradas) throws Exception;
-
-    Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception;
-
-    Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception;
-
-    Compra finalizarCompra(Compra compra) throws Exception;
+    Compra registrarCompra(Compra compra) throws Exception;
 
     boolean cambiarContrasena(String emailCliente) throws Exception;
 
@@ -49,4 +43,10 @@ public interface ClienteServicio {
     List<Pelicula> filtrarPeliculasEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception;
 
     List<Funcion> obtenerFuncionesPelicula(String nombrePelicula) throws Exception;
+
+    List<CuponCliente> obtenerCuponesCliente(Cliente cliente) throws Exception;
+
+    List<CuponCliente> obtenerCuponesClienteEstado(Cliente cliente, EstadoCupon disponible) throws Exception;
+
+    Compra obtenerCompra(Integer idCompra) throws Exception;
 }

@@ -19,10 +19,6 @@
     display: none;
 }
 
-.form-busqueda{
-    width: 500px;
-}
-
 .navegacion{
     background-color: #0A0814;
     font-family: "Marcellus", 'Lato', sans-serif;
@@ -31,18 +27,21 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.dialogo{
-    background-color: rgba(16, 14, 25, .9);
-}
-
-.body {
-    background-color: #100E19;
+body {
+    background-color: #100E19 !important;
+    font-family: "Marcellus", 'Lato', sans-serif !important;
 }
 
 .texto-resaltado {
     font-family: var(--bs-body-font-family);
     color: #6B8CE1;
     font-size: calc(1.325rem + .9vw);
+}
+
+.texto-sombreado {
+    text-shadow: 2px 2px 5px black;
+    font-family: "Marcellus", 'Lato', sans-serif;
+    font-size: calc(1.325rem);
 }
 
 .texto {
@@ -84,10 +83,6 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.seleccion_ciudad {
-    background: #1B1632;
-}
-
 .titulo {
     font-family: "Marcellus", 'Lato', sans-serif;
     color: #6B8CE1;
@@ -115,21 +110,161 @@
     -webkit-backdrop-filter: blur(8.4px);
     padding: 5%;
     margin-bottom: 10%;
+    color: #D9D9D9;
 }
 
-.detalle-pelicula {
+.confiteria {
+    font-family: "Marcellus", 'Lato', sans-serif;
+    color: #D9D9D9;
+    font-size: 1rem;
+}
+
+.comestible {
     position: relative;
     display: flex;
-    flex-wrap: wrap;
-    width: 300px;
+    flex-wrap: nowrap;
+    width: 200px;
+    height: 400px;
     background: rgba(27, 22, 50, 0.5);
     border-radius: 16px;
     box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8.4px);
     -webkit-backdrop-filter: blur(8.4px);
-    padding: 5%;
-    margin-bottom: 10%;
 }
+
+.ui-selectonemenu.selector {
+    background: #1B1632;
+    border-radius: 20px;
+    border: transparent;
+}
+
+.ui-selectonemenu.selector.select-ciudad {
+    width: 80%;
+}
+
+.ui-selectonemenu.selector.select-teatro {
+    width: 60%;
+}
+
+.ui-selectonemenu.selector.select-metodo-pago {
+    width: 80%;
+}
+
+.ui-selectonemenu.selector.select-cupon {
+    width: 80%;
+}
+
+.ui-button.boton{
+    background: #6B8CE1;
+    color: #0A0814;
+    border-radius: 50px;
+}
+
+.ui-button.boton-circular {
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.ui-button.boton-texto-resaltado {
+    background: transparent;
+    border: transparent;
+    color: #6B8CE1;
+    font-family: var(--bs-body-font-family);
+    font-size: calc(1.325rem);
+}
+
+.ui-button.logout {
+    background: transparent;
+    border: transparent;
+    color: #6B8CE1;
+    font-family: var(--bs-body-font-family);
+}
+
+.ui-dialog-titlebar {
+    text-align: center !important;
+    color: #6B8CE1 !important;
+    font-family: "Marcellus", 'Lato', sans-serif !important;
+    background: #0A0814 !important;
+}
+
+.ui-dialog-content {
+    background-color: rgba(16, 14, 25, .9) !important;
+    font-family: "Marcellus", 'Lato', sans-serif !important;
+    color: #D9D9D9 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+}
+
+.ui-inputfield.input, .ui-calendar.input, .ui-inputfield.ui-widget.input{
+    background: #1B1632;
+    color: #BFBFBF;
+    border: transparent;
+}
+
+.ui-inputfield.busqueda {
+    background: #1B1632;
+    color: #BFBFBF;
+    border-radius: 20px;
+    border: transparent;
+    width: 50%;
+}
+
+.nombre-sesion {
+    color: #6B8CE1;
+}
+
+.dropdown-menu.opciones {
+    background: rgba(10, 8, 20, 0.9);
+}
+
+.texto-barra-admin {
+    font-size: 12px !important;
+}
+
+.texto-normal {
+    color: #D9D9D9;
+    font-size: 1rem;
+}
+
+body .ui-accordion {
+    border: none !important;
+}
+
+.ui-accordion-header {
+    background: #1B1632 !important;
+    border: none !important;
+    color: #D9D9D9 !important;
+}
+
+.ui-accordion-content {
+    border: none; !important;
+    color: #0A0814 !important;
+}
+
+.precio {
+    font-family: var(--bs-body-font-family);
+    color: #6B8CE1;
+    font-weight: bold;
+    font-size: 1.325rem;
+}
+
+.fondo-detalle-compra {
+    background: #1B1632;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.texto-oscuro {
+    color: #0A0814;
+}
+
+
+
+
+
 
 
 

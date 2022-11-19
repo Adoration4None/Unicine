@@ -25,13 +25,14 @@ public class ClienteServicioImpl implements ClienteServicio {
     private final EntradaRepo entradaRepo;
     private final CiudadRepo ciudadRepo;
     private final SalaRepo salaRepo;
+    private final CompraConfiteriaRepo compraConfiteriaRepo;
 
     // Servicio de email
     private final EmailServicio emailServicio;
 
     public ClienteServicioImpl(ClienteRepo clienteRepo, FuncionRepo funcionRepo, CuponRepo cuponRepo,
                                CuponClienteRepo cuponClienteRepo, CompraRepo compraRepo, EmailServicio emailServicio,
-                               EntradaRepo entradaRepo, CiudadRepo ciudadRepo, SalaRepo salaRepo) {
+                               EntradaRepo entradaRepo, CiudadRepo ciudadRepo, SalaRepo salaRepo, CompraConfiteriaRepo compraConfiteriaRepo) {
         this.clienteRepo = clienteRepo;
         this.funcionRepo = funcionRepo;
         this.cuponRepo = cuponRepo;
@@ -41,6 +42,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         this.entradaRepo = entradaRepo;
         this.ciudadRepo = ciudadRepo;
         this.salaRepo = salaRepo;
+        this.compraConfiteriaRepo = compraConfiteriaRepo;
     }
 
     @Override
@@ -236,6 +238,18 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
+    public CuponCliente obtenerCuponCliente(Integer idCuponCliente) throws Exception {
+        if(idCuponCliente == null || idCuponCliente.equals(0)) throw new Exception("ID de cupon vacio");
+
+        Optional<CuponCliente> cuponClienteGuardado = cuponClienteRepo.findById(idCuponCliente);
+
+        if (cuponClienteGuardado.isEmpty()) throw new Exception("Cupon no encontrado");
+
+        return cuponClienteGuardado.get();
+    }
+
+
+    @Override
     public List<Pelicula> buscarPeliculas(String busqueda, Integer idCiudad) throws Exception {
         if(busqueda == null || busqueda.equals("")) throw new Exception("Busqueda vacia");
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("Ciudad vacia");
@@ -243,91 +257,16 @@ public class ClienteServicioImpl implements ClienteServicio {
         return funcionRepo.buscarPeliculas(busqueda, idCiudad);
     }
 
-    public Compra iniciarCompra(Cliente cliente, Funcion funcion) throws Exception {
-
-        if(cliente == null || funcion == null)
-            throw new Exception("Se necesitan un cliente y una funcion para iniciar una compra");
-
-        if( clienteInactivo(cliente.getCedula()) )
-            throw new Exception("El cliente debe activar su cuenta para poder comprar");
-
-        return Compra.builder().cliente(cliente).funcion(funcion).build();
-    }
-
     @Override
-    public Compra asignarAsientosCompra(Compra compra, List<Entrada> entradas) throws Exception {
-
-        if(compra == null) throw new Exception("No hay compra a la cual asignar asientos");
-        if(entradas == null || entradas.isEmpty() ) throw new Exception("No se han seleccionado entradas para comprar");
-
-        if( entradasNoDisponibles( compra.getFuncion(), entradas) )
-            throw new Exception("Alguno(s) de los asientos ya esta(n) asignado(s)");
-
-        if( !salaRepo.verificarAsientosDisponibles(entradas.size()) )
-            throw new Exception("El numero de entradas excede la cantidad de sillas en la sala");
-
-        compra.setEntradas(entradas);
-        asignarCompraEntradas(compra, entradas);
-
-        return compra;
-    }
-
-    private boolean entradasNoDisponibles(Funcion funcion, List<Entrada> entradas) {
-        try {
-            List<Entrada> entradasCompradas = obtenerEntradasCompradas(funcion);
-
-            for(Entrada e : entradasCompradas) {
-                if( entradas.contains(e) ) return true;
-            }
-
-            return false;
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void asignarCompraEntradas(Compra compra, List<Entrada> entradas) {
-        entradas.forEach(entrada -> {
-            entrada.setCompra(compra);
-            entradaRepo.save(entrada);
-        } );
-    }
-
-    @Override
-    public Compra comprarConfiteria(Compra compra, List<CompraConfiteria> confiteria) throws Exception {
-
-        if(compra == null) throw new Exception("No hay compra a la cual asignar confiteria");
-
-        if(confiteria == null || confiteria.size() < 1)
-            throw new Exception("No se ha seleccionado confiteria para comprar");
-
-        compra.setComprasConfiteria(confiteria);
-
-        return compra;
-    }
-
-    @Override
-    public Compra elegirMetodoPago(Compra compra, MetodoPago metodoPago) throws Exception {
-        if(compra == null) throw new Exception("No hay compra a la cual asignar metodo de pago");
-        if( metodoPago == null ) throw new Exception("No se ha seleccionado metodo de pago");
-
-        compra.setMetodoPago(metodoPago);
-
-        return compra;
-    }
-
-    @Override
-    public Compra finalizarCompra(Compra compra) throws Exception {
+    public Compra registrarCompra(Compra compra) throws Exception {
         if(compra == null) throw new Exception("No hay compra para registrar");
 
         compra.setFechaCompra( LocalDateTime.now() );
         compra.calcularValorTotal();
-        compraRepo.save(compra);
 
-        Cliente cliente = compra.getCliente();
-        cliente.getCompras().add(compra);
-        clienteRepo.save(cliente);
+        compraRepo.save(compra);
+        entradaRepo.saveAll( compra.getEntradas() );
+        compraConfiteriaRepo.saveAll(compra.getComprasConfiteria() );
 
         if( primeraCompra(compra.getCliente()) ) enviarCuponPrimeraCompra(compra.getCliente());
 
@@ -350,10 +289,19 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     private void enviarConfirmacionCompra(Cliente cliente, Compra compra) {
-        String mensaje = "Has realizado una compra exitosa! Detalles: " +
-                        compra.toString() + " \n " +
-                        "Subtotal confiteria: " + compra.obtenerTotalConfiteria() + "\n" +
-                        "Subtotal entradas: " + compra.obtenerTotalEntradas();
+        String mensaje = "¡Has realizado una compra!     " +
+                         " | ID de la compra: " + compra.getId() +
+                         " | Cantidad de entradas: " + compra.getEntradas().size() +
+                         " | Subtotal entradas: $" + compra.obtenerTotalEntradas() +
+                         " | Pelicula: " + compra.getFuncion().getPelicula().getNombre() +
+                         " | Sala: " + compra.getFuncion().getSala().getNumero() +
+                         " | Teatro: " + compra.getFuncion().getSala().getTeatro().getNombre() + " " + compra.getFuncion().getSala().getTeatro().getCiudad().getNombre() +
+                         " | Direccion: " + compra.getFuncion().getSala().getTeatro().getDireccion() +
+                         " | Subtotal confiteria: $" + compra.obtenerTotalConfiteria() +
+                         " | Fecha y hora de la funcion: " + compra.getFuncion().getHorario().getFecha().toString() + " " + compra.getFuncion().getHorario().getHora().toString() + "\n" +
+                         " || VALOR TOTAL: $" + compra.getValorTotal() + " ||      " +
+                         " ----------------------- " +
+                         " Puedes verla en tu historial de compras: https://bit.ly/3s7ETPZ";
 
         emailServicio.enviarEmail("Confirmacion Compra", mensaje, cliente.getEmail());
     }
@@ -448,6 +396,27 @@ public class ClienteServicioImpl implements ClienteServicio {
         if(nombrePelicula == null || nombrePelicula.isEmpty()) throw new Exception("Pelicula vacia");
 
         return funcionRepo.obtenerFuncionesPelicula(nombrePelicula);
+    }
+
+    @Override
+    public List<CuponCliente> obtenerCuponesCliente(Cliente cliente) throws Exception {
+        if(cliente == null) throw new Exception("Cliente vacio");
+
+        return cuponClienteRepo.obtenerCuponesCliente(cliente.getCedula());
+    }
+
+    @Override
+    public List<CuponCliente> obtenerCuponesClienteEstado(Cliente cliente, EstadoCupon estadoCupon) throws Exception {
+        if(cliente == null) throw new Exception("Cliente vacio");
+        if(estadoCupon == null) throw new Exception("Estado del cupon vacio");
+        return cuponClienteRepo.obtenerCuponesClienteEstado(cliente.getCedula(), estadoCupon);
+    }
+
+    @Override
+    public Compra obtenerCompra(Integer idCompra) throws Exception {
+        if(idCompra == null || idCompra.equals(0)) throw new Exception("ID de compra vacio");
+
+        return compraRepo.findById(idCompra).orElse(null);
     }
 
 }
