@@ -29,12 +29,12 @@ INSERT INTO teatro VALUES
                        (5, "Sidney, Bogotá Cr 15 - 19",      "https://www.money.com.bo/wp-content/uploads/2020/09/cine.jpg", "Arboleda Theaters",     "4508", 4);
 
 INSERT INTO sala VALUES
-                    -- id, # sillas, columnas, filas,  tipo,  teatro
-                       (1,     70,      10,      7,  "SALA_2D", 1),
-                       (2,     80,      10,      8,  "SALA_3D", 1),
-                       (3,     150,     15,     10,  "SALA_XD", 2),
-                       (4,     60,       6,     10,  "SALA_2D", 2),
-                       (5,     90,       9,     10,  "SALA_XD", 1);
+                    -- id, # sillas, columnas, filas, numero,  tipo,   teatro
+                       (1,     70,      10,      7,     2,   "SALA_2D", 1),
+                       (2,     80,      10,      8,     3,   "SALA_3D", 1),
+                       (3,     150,     15,     10,     1,   "SALA_XD", 2),
+                       (4,     60,       6,     10,     1,   "SALA_2D", 2),
+                       (5,     90,       9,     10,     3,   "SALA_XD", 1);
 
  INSERT INTO genero VALUES
                         (1, "Terror"),
@@ -107,14 +107,14 @@ INSERT INTO cupon_cliente VALUES
                               (5, "USADO",      "1223", 4,     5);
 
 INSERT INTO entrada VALUES
-                    --  id, columna, fila, precio, compra, sala
-                        (1,    3,     4,    8000,    1,     2),
-                        (2,    4,     4,    9000,    1,     2),
-                        (3,   10,     7,    8500,    2,     1),
-                        (4,    9,     7,    10000,   2,     1),
-                        (5,    6,     5,    6400,    4,     5),
-                        (6,    5,     2,    7000,   null,   3),
-                        (7,    4,     9,    8000,   null,   4);
+                    --  id, columna, fila, precio, precio base, compra, sala
+                        (1,    3,     4,     0,       8000,        1,     2),
+                        (2,    4,     4,     0,       8000,        1,     2),
+                        (3,   10,     7,     0,       8000,        2,     1),
+                        (4,    9,     7,     0,       8000,        2,     1),
+                        (5,    6,     5,     0,       8000,        4,     5),
+                        (6,    5,     2,     0,       8000,       null,   3),
+                        (7,    4,     9,     0,       8000,        null,   4);
 
 INSERT INTO confiteria VALUES
                            (1, "Cafe helado",                                                "AGOTADO",    "https://okdiario.com/img/recetas/2016/10/25/cafe-helado-vietnamita.jpg", "Granizado de cafe",   50000, 3),

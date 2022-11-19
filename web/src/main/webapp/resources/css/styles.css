@@ -146,6 +146,14 @@ body {
     width: 60%;
 }
 
+.ui-selectonemenu.selector.select-metodo-pago {
+    width: 80%;
+}
+
+.ui-selectonemenu.selector.select-cupon {
+    width: 80%;
+}
+
 .ui-button.boton{
     background: #6B8CE1;
     color: #0A0814;

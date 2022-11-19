@@ -37,4 +37,11 @@ public class CompraConfiteria implements Serializable {
     @ManyToOne
     @NonNull
     private Confiteria comestible;
+
+    public int actualizarUnidadesCompradas(char operacion) {
+        if(operacion == '-') unidadesCompradas--;
+        if(operacion == '+') unidadesCompradas++;
+
+        return unidadesCompradas;
+    }
 }
