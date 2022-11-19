@@ -53,6 +53,7 @@ public class PeliculaBean implements Serializable {
 
     @Getter @Setter
     private List<Pelicula> peliculas;
+
     @PostConstruct
     public void init(){
         estados = EstadoPelicula.values();
