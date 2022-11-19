@@ -257,7 +257,7 @@ public class ClienteServicioTest {
         Compra compraInicial = compraRepo.findById(5).orElse(null);
 
         try {
-            Compra compra = clienteServicio.finalizarCompra(compraInicial);
+            Compra compra = clienteServicio.registrarCompra(compraInicial);
             assert compraInicial != null;
             Assertions.assertEquals( compraInicial.getCliente(), compra.getCliente() );
         } catch (Exception e) {

@@ -44,8 +44,4 @@ public class Cliente extends Persona implements Serializable {
     public void agregarCuponCliente(CuponCliente cuponCliente) {
         cuponesCliente.add(cuponCliente);
     }
-
-    public void agregarCompra(Compra compra) {
-        compras.add(compra);
-    }
 }

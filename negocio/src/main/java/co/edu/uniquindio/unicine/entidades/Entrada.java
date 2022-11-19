@@ -13,8 +13,6 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Entrada implements Serializable {
-    private static final Float PRECIO_BASE = 8000.0f;
-
     // Atributos --------------------------------------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +27,10 @@ public class Entrada implements Serializable {
     @PositiveOrZero
     private Integer columnaAsiento;
 
+    private Float precio;
+
     @Column(nullable = false)
-    private Float precio = PRECIO_BASE;
+    private Float precioBase;
 
     // Relaciones -------------------------------------------------------------------------------------------
     @ManyToOne
@@ -42,15 +42,21 @@ public class Entrada implements Serializable {
     private Compra compra;
 
     @Builder
-    public Entrada(@NonNull Integer filaAsiento, @NonNull Integer columnaAsiento) {
+    public Entrada(@NonNull Integer filaAsiento, @NonNull Integer columnaAsiento, @NonNull Float precioBase) {
         this.filaAsiento = filaAsiento;
         this.columnaAsiento = columnaAsiento;
+        this.precioBase = precioBase;
     }
 
     public Float calcularPrecio() {
-        if( sala.getTipo() == TipoSala.SALA_3D ) precio += (precio * 0.25f);
-        if( sala.getTipo() == TipoSala.SALA_XD ) precio += (precio * 0.5f);
-
+        this.precio = precioBase + getRecargo();
         return precio;
+    }
+
+    public float getRecargo() {
+        if( sala.getTipo() == TipoSala.SALA_3D ) return precioBase * 0.25f;
+        if( sala.getTipo() == TipoSala.SALA_XD ) return precioBase * 0.5f;
+
+        return 0f;
     }
 }

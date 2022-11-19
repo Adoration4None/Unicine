@@ -31,6 +31,10 @@ public class Sala implements Serializable {
 
     @Column(nullable = false)
     @NonNull
+    private Integer numero;
+
+    @Column(nullable = false)
+    @NonNull
     private Integer columnas;
 
     @Enumerated(EnumType.STRING)

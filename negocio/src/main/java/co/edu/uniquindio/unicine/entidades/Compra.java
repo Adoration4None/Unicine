@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Compra implements Serializable {
-    // Atributos ----------------------------------------------------------------------------------
+    // Atributos ------------------------------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -65,10 +66,11 @@ public class Compra implements Serializable {
     public Float calcularValorTotal() throws Exception {
         float total = 0f;
 
-        if(entradas.isEmpty() || funcion == null)
+        if(funcion == null)
             throw new Exception("No se puede calcular el valor de la compra");
 
-        total += obtenerTotalEntradas();
+        if(!entradas.isEmpty())
+            total += obtenerTotalEntradas();
 
         if(this.comprasConfiteria != null) total += obtenerTotalConfiteria();
         if(this.cuponCliente != null) total -= (total * this.cuponCliente.obtenerPorcentajeDescuento()/100);
@@ -79,7 +81,7 @@ public class Compra implements Serializable {
 
     public float obtenerTotalConfiteria() {
         float total = 0f;
-        for (CompraConfiteria c : this.comprasConfiteria) total += c.getPrecio();
+        for (CompraConfiteria c : this.comprasConfiteria) total += c.getPrecio() * c.getUnidadesCompradas();
         return total;
     }
 
