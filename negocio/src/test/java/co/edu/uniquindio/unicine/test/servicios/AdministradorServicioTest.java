@@ -26,7 +26,7 @@ public class AdministradorServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void iniciarSesion() throws Exception {
-        boolean comprobacion = administradorServicio.iniciarSesion("administradorunicine@gmail.com", "samuelyfelipe");
+        boolean comprobacion = administradorServicio.iniciarSesion("administradorunicine@gmail.com", "samuelyfelipe") != null;
         Assertions.assertTrue(comprobacion);
     }
 

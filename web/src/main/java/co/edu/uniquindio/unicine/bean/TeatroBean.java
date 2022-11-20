@@ -60,7 +60,7 @@ public class TeatroBean implements Serializable {
         editar = false;
         teatro = new Teatro();
         teatros = administradorTeatroServicio.listarTeatros();
-        ciudades = administradorTeatroServicio.listarCiudades();
+        ciudades = administradorServicio.listarCiudades();
         teatrosSeleccionados = new ArrayList<>();
     }
 
