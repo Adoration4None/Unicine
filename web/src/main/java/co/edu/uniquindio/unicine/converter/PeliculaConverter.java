@@ -21,7 +21,7 @@ public class PeliculaConverter implements Converter<Pelicula> {
         Pelicula pelicula;
 
         try {
-            pelicula = administradorServicio.obtenerPelicula( value );
+            pelicula = administradorServicio.obtenerPelicula( Integer.valueOf(value) );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -32,7 +32,7 @@ public class PeliculaConverter implements Converter<Pelicula> {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Pelicula value) {
         if(value != null) {
-            return value.getNombre();
+            return "" + value.getId();
         }
 
         return "";

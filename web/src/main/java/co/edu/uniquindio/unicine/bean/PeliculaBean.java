@@ -87,7 +87,7 @@ public class PeliculaBean implements Serializable {
     public void eliminarPelicula(){
         try{
             for (Pelicula p: peliculasSeleccionadas){
-               administradorServicio.eliminarPelicula(p.getNombre());
+               administradorServicio.eliminarPelicula(p.getId());
                peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();

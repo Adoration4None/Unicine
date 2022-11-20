@@ -21,7 +21,7 @@ public class Pelicula implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     @NonNull
     private String nombre;
 
