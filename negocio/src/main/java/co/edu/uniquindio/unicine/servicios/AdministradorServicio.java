@@ -65,4 +65,16 @@ public interface AdministradorServicio {
     public void eliminarGenero(Integer idGenero) throws Exception;
 
     List<Genero> obtenerGeneros();
+
+
+    // Opciones de ciudad -------------------------------------------------------------------------------------
+    Ciudad crearCiudad(Ciudad ciudad) throws Exception;
+
+    Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
+
+    void eliminarCiudad(Integer idCiudad) throws Exception;
+
+    Ciudad actualizarCiudad(Ciudad ciudad) throws Exception;
+
+    List<Ciudad> listarCiudades();
 }

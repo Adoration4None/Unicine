@@ -15,17 +15,19 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     private final ConfiteriaRepo confiteriaRepo;
     private final CuponRepo cuponRepo;
     private final GeneroRepo generoRepo;
+    private final CiudadRepo ciudadRepo;
 
     String EMAIL_ADMINISTRADOR = "administradorunicine@gmail.com";
     String CONTRASENA_ADMINISTRADOR = "samuelyfelipe";
 
     public AdministradorServicioImpl(AdministradorTeatroRepo administradorTeatroRepo, PeliculaRepo peliculaRepo,
-                                     ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo, GeneroRepo generoRepo) {
+                                     ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo, GeneroRepo generoRepo, CiudadRepo ciudadRepo) {
         this.administradorTeatroRepo = administradorTeatroRepo;
         this.peliculaRepo = peliculaRepo;
         this.confiteriaRepo = confiteriaRepo;
         this.cuponRepo = cuponRepo;
         this.generoRepo = generoRepo;
+        this.ciudadRepo = ciudadRepo;
     }
 
     @Override
@@ -259,5 +261,51 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     @Override
     public List<Genero> obtenerGeneros() {
         return generoRepo.findAll();
+    }
+
+
+    // Opciones de ciudad ---------------------------------------------------------------------------------------
+    @Override
+    public Ciudad crearCiudad(Ciudad ciudad) throws Exception {
+        if(ciudad == null) throw new Exception("No hay ciudad para crear");
+        if( ciudadRepo.findByNombreAndDepartamento(ciudad.getNombre(), ciudad.getDepartamento()) != null )
+            throw new Exception("La ciudad ya existe");
+
+        return ciudadRepo.save(ciudad);
+    }
+
+    @Override
+    public Ciudad obtenerCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de ciudad vacio");
+
+        Ciudad ciudadGuardada = ciudadRepo.findById(idCiudad).orElse(null);
+
+        if(ciudadGuardada == null) throw new Exception("La ciudad no existe en la base de datos");
+
+        return ciudadGuardada;
+    }
+
+    @Override
+    public void eliminarCiudad(Integer idCiudad) throws Exception {
+        Optional<Ciudad> ciudadGuardada = ciudadRepo.findById(idCiudad);
+
+        if(ciudadGuardada.isEmpty()) throw new Exception("La ciudad no existe");
+
+        ciudadRepo.delete(ciudadGuardada.get());
+    }
+
+    @Override
+    public Ciudad actualizarCiudad(Ciudad ciudad) throws Exception {
+        Optional<Ciudad> ciudadGuardada = ciudadRepo.findById(ciudad.getId());
+
+        if(ciudadGuardada.isEmpty()) throw new Exception("La ciudad no existe");
+
+        return ciudadRepo.save(ciudad);
+    }
+
+
+    @Override
+    public List<Ciudad> listarCiudades() {
+        return ciudadRepo.findAll();
     }
 }
