@@ -133,7 +133,7 @@ public class AdminTeatroBean implements Serializable {
         return "/admin/ciudades?faces-redirect=true";
     }
 
-    public String gestionarPeliculas() {
+    public String gestionarGeneros() {
         return "/admin/generos?faces-redirect=true";
     }
 

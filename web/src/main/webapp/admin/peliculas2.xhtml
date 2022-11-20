@@ -57,13 +57,6 @@
                     <h:outputText value="#{movie.estado}"/>
                 </p:column>
 
-                <p:column headerText="Genero">
-                    <p:repeat value="#{movie.nombresGeneros}" var="genero">
-                        <p:chip label="#{genero} " styleClass="mx-1 my-1"/>
-                        <h:outputText />
-                    </p:repeat>
-                </p:column>
-
                 <p:column headerText="">
                     <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(movie)}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
                 </p:column>
