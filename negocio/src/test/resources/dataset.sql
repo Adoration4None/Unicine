@@ -86,7 +86,7 @@ INSERT INTO funcion VALUES
 INSERT INTO cupon VALUES
                       (1, "BIENVENIDA",     "Cupon de bienvenida",                        "2022-10-05", "Hola Mundo",      15),
                       (2, "CUMPLEANOS",     "Cupon de regalo de cumpleaños",              "2023-01-03", "H-Bday",          15),
-                      (3, "PRIMERA_COMPRA", "Cupon de primera compra en Unicine",         "2022-12-06", "Agosto venteado", 10),
+                      (3, "PRIMERA_COMPRA", "Cupon de primera compra en Unicine",         "2022-12-06", "F.I.R.S.T.",      10),
                       (4, "HALLOWEEN",      "Cupon de celebracion halloween",             "2023-02-25", "Halo",            20),
                       (5, "NAVIDAD",        "Cupon para la familia uniciner en Navidad",  "2022-12-12", "Mry X-Mas",       25);
 

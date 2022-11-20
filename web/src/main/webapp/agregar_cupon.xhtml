@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -9,11 +8,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="WEB-INF/template.xhtml">
-    <ui:define name="title">Activar Cuenta</ui:define>
+    <ui:define name="title">Agregar Cupon</ui:define>
 
     <ui:define name="header">
         <nav>
-            <div jsf:id="navegacion" class="#{seguridadBean.ciudad == null ? 'oculto' : 'navegacion'}">
+            <div jsf:id="navegacion" class="navegacion">
                 <div class="container-fluid">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                         <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
@@ -59,16 +58,18 @@
             <div class="login-admin mt-5">
                 <div class="d-flex flex-nowrap flex-column align-items-center justify-content-center">
                     <h:graphicImage library="img" name="logo2.png" styleClass="my-1" />
-                    <h1 class="texto-resaltado mt-2 text-center">#{gestionCuentaBean.mensaje}</h1>
+                    <h1 class="texto-resaltado mt-2 text-center">#{agregarCuponBean.mensaje}</h1>
                     <h:graphicImage library="img" name="check.png" width="75" />
 
                     <h:form styleClass="mb-4">
                         <p:commandLink value="Volver a la pagina de inicio" styleClass="logout"
-                                         action="#{gestionCuentaBean.redirigir}" />
+                                       action="#{agregarCuponBean.redirigir}" />
                     </h:form>
                 </div>
             </div>
         </div>
     </ui:define>
 </ui:composition>
+
 </html>
+

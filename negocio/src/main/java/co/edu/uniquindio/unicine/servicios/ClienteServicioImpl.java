@@ -2,8 +2,10 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import net.bytebuddy.asm.Advice;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.AES256TextEncryptor;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -64,17 +66,26 @@ public class ClienteServicioImpl implements ClienteServicio {
         if( !spe.checkPassword(contrasena, clienteEncontrado.getContrasena() ) )
             throw new Exception("La contraseña es incorrecta");
 
-        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) )
+        if( clienteEncontrado.getFechaNacimiento() != null && hoyCumpleAnios(clienteEncontrado) ) {
             enviarCuponCumpleanios(clienteEncontrado);
+            clienteEncontrado.agregarAnioCelebrado( LocalDate.now().getYear() );
+            clienteRepo.save(clienteEncontrado);
+        }
 
         return clienteEncontrado;
     }
 
     private void enviarCuponCumpleanios(Cliente cliente) {
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        String param1 = textEncryptor.encrypt("H-Bday");
+        String param2 = textEncryptor.encrypt( cliente.getEmail() );
+
         String mensaje = "¡Unicine te desea un feliz cumpleaños! Disfrutalo con un cupon de regalo " +
                 "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "https://bit.ly/3s7ETPZ";
+                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Cumpleaños - 15% Descuento", mensaje, cliente.getEmail());
     }
@@ -82,6 +93,9 @@ public class ClienteServicioImpl implements ClienteServicio {
     private boolean hoyCumpleAnios(Cliente cliente) {
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaNacimientoCliente = cliente.getFechaNacimiento();
+
+        if( cliente.getAniosCelebrados().contains(fechaActual.getYear()) )
+            return false;
 
         return fechaActual.getMonth()      == fechaNacimientoCliente.getMonth() &&
                fechaActual.getDayOfMonth() == fechaNacimientoCliente.getDayOfMonth();
@@ -130,10 +144,16 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     private void enviarCuponBienvenida(Cliente cliente) {
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        String param1 = textEncryptor.encrypt("Hola Mundo");
+        String param2 = textEncryptor.encrypt( cliente.getEmail() );
+
         String mensaje = "¡Disfruta ahora mismo un cupon de bienvenida totalmente gratis " +
                 "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "https://bit.ly/3s7ETPZ";
+                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Bienvenida - 15% Descuento", mensaje, cliente.getEmail());
     }
@@ -152,6 +172,9 @@ public class ClienteServicioImpl implements ClienteServicio {
         Cliente clienteEncontrado = clienteRepo.findByEmail(emailDesencriptado);
 
         if(clienteEncontrado == null) throw new Exception("El cliente no existe");
+
+        if(clienteEncontrado.getEstado() == EstadoPersona.ACTIVO)
+            throw new Exception("Esta cuenta ya esta verificada");
 
         clienteEncontrado.setEstado(EstadoPersona.ACTIVO);
         clienteRepo.save(clienteEncontrado);
@@ -279,10 +302,16 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     private void enviarCuponPrimeraCompra(Cliente cliente) {
-        String mensaje = "Felicidades por tu primera compra! Para conmemorar este momento, te hemos enviado un cupon de regalo " +
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        String param1 = textEncryptor.encrypt("F.I.R.S.T.");
+        String param2 = textEncryptor.encrypt( cliente.getEmail() );
+
+        String mensaje = "Felicidades por tu primera compra! Para que sigas disfrutando del mejor cine te hemos enviado un cupon de regalo " +
                 "con el que puedes obtener un 10% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "https://bit.ly/3s7ETPZ";
+                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Regalo - 10% Descuento", mensaje, cliente.getEmail());
     }
@@ -343,6 +372,35 @@ public class ClienteServicioImpl implements ClienteServicio {
         }
 
         return cuponCliente;
+    }
+
+    @Override
+    public void agregarCuponCorreo(String nombreCupon, String emailCliente) throws Exception {
+        nombreCupon = nombreCupon.replaceAll(" ", "+");
+        emailCliente = emailCliente.replaceAll(" ", "+");
+
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        String nombreCuponDesencriptado = textEncryptor.decrypt(nombreCupon);
+        String emailDesencriptado = textEncryptor.decrypt(emailCliente);
+
+        Cupon cuponEncontrado = cuponRepo.findByNombre(nombreCuponDesencriptado);
+        Cliente clienteEncontrado = clienteRepo.findByEmail(emailDesencriptado);
+
+        if(cuponEncontrado == null) throw new Exception("El cupon no existe");
+        if(clienteEncontrado == null) throw new Exception("El cliente no existe");
+
+        CuponCliente cuponCliente = new CuponCliente(clienteEncontrado, cuponEncontrado);
+
+        try {
+            CuponCliente repetido = cuponClienteRepo.findByClienteAndCupon(clienteEncontrado, cuponEncontrado);
+        }
+        catch(IncorrectResultSizeDataAccessException e) {
+            throw new Exception("Ya tienes este cupon");
+        }
+
+        cuponClienteRepo.save(cuponCliente);
     }
 
     @Override

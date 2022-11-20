@@ -92,11 +92,6 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public Pelicula crearPelicula(Pelicula pelicula) throws Exception {
         if(pelicula == null) throw new Exception("Pelicula vacia");
 
-        Integer peliculaId = pelicula.getId();
-
-        if(peliculaRepo.findById(peliculaId).isPresent())
-            throw new Exception("La pelicula con el id" + peliculaId + " ya existe");
-
         return peliculaRepo.save(pelicula);
     }
 

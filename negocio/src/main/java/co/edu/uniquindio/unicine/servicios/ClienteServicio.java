@@ -34,6 +34,8 @@ public interface ClienteServicio {
 
     CuponCliente agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
 
+    void agregarCuponCorreo(String nombreCupon, String emailCliente) throws Exception;
+
     List<Ciudad> obtenerCiudades();
 
     Ciudad obtenerCiudad(Integer idCiudad) throws Exception;
