@@ -213,7 +213,7 @@ body {
     border: transparent;
 }
 
-.ui-inputfield.busqueda {
+.ui-inputfield.busqueda, .ui-inputfield.nombre-cupon {
     background: #1B1632;
     color: #BFBFBF;
     border-radius: 20px;

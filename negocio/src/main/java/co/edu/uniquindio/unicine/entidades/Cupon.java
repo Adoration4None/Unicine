@@ -54,8 +54,4 @@ public class Cupon implements Serializable {
         this.criterio = criterio;
     }
 
-    // Metodos ------------------------------------------------------------
-    public void agregarCuponCliente(CuponCliente cuponCliente) {
-        clientesCupon.add(cuponCliente);
-    }
 }

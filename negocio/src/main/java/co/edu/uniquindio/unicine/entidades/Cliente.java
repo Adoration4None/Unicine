@@ -41,7 +41,4 @@ public class Cliente extends Persona implements Serializable {
         super(cedula, nombreCompleto, email, contrasena);
     }
 
-    public void agregarCuponCliente(CuponCliente cuponCliente) {
-        cuponesCliente.add(cuponCliente);
-    }
 }

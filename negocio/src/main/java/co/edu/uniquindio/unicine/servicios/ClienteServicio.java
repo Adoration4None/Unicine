@@ -48,5 +48,9 @@ public interface ClienteServicio {
 
     List<CuponCliente> obtenerCuponesClienteEstado(Cliente cliente, EstadoCupon disponible) throws Exception;
 
+    CuponCliente actualizarCuponCliente(CuponCliente cuponCliente) throws Exception;
+
     Compra obtenerCompra(Integer idCompra) throws Exception;
+
+    boolean cuponVencido(Cupon cupon);
 }
