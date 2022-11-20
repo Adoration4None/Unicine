@@ -64,24 +64,28 @@
                         <f:selectItem itemLabel="Seleccione un tipo" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{funcionBean.tipos}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}"/>
                     </p:selectOneMenu>
+                    <p:message for="tipo_funcion"/>
 
                     <p:outputLabel for="horario_funcion" value="Horario:"/>
                     <p:selectOneMenu id="horario_funcion" value="#{funcionBean.funcion.horario}" converter="#{horarioConverter}">
                         <f:selectItem itemLabel="Seleccione un horario" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{funcionBean.horarios}" var="hora" itemLabel="#{hora.id}" itemValue="#{hora}"/>
                     </p:selectOneMenu>
+                    <p:message for="horario_funcion"/>
 
                     <p:outputLabel for="sala_funcion" value="Sala:"/>
                     <p:selectOneMenu id="sala_funcion" value="#{funcionBean.funcion.sala}" converter="#{salaConverter}">
                         <f:selectItem itemLabel="Seleccione una sala" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{funcionBean.salas}" var="sala" itemLabel="#{sala.id}" itemValue="#{sala}"/>
                     </p:selectOneMenu>
+                    <p:message for="sala_funcion"/>
 
                     <p:outputLabel for="pelicula_funcion" value="Pelicula:"/>
                     <p:selectOneMenu id="pelicula_funcion" value="#{funcionBean.funcion.pelicula}" converter="#{peliculaConverter}">
                         <f:selectItem itemLabel="Seleccione una pelicula" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{funcionBean.peliculas}" var="peli" itemLabel="#{peli.nombre}" itemValue="#{peli}"/>
                     </p:selectOneMenu>
+                    <p:message for="pelicula_funcion"/>
 
                 </h:panelGrid>
                 <p:commandButton icon="pi pi-save" action="#{funcionBean.crearFuncion}" value="#{funcionBean.mensaje2Crear}" update="form_datatable:datatable_crud_funcion"/>

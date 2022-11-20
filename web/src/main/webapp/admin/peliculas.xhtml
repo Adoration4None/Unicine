@@ -82,11 +82,12 @@
                     <p:inputText id="reparto_movie" rows="3" value="#{peliculaBean.pelicula.reparto}" required="true"/>
                     <p:message for="reparto_movie"/>
 
-                    <p:outputLabel for="estado_pelicula" value="Estado:"/>
-                    <p:selectOneMenu id="estado_pelicula" value="#{peliculaBean.pelicula.estado}">
+                    <p:outputLabel for="estado_movie" value="Estado:"/>
+                    <p:selectOneMenu id="estado_movie" value="#{peliculaBean.pelicula.estado}">
                         <f:selectItem itemLabel="Seleccione un estado" noSelectionOption="true" itemValue="#{null}"/>
                         <f:selectItems value="#{peliculaBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
                     </p:selectOneMenu>
+                    <p:message for="estado_movie"/>
 
                 </h:panelGrid>
                 <p:commandButton icon="pi pi-save" action="#{peliculaBean.crearPelicula}" value="#{peliculaBean.mensaje2Crear}" update="form_datatable:datatable_crud_pelicula"/>

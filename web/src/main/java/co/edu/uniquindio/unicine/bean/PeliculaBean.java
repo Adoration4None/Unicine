@@ -18,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class PeliculaBean implements Serializable {
     public void init(){
         estados = EstadoPelicula.values();
         pelicula = new Pelicula();
-        editar=false;
+        editar = false;
         peliculasSeleccionadas = new ArrayList<>();
         peliculas = administradorServicio.listarPeliculas();
     }
@@ -84,18 +85,18 @@ public class PeliculaBean implements Serializable {
         }
     }
 
-    public void eliminarPelicula(){
-        try{
-            for (Pelicula p: peliculasSeleccionadas){
-               administradorServicio.eliminarPelicula(p.getNombre());
-               peliculas.remove(p);
+    public void eliminarPelicula() {
+        try {
+            for (Pelicula p : peliculasSeleccionadas) {
+                administradorServicio.eliminarPelicula(p.getNombre());
+                peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();
             peliculas = administradorServicio.listarPeliculas();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
-        } catch (Exception e){
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar la película porque está asociada a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }

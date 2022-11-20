@@ -64,8 +64,13 @@ public class AdminTeatroBean implements Serializable {
             }
 
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
-            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+            if(e.getMessage().contains("administrador_teatro.UK_540p4087vlp4brxqmlc8dqtlf")){
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "El email ya existe en la base de datos");
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+            }else{
+                FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+                PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+            }
         }
     }
 
@@ -80,7 +85,7 @@ public class AdminTeatroBean implements Serializable {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Administrador eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar el administrador de teatro porque está asociado a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
