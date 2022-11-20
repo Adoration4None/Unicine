@@ -76,8 +76,10 @@ public class HorarioBean implements Serializable {
                 horarios.remove(hora);
             }
             horariosSeleccionados.clear();
+            horarios = adminTeatroServicio.listarHorarios();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Horario eliminado");
-            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);        } catch (Exception e) {
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+        } catch (Exception e) {
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);        }
     }

@@ -1,6 +1,9 @@
 package co.edu.uniquindio.unicine.bean;
 
 import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
+import co.edu.uniquindio.unicine.entidades.Ciudad;
+import co.edu.uniquindio.unicine.entidades.EstadoPersona;
+import co.edu.uniquindio.unicine.entidades.Teatro;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +37,14 @@ public class AdminTeatroBean implements Serializable {
     @Setter
     private List<AdministradorTeatro> administradoresSeleccionados;
 
+    @Getter
+    @Setter
+    private EstadoPersona[] estados;
+
+    @Getter
+    @Setter
+    private List<Ciudad> ciudades;
+
     private Boolean editar;
 
     public AdminTeatroBean(AdministradorServicio administradorServicio) {
@@ -42,6 +53,8 @@ public class AdminTeatroBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        ciudades = administradorServicio.listarCiudades();
+        estados = EstadoPersona.values();
         editar = false;
         administrador = new AdministradorTeatro();
         administradores = administradorServicio.listarAdministradores();
@@ -114,5 +127,17 @@ public class AdminTeatroBean implements Serializable {
     public void seleccionarAdmin(AdministradorTeatro admin) {
         this.administrador = admin;
         editar = true;
+    }
+
+    public String gestionarCiudades() {
+        return "/admin/ciudades?faces-redirect=true";
+    }
+
+    public String gestionarPeliculas() {
+        return "/admin/generos?faces-redirect=true";
+    }
+
+    public String gestionarHorarios() {
+        return "/admin_teatro/horarios?faces-redirect=true";
     }
 }

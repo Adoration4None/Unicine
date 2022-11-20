@@ -13,8 +13,8 @@
         <h:form id="form_datatable">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{teatroBean.botonAgregarEditar}" oncomplete="PF('crear_teatro').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{teatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{teatroBean.teatrosSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{teatroBean.eliminarTeatros}" update="form_datatable:datatable_crud_teatro,@this"/>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{teatroBean.botonAgregarEditar}" oncomplete="PF('crear_teatro').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{teatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{teatroBean.teatrosSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger" action="#{teatroBean.eliminarTeatros}" update="form_datatable:datatable_crud_teatro,@this"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -49,7 +49,7 @@
                 </p:column>
 
                 <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{teatroBean.seleccionarTeatro(teatro)}" oncomplete="PF('crear_teatro').show()" update="dialog_crear"/>
+                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{teatroBean.seleccionarTeatro(teatro)}" oncomplete="PF('crear_teatro').show()" update="dialog_crear"/>
                 </p:column>
 
             </p:dataTable>

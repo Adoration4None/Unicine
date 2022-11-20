@@ -13,8 +13,9 @@
         <h:form id="form_datatable">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{funcionBean.botonAgregarEditar}" oncomplete="PF('crear_funcion').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{funcionBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{funcionBean.funcionesSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{funcionBean.eliminarFunciones}" update="form_datatable:datatable_crud_funcion,@this"/>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{funcionBean.botonAgregarEditar}" oncomplete="PF('crear_funcion').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{funcionBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{funcionBean.funcionesSeleccionadas.size()==0}" styleClass="ui-button-outlined ui-button-danger me-3" action="#{funcionBean.eliminarFunciones}" update="form_datatable:datatable_crud_funcion,@this"/>
+                    <p:commandButton value="Gestionar horarios" styleClass="ui-button-outlined me-3" action="#{adminTeatroBean.gestionarHorarios}"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -49,7 +50,7 @@
                 </p:column>
 
                 <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{funcionBean.seleccionarFuncion(fun)}" oncomplete="PF('crear_funcion').show()" update="dialog_crear"/>
+                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{funcionBean.seleccionarFuncion(fun)}" oncomplete="PF('crear_funcion').show()" update="dialog_crear"/>
                 </p:column>
 
             </p:dataTable>

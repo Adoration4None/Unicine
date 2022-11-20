@@ -13,12 +13,13 @@
         <h:form id="form_datatable">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{peliculaBean.botonAgregarEditar}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{peliculaBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{peliculaBean.eliminarPelicula()}" update="form_datatable:datatable_crud_pelicula,@this"/>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{peliculaBean.botonAgregarEditar}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{peliculaBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{peliculaBean.peliculasSeleccionadas.size()==0}" styleClass="ui-button-outlined ui-button-danger me-3" action="#{peliculaBean.eliminarPelicula}" update="form_datatable:datatable_crud_pelicula,@this"/>
+                    <p:commandButton value="Gestionar generos" styleClass="ui-button-outlined me-3" action="#{adminTeatroBean.gestionarPeliculas}"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable id="datatable_crud_pelicula" value="#{peliculaBean.peliculas}" var="movie" paginator="true" rows="10" rowKey="#{movie.nombre}"
+            <p:dataTable id="datatable_crud_pelicula" value="#{peliculaBean.peliculas}" var="movie" paginator="true" rows="10" rowKey="#{movie.id}"
                          paginatorPosition="bottom" rowSelectMode="add" selection="#{peliculaBean.peliculasSeleccionadas}">
                 <p:column selectionMode="multiple" exportable="false"/>
 
@@ -27,6 +28,10 @@
                 <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
                 <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
                 <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{movie.id}"/>
+                </p:column>
 
                 <p:column headerText="Nombre">
                     <h:outputText value="#{movie.nombre}"/>
@@ -53,7 +58,7 @@
                 </p:column>
 
                 <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(movie)}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
+                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{peliculaBean.seleccionarPelicula(movie)}" oncomplete="PF('crear_pelicula').show()" update="dialog_crear"/>
                 </p:column>
 
             </p:dataTable>
@@ -88,6 +93,12 @@
                         <f:selectItems value="#{peliculaBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
                     </p:selectOneMenu>
                     <p:message for="estado_movie"/>
+
+                    <p:outputLabel for="generos_movie" value="Generos:"/>
+                    <p:selectManyCheckbox id="generos_movie" value="#{peliculaBean.pelicula.generos}">
+                        <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero.nombre}" itemValue="#{genero}"/>
+                    </p:selectManyCheckbox>
+                    <p:message for="generos_movie"/>
 
                 </h:panelGrid>
                 <p:commandButton icon="pi pi-save" action="#{peliculaBean.crearPelicula}" value="#{peliculaBean.mensaje2Crear}" update="form_datatable:datatable_crud_pelicula"/>
