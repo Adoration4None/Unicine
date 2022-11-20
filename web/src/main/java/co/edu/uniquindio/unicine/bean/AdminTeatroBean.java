@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +25,11 @@ public class AdminTeatroBean implements Serializable {
 
     @Autowired
     private AdministradorServicio administradorServicio;
+
+    @Getter
+    @Setter
+    @Value(value="#{seguridadBean.personaIngresada}")
+    private AdministradorTeatro administradorTeatro;
 
     @Getter
     @Setter
