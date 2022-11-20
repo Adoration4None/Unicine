@@ -3,7 +3,6 @@ package co.edu.uniquindio.unicine.bean;
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.entidades.Teatro;
-import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
@@ -28,9 +27,9 @@ public class DetallePeliculaBean implements Serializable {
     private ClienteServicio clienteServicio;
 
     @Value("#{param['mov']}")
-    private String nombrePelicula;
+    private String idPelicula;
 
-    @Value(value = "#{seguridadBean.ciudadSeleccionada.id}")
+    @Value(value = "#{seguridadBean.ciudad.id}")
     private Integer idCiudad;
 
     @Getter @Setter
@@ -45,13 +44,17 @@ public class DetallePeliculaBean implements Serializable {
     @Getter @Setter
     private List<Funcion> funcionesPelicula;
 
+    //luego lo borro
+    @Getter @Setter
+    private List<Pelicula> peliculasSeleccionadas;
+
     @PostConstruct
     public void init() {
 
-        if(nombrePelicula != null && !nombrePelicula.isEmpty()) {
+        if(idPelicula != null) {
             try {
-                pelicula = administradorServicio.obtenerPelicula(nombrePelicula);
-                funcionesPelicula = clienteServicio.obtenerFuncionesPelicula(nombrePelicula);
+                pelicula = administradorServicio.obtenerPelicula( Integer.valueOf(idPelicula) );
+                funcionesPelicula = clienteServicio.obtenerFuncionesPelicula( Integer.valueOf(idPelicula) );
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -7,6 +7,12 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
 
 <ui:composition template="WEB-INF/template.xhtml">
     <ui:define name="title">#{buscarPeliculaBean.busqueda}</ui:define>
@@ -19,5 +25,5 @@
 
     </ui:define>
 </ui:composition>
-
+</h:head>
 </html>

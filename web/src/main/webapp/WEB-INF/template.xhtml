@@ -23,18 +23,18 @@
     <header>
         <ui:insert name="header">
             <nav>
-                <div jsf:id="navegacion" class="#{seguridadBean.ciudadSeleccionada == null ? 'oculto' : 'navegacion'}">
+                <div jsf:id="navegacion" class="#{seguridadBean.ciudad == null ? 'oculto' : 'navegacion'}">
                     <div class="container-fluid">
                         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
                             <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
                                 <li>
-                                    <a href="/index.xhtml?city=#{seguridadBean.ciudadSeleccionada.id}" class="nav-link px-2 link-dark">
+                                    <a href="/index.xhtml?city=#{seguridadBean.ciudad.id}" class="nav-link px-2 link-dark">
                                         <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
                                     </a>
                                 </li>
                                 <li class="mx-1 my-1 align-items-center">
                                     <h:form>
-                                        <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{seguridadBean.ciudadSeleccionada.nombre}"/>
+                                        <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{seguridadBean.ciudad.nombre}"/>
                                     </h:form>
                                 </li>
                             </ul>

@@ -33,7 +33,7 @@ public class CompraBean implements Serializable {
     @Value("#{param['func']}")
     private String idFuncion;
 
-    @Value("#{seguridadBean.ciudadSeleccionada.id}")
+    @Value("#{seguridadBean.ciudad.id}")
     private String idCiudad;
 
     @Value(value = "#{seguridadBean.cliente}")

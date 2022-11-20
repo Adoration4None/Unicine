@@ -88,7 +88,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     // Gestionar peliculas ---------------------------------------------------------------------------------------
     @Override
     public Pelicula crearPelicula(Pelicula pelicula) throws Exception {
-        String peliculaId = pelicula.getNombre();
+        if(pelicula == null) throw new Exception("Pelicula vacia");
+
+        Integer peliculaId = pelicula.getId();
 
         if(peliculaRepo.findById(peliculaId).isPresent())
             throw new Exception("La pelicula con el id" + peliculaId + " ya existe");
@@ -98,7 +100,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public Pelicula actualizarPelicula(Pelicula pelicula) throws Exception {
-        Optional<Pelicula> peliculaGuardada = peliculaRepo.findById(pelicula.getNombre());
+        if(pelicula == null) throw new Exception("Pelicula vacia");
+
+        Optional<Pelicula> peliculaGuardada = peliculaRepo.findById(pelicula.getId());
 
         if(peliculaGuardada.isEmpty()) throw new Exception("La pelicula no existe");
 
@@ -106,8 +110,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     }
 
     @Override
-    public void eliminarPelicula(String nombrePelicula) throws Exception {
-        Optional<Pelicula> peliculaGuardada = peliculaRepo.findById(nombrePelicula);
+    public void eliminarPelicula(Integer idPelicula) throws Exception {
+        if(idPelicula == null || idPelicula.equals(0)) throw new Exception("ID de pelicula vacio");
+
+        Optional<Pelicula> peliculaGuardada = peliculaRepo.findById(idPelicula);
 
         if(peliculaGuardada.isEmpty()) throw new Exception("La pelicula no existe");
 
@@ -115,10 +121,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     }
 
     @Override
-    public Pelicula obtenerPelicula(String nombrePelicula) throws Exception {
-        if(nombrePelicula == null || nombrePelicula.equals("")) throw new Exception("Nombre de pelicula vacio");
+    public Pelicula obtenerPelicula(Integer idPelicula) throws Exception {
+        if(idPelicula == null || idPelicula.equals(0) ) throw new Exception("ID de pelicula vacio");
 
-        Pelicula peliculaGuardada = peliculaRepo.findById(nombrePelicula).orElse(null);
+        Pelicula peliculaGuardada = peliculaRepo.findById(idPelicula).orElse(null);
 
         if(peliculaGuardada == null) throw new Exception("La pelicula no existe en la base de datos");
 
@@ -230,6 +236,24 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if( generoRepo.findByNombre(genero.getNombre()) != null ) throw new Exception("El genero ya existe");
 
         return generoRepo.save(genero);
+    }
+
+    @Override
+    public Genero actualizarGenero(Genero genero) throws Exception {
+        Optional<Genero> generoGuardado = generoRepo.findById(genero.getId());
+
+        if(generoGuardado.isEmpty()) throw new Exception("El genero no existe");
+
+        return generoRepo.save(genero);
+    }
+
+    @Override
+    public void eliminarGenero(Integer idGenero) throws Exception {
+        Optional<Genero> generoGuardado = generoRepo.findById(idGenero);
+
+        if(generoGuardado.isEmpty()) throw new Exception("El genero no existe");
+
+        generoRepo.delete(generoGuardado.get());
     }
 
     @Override

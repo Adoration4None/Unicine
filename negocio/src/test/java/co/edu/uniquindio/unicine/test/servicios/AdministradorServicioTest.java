@@ -108,7 +108,7 @@ public class AdministradorServicioTest {
     @Sql("classpath:dataset.sql")
     public void actualizarPelicula() {
         try {
-            Pelicula peliculaActualizar = administradorServicio.obtenerPelicula("The Batman");
+            Pelicula peliculaActualizar = administradorServicio.obtenerPelicula(4);
             peliculaActualizar.setImagen("ruta imagen 56");
 
             Pelicula peliculaActualizada = administradorServicio.actualizarPelicula(peliculaActualizar);
@@ -123,8 +123,8 @@ public class AdministradorServicioTest {
     public void eliminarPelicula() {
 
         try {
-            administradorServicio.eliminarPelicula("One Piece Film: Red");
-            Pelicula peliculaPrueba = administradorServicio.obtenerPelicula("One Piece Film: Red");
+            administradorServicio.eliminarPelicula(1);
+            Pelicula peliculaPrueba = administradorServicio.obtenerPelicula(1);
             Assertions.assertNull(peliculaPrueba);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -135,7 +135,7 @@ public class AdministradorServicioTest {
     @Sql("classpath:dataset.sql")
     public void obtenerPelicula() {
         try {
-            Pelicula peliculaEncontrada = administradorServicio.obtenerPelicula("The Truman Show");
+            Pelicula peliculaEncontrada = administradorServicio.obtenerPelicula(5);
             Assertions.assertEquals("ruta imagen", peliculaEncontrada.getImagen());
         } catch (Exception e) {
             throw new RuntimeException(e);

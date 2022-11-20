@@ -392,10 +392,10 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Funcion> obtenerFuncionesPelicula(String nombrePelicula) throws Exception {
-        if(nombrePelicula == null || nombrePelicula.isEmpty()) throw new Exception("Pelicula vacia");
+    public List<Funcion> obtenerFuncionesPelicula(Integer idPelicula) throws Exception {
+        if(idPelicula == null || idPelicula.equals(0)) throw new Exception("ID de pelicula vacio");
 
-        return funcionRepo.obtenerFuncionesPelicula(nombrePelicula);
+        return funcionRepo.obtenerFuncionesPelicula(idPelicula);
     }
 
     @Override

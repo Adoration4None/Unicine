@@ -1,7 +1,6 @@
 package co.edu.uniquindio.unicine.filtros;
 
 import co.edu.uniquindio.unicine.bean.SeguridadBean;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -39,10 +38,10 @@ public class SeguridadFiltro implements Filter {
                         else if( userManager.getTipoSesion() == 1 )
                             response.sendRedirect(request.getContextPath() + PAGINA_INICIO_ADMIN_TEATRO);
                         else
-                            if(userManager.getCiudadSeleccionada() == null)
+                            if(userManager.getCiudad() == null)
                                 response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE);
                             else
-                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudadSeleccionada().getId());
+                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudad().getId());
                     }
                 } else {
                     //El usuario no está logueado, entonces se redirecciona al inicio
@@ -59,10 +58,10 @@ public class SeguridadFiltro implements Filter {
                         if( userManager.getTipoSesion() == 1 )
                             response.sendRedirect(request.getContextPath() + PAGINA_INICIO_ADMIN_TEATRO);
                         else {
-                            if(userManager.getCiudadSeleccionada() == null)
+                            if(userManager.getCiudad() == null)
                                 response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE);
                             else
-                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudadSeleccionada().getId());
+                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudad().getId());
                         }
                     }
                 } else {
@@ -80,10 +79,10 @@ public class SeguridadFiltro implements Filter {
                         if( userManager.getTipoSesion() == 0 )
                             response.sendRedirect(request.getContextPath() + PAGINA_INICIO_ADMIN);
                         else {
-                            if(userManager.getCiudadSeleccionada() == null)
+                            if(userManager.getCiudad() == null)
                                 response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE);
                             else
-                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudadSeleccionada().getId());
+                                response.sendRedirect(request.getContextPath() + PAGINA_INICIO_CLIENTE + "?city=" + userManager.getCiudad().getId());
                         }
                     }
                 } else {

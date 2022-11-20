@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Ciudad implements Serializable {
-    // Atributos ----------------------------------------------------------
+    // Atributos ------------------------------------------------------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -29,13 +29,12 @@ public class Ciudad implements Serializable {
     @NonNull
     private String departamento;
 
-    // Relacion ------------------------------------------------------------
+    // Relaciones ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude
     private List<Teatro> teatros = new ArrayList<>();
 
-    // Metodos ------------------------------------------------------------
-    public void agregarTeatro(Teatro teatro) {
-        teatros.add(teatro);
-    }
+    @OneToOne
+    private AdministradorTeatro administrador;
+
 }
