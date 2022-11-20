@@ -146,8 +146,8 @@
                             <p:selectOneMenu id="seleccion_cupon" styleClass="mx-3 selector select-cupon"
                                              value="#{compraBean.cupon}" converter="#{cuponClienteConverter}">
                                 <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
-                                <f:selectItems value="#{compraBean.cuponesCliente}" var="cuponCliente" itemLabel="#{cuponCliente.cupon.nombre}" itemValue="#{cuponCliente}"/>
-                                <p:ajax event="change" listener="#{compraBean.asignarCupon}" update="completar-compra" />
+                                <f:selectItems value="#{compraBean.cuponesCliente}" var="cuponCliente" itemLabel="#{cuponCliente.cupon.nombre}: -#{cuponCliente.cupon.porcentajeDescuento}%" itemValue="#{cuponCliente}"/>
+                                <p:ajax event="change" listener="#{compraBean.asignarCupon}" update="completar-compra,resumen-compra" />
                             </p:selectOneMenu>
                         </div>
 

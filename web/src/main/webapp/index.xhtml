@@ -21,100 +21,105 @@
 
     <ui:define name="header">
         <nav>
-            <div jsf:id="navegacion-inicio" class="#{seguridadBean.ciudad != null ? 'oculto' : 'navegacion'}">
-                <div class="container">
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
-                            <li>
-                                <a href="/" class="nav-link px-2 link-dark">
-                                    <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
-                                </a>
-                            </li>
-                        </ul>
+            <h:panelGroup layout="block" rendered="#{seguridadBean.ciudad == null}">
+                <div jsf:id="navegacion-inicio" class="navegacion">
+                    <div class="container">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
+                                <li>
+                                    <a href="/" class="nav-link px-2 link-dark">
+                                        <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                    </a>
+                                </li>
+                            </ul>
 
-                        <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
-                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
-                        </ul>
+                            <ul class="nav col-12 col-lg-auto justify-content-center">
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                                <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            </ul>
 
-                        <h:form rendered="#{seguridadBean.autenticado}">
-                            <div class="dropdown text-end mx-3 my-1">
-                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
-                                         alt="mdo" width="32" height="32" class="rounded-circle" />
-                                </a>
-                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
-                                    <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
-                                    <li><a class="dropdown-item" href="#">Historial de compras</a></li>
-                                    <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                    <li><hr /></li>
-                                    <li class="dropdown-item">
-                                        <i class="pi pi-power-off" />
-                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
-                                    </li>
-                                </ul>
-                            </div>
-                        </h:form>
-                    </div>
+                            <h:form rendered="#{seguridadBean.autenticado}">
+                                <div class="dropdown text-end mx-3 my-1">
+                                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                             alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    </a>
+                                    <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
+                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                        <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                        <li><a class="dropdown-item" href="/cliente/cupones_cliente.xhtml">Ver y agregar cupones</a></li>
+                                        <li><hr /></li>
+                                        <li class="dropdown-item">
+                                            <i class="pi pi-power-off" />
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h:form>
+                        </div>
 
-                </div>
-            </div>
-
-            <div jsf:id="navegacion" class="#{seguridadBean.ciudad == null ? 'oculto' : 'navegacion'}">
-                <div class="container-fluid">
-                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
-                        <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
-                            <li>
-                                <a href="index.xhtml?city=#{seguridadBean.ciudad.id}" class="nav-link px-2 link-dark">
-                                    <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
-                                </a>
-                            </li>
-                            <li class="mx-1 my-1 align-items-center">
-                                <h:form>
-                                    <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
-                                </h:form>
-                            </li>
-                        </ul>
-
-                        <h:form styleClass="w-50 ms-auto me-0">
-                            <div role="search">
-                                <p:inputText styleClass="mx-2 busqueda"
-                                             placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
-
-                                <p:commandButton styleClass="boton-circular"
-                                                 icon="pi pi-chevron-right" action="#{buscarPeliculaBean.buscarPelicula}">
-                                </p:commandButton>
-                            </div>
-                        </h:form>
-
-                        <ul class="nav col-12 col-lg-auto justify-content-center">
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
-                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
-                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
-                        </ul>
-
-                        <h:form rendered="#{seguridadBean.autenticado}">
-                            <div class="dropdown text-end mx-3 my-1">
-                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
-                                         alt="mdo" width="32" height="32" class="rounded-circle" />
-                                </a>
-                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
-                                    <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
-                                    <li><a class="dropdown-item" href="#">Historial de compras</a></li>
-                                    <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
-                                    <li><hr /></li>
-                                    <li class="dropdown-item">
-                                        <i class="pi pi-power-off" />
-                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
-                                    </li>
-                                </ul>
-                            </div>
-                        </h:form>
                     </div>
                 </div>
-            </div>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" rendered="#{seguridadBean.ciudad != null}">
+                <div jsf:id="navegacion" class="navegacion">
+                    <div class="container-fluid">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
+                            <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="index.xhtml?city=#{seguridadBean.ciudad.id}" class="nav-link px-2 link-dark">
+                                        <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                    </a>
+                                </li>
+                                <li class="mx-1 my-1 align-items-center">
+                                    <h:form>
+                                        <p:commandButton styleClass="boton-texto-resaltado" action="#{seguridadBean.restablecerCiudad}" value="#{principalBean.nombreCiudad}"/>
+                                    </h:form>
+                                </li>
+                            </ul>
+
+                            <h:form styleClass="w-50 ms-auto me-0">
+                                <div role="search">
+                                    <p:inputText styleClass="mx-2 busqueda"
+                                                 placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
+
+                                    <p:commandButton styleClass="boton-circular"
+                                                     icon="pi pi-chevron-right" action="#{buscarPeliculaBean.buscarPelicula}">
+                                    </p:commandButton>
+                                </div>
+                            </h:form>
+
+                            <ul class="nav col-12 col-lg-auto justify-content-center">
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                                <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                                <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                            </ul>
+
+                            <h:form rendered="#{seguridadBean.autenticado}">
+                                <div class="dropdown text-end mx-3 my-1">
+                                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                             alt="mdo" width="32" height="32" class="rounded-circle" />
+                                    </a>
+                                    <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
+                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                        <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                        <li><a class="dropdown-item" href="/cliente/cupones_cliente.xhtml">Ver y agregar cupones</a></li>
+                                        <li><hr /></li>
+                                        <li class="dropdown-item">
+                                            <i class="pi pi-power-off" />
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+
         </nav>
     </ui:define>
 

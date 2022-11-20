@@ -104,9 +104,9 @@ public class CompraBean implements Serializable {
         if(idFuncion != null && !idFuncion.isEmpty()) {
             try {
                 cuponesCliente = clienteServicio.obtenerCuponesClienteEstado(cliente, EstadoCupon.DISPONIBLE);
+                cuponesCliente = actualizarCuponesCliente(cuponesCliente);
                 funcion = adminTeatroServicio.obtenerFuncion( Integer.valueOf(idFuncion) );
                 entradasCompradas = clienteServicio.obtenerEntradasCompradas(funcion);
-                System.out.println(entradasCompradas.toString());
 
                 compra.setFuncion(funcion);
                 int filas = funcion.getSala().getFilas();
@@ -241,9 +241,11 @@ public class CompraBean implements Serializable {
 
     public void asignarCupon() {
         compra.setCuponCliente(cupon);
+        valorTotal -= (valorTotal * (cupon.getCupon().getPorcentajeDescuento()/100));
     }
 
     public String finalizarCompra(){
+
         if(seleccionadas.size() == 0) mostrarError( new Exception("Debes comprar al menos una entrada") );
         if(metodoPago == null) mostrarError( new Exception("Debes seleccionar un metodo de pago") );
         if(cupon != null && cupon.getEstado() != EstadoCupon.DISPONIBLE )
@@ -253,16 +255,33 @@ public class CompraBean implements Serializable {
         compra.setComprasConfiteria(comprasConfiteria);
         compra.setMetodoPago(metodoPago);
 
-        if(cupon != null) compra.setCuponCliente(cupon);
-
         try {
-            clienteServicio.registrarCompra(compra);
+            compra = clienteServicio.registrarCompra(compra);
+            if(cupon != null) clienteServicio.redimirCupon(cupon.getId(), compra);
             return "/cliente/detalle-compra?faces-redirect=true&amp;b=" + compra.getId();
         } catch (Exception e) {
             mostrarError(e);
         }
 
         return "";
+    }
+
+    private List<CuponCliente> actualizarCuponesCliente(List<CuponCliente> cuponesCliente) {
+        List<CuponCliente> listaActualizada = new ArrayList<>();
+
+        try {
+            for(CuponCliente c : cuponesCliente) {
+                if( clienteServicio.cuponVencido(c.getCupon()) ) {
+                    c.setEstado(EstadoCupon.VENCIDO);
+                    clienteServicio.actualizarCuponCliente(c);
+                }
+                listaActualizada.add(c);
+            }
+        } catch (Exception e) {
+            mostrarError(e);
+        }
+
+        return listaActualizada;
     }
 
     private void mostrarError(Exception e) {
