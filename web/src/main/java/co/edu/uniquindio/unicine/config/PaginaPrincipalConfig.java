@@ -10,7 +10,7 @@ public class PaginaPrincipalConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("admin_teatro/salas.xhtml");
+        registry.addViewController("/").setViewName("login_admin.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }
