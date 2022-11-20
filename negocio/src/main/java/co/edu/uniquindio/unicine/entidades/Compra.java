@@ -37,7 +37,7 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private List<CompraConfiteria> comprasConfiteria = new ArrayList<>();
 
-    @ManyToOne
+    @OneToOne
     @ToString.Exclude
     private CuponCliente cuponCliente;
 
@@ -93,13 +93,5 @@ public class Compra implements Serializable {
         }
 
         return total;
-    }
-
-    public void agregarCompraConfiteria(CompraConfiteria compraConfiteria) {
-       comprasConfiteria.add(compraConfiteria);
-    }
-
-    public void agregarEntrada(Entrada entrada) {
-       entradas.add(entrada);
     }
 }

@@ -3,7 +3,6 @@ package co.edu.uniquindio.unicine.bean;
 import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.entidades.Teatro;
-import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
@@ -28,13 +27,10 @@ public class DetallePeliculaBean implements Serializable {
     private ClienteServicio clienteServicio;
 
     @Value("#{param['mov']}")
-    private String nombrePelicula;
+    private String idPelicula;
 
-    @Value("#{param['city']}")
-    private String idCiudad;
-
-    @Getter @Setter
-    private String nombreCiudad;
+    @Value(value = "#{seguridadBean.ciudad.id}")
+    private Integer idCiudad;
 
     @Getter @Setter
     private Pelicula pelicula;
@@ -55,11 +51,10 @@ public class DetallePeliculaBean implements Serializable {
     @PostConstruct
     public void init() {
 
-        if(nombrePelicula != null && !nombrePelicula.isEmpty()) {
+        if(idPelicula != null) {
             try {
-                pelicula = administradorServicio.obtenerPelicula(nombrePelicula);
-                funcionesPelicula = clienteServicio.obtenerFuncionesPelicula(nombrePelicula);
-                nombreCiudad = clienteServicio.obtenerCiudad( Integer.valueOf(idCiudad) ).getNombre();
+                pelicula = administradorServicio.obtenerPelicula( Integer.valueOf(idPelicula) );
+                funcionesPelicula = clienteServicio.obtenerFuncionesPelicula( Integer.valueOf(idPelicula) );
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -68,7 +63,7 @@ public class DetallePeliculaBean implements Serializable {
 
     public String comprar(Funcion funcion) {
         if(funcion != null) {
-            return "/cliente/compra.xhtml?faces-redirect=true&amp;city=" + idCiudad + "&amp;func=" + funcion.getId();
+            return "/cliente/compra.xhtml?faces-redirect=true&amp;func=" + funcion.getId();
         }
 
         return "";

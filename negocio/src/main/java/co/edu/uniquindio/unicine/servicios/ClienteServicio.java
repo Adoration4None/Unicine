@@ -42,9 +42,11 @@ public interface ClienteServicio {
 
     List<Pelicula> filtrarPeliculasEstadoCiudad(Integer idCiudad, EstadoPelicula estado) throws Exception;
 
-    List<Funcion> obtenerFuncionesPelicula(String nombrePelicula) throws Exception;
+    List<Funcion> obtenerFuncionesPelicula(Integer idPelicula) throws Exception;
 
     List<CuponCliente> obtenerCuponesCliente(Cliente cliente) throws Exception;
 
     List<CuponCliente> obtenerCuponesClienteEstado(Cliente cliente, EstadoCupon disponible) throws Exception;
+
+    Compra obtenerCompra(Integer idCompra) throws Exception;
 }

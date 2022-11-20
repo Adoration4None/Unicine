@@ -26,9 +26,9 @@ public interface AdministradorServicio {
 
     Pelicula actualizarPelicula(Pelicula pelicula) throws Exception;
 
-    void eliminarPelicula(String nombrePelicula) throws Exception;
+    void eliminarPelicula(Integer idPelicula) throws Exception;
 
-    Pelicula obtenerPelicula(String nombrePelicula) throws Exception;
+    Pelicula obtenerPelicula(Integer idPelicula) throws Exception;
 
     List<Pelicula> listarPeliculas();
 

@@ -9,6 +9,7 @@ import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,7 +41,7 @@ public class SeguridadBean implements Serializable {
     private Persona personaIngresada;
 
     @Getter @Setter
-    private Ciudad ciudadSeleccionada;
+    private Ciudad ciudad;
 
     @Getter @Setter
     private Cliente cliente;
@@ -64,8 +65,8 @@ public class SeguridadBean implements Serializable {
                 autenticado = true;
                 cliente = (Cliente) personaIngresada;
 
-                if(ciudadSeleccionada != null)
-                    return "/index?faces-redirect=true&amp;city=" + ciudadSeleccionada.getId();
+                if(ciudad != null)
+                    return "/index?faces-redirect=true&amp;city=" + ciudad.getId();
                 else
                     return "/index?faces-redirect=true";
             }
@@ -92,6 +93,7 @@ public class SeguridadBean implements Serializable {
 
                 if(personaIngresada != null) {
                     tipoSesion = 1;
+                    ciudad = administradorServicio.obtenerAdministrador( personaIngresada.getCedula() ).getCiudad();
                     autenticado = true;
 
                     return "/admin_teatro/index_admin_teatro?faces-redirect=true";
@@ -121,7 +123,7 @@ public class SeguridadBean implements Serializable {
 
     public String seleccionarCiudad(Ciudad ciudad){
         if(ciudad != null) {
-            ciudadSeleccionada = ciudad;
+            this.ciudad = ciudad;
 
             return "/index?faces-redirect=true&amp;city=" + ciudad.getId();
         }
@@ -130,13 +132,13 @@ public class SeguridadBean implements Serializable {
     }
 
     public String restablecerCiudad() {
-        ciudadSeleccionada = null;
+        ciudad = null;
         return "/index?faces-redirect=true";
     }
 
     private void mostrarError(Exception e) {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
-        FacesContext.getCurrentInstance().addMessage("mensaje_login", fm);
+        PrimeFaces.current().dialog().showMessageDynamic(fm);
     }
 
 }

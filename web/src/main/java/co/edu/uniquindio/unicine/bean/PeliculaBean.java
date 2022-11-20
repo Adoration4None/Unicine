@@ -85,11 +85,12 @@ public class PeliculaBean implements Serializable {
         }
     }
 
-    public void eliminarPelicula() {
-        try {
-            for (Pelicula p : peliculasSeleccionadas) {
-                administradorServicio.eliminarPelicula(p.getNombre());
-                peliculas.remove(p);
+
+    public void eliminarPelicula(){
+        try{
+            for (Pelicula p: peliculasSeleccionadas){
+               administradorServicio.eliminarPelicula(p.getId());
+               peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();
             peliculas = administradorServicio.listarPeliculas();

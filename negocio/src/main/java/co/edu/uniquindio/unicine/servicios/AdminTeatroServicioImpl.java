@@ -45,6 +45,9 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         if(administradorTeatroEncontrado == null) throw new Exception("El correo ingresado no existe");
 
+        if( administradorTeatroEncontrado.getEstado() == EstadoPersona.INACTIVO )
+            throw new Exception("Administrador inactivo");
+
         // Comprobar contraseña encriptada
         StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
 
@@ -62,7 +65,6 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if(teatroRepo.findByNombreAndDireccionAndCiudad(teatro.getNombre(), teatro.getDireccion(), teatro.getCiudad()) != null)
             throw new Exception("El teatro ya existe");
 
-        teatro.getCiudad().agregarTeatro(teatro);
         ciudadRepo.save( teatro.getCiudad() );
 
         return teatroRepo.save(teatro);
@@ -326,6 +328,5 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         return teatroRepo.obtenerTeatrosCiudad(idCiudad);
     }
-
 
 }
