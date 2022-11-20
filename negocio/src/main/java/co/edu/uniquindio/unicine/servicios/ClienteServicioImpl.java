@@ -223,12 +223,11 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         if( cuponRedimido == null ) throw new Exception("El cupon ingresado no se encuentra en la base de datos");
 
-        if( !cuponNoVencido(cuponRedimido.getCupon()) )
+        if( cuponVencido(cuponRedimido.getCupon()) )
             throw new Exception("El cupon ingresado no se encuentra disponible");
 
         // Actualizar estado del cupon
         cuponRedimido.setEstado(EstadoCupon.USADO);
-        cuponRedimido.setCompra(compra);
         cuponClienteRepo.save(cuponRedimido);
 
         // Agregar el cupon a la compra
@@ -335,23 +334,20 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         cupon = cuponRepo.findByNombre(nombreCupon);
 
-        if( cupon != null && cuponNoVencido(cupon) ) {
+        if( cupon != null && !cuponVencido(cupon) ) {
             cuponCliente = new CuponCliente(cliente, cupon);
-            cupon.agregarCuponCliente(cuponCliente);
-            cliente.agregarCuponCliente(cuponCliente);
-
-            cuponRepo.save(cupon);
-            clienteRepo.save(cliente);
+            cuponClienteRepo.save(cuponCliente);
         }
         else {
-            throw new Exception("Cupon no valido");
+            throw new Exception("El cupon no esta disponible o esta vencido");
         }
 
-        return cuponClienteRepo.save(cuponCliente);
+        return cuponCliente;
     }
 
-    private boolean cuponNoVencido(Cupon cupon) {
-        return !cupon.getFechaVencimiento().equals( LocalDate.now() );
+    @Override
+    public boolean cuponVencido(Cupon cupon) {
+        return cupon.getFechaVencimiento().isBefore( LocalDate.now() ) || cupon.getFechaVencimiento().isEqual( LocalDate.now() );
     }
 
     @Override
@@ -410,6 +406,17 @@ public class ClienteServicioImpl implements ClienteServicio {
         if(cliente == null) throw new Exception("Cliente vacio");
         if(estadoCupon == null) throw new Exception("Estado del cupon vacio");
         return cuponClienteRepo.obtenerCuponesClienteEstado(cliente.getCedula(), estadoCupon);
+    }
+
+    @Override
+    public CuponCliente actualizarCuponCliente(CuponCliente cuponCliente) throws Exception {
+        if(cuponCliente == null) throw new Exception("Cupon vacio");
+
+        Optional<CuponCliente> cuponClienteGuardado = cuponClienteRepo.findById(cuponCliente.getId());
+
+        if (cuponClienteGuardado.isEmpty()) throw new Exception("Cupon no asociado con ningun cliente");
+
+        return cuponClienteRepo.save(cuponCliente);
     }
 
     @Override
