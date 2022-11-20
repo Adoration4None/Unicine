@@ -63,7 +63,12 @@
                                              alt="mdo" width="32" height="32" class="rounded-circle" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
-                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                        <li onclick="PF('info_cliente').show()" >
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a>
+                                        </li>
+                                        <li onclick="PF('actualizar_cliente').show()">
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Actualizar usuario</a>
+                                        </li>
                                         <li><a class="dropdown-item" href="#">Historial de compras</a></li>
                                         <li><a class="dropdown-item" href="/cliente/cupones_cliente.xhtml">Ver y agregar cupones</a></li>
                                         <li><hr /></li>
@@ -181,7 +186,87 @@
                 <p:growl for="mensaje_login" showDetail="true"/>
             </h:form>
         </span>
+    </p:dialog>
 
+    <p:dialog id="dialog_info" widgetVar="info_cliente" modal="true" header="Informacion del cliente" showEffect="fade">
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nombre_admin" value="Nombre:"/>
+                <p:inputText id="nombre_admin" disabled="true" value="#{seguridadBean.cliente.nombreCompleto}" required="true"/>
+                <p:message for="nombre_admin"/>
+
+                <p:outputLabel for="cedula_admin" value="Cedula:"/>
+                <p:inputText id="cedula_admin" disabled="true" value="#{seguridadBean.cliente.cedula}" required="true"/>
+                <p:message for="cedula_admin"/>
+
+                <p:outputLabel for="imagen_cliente" value="Imagen:"/>
+                <img jsf:id="imagen_cliente" src="https://64.media.tumblr.com/2a5114c58aa7322c32e3f0191e159c35/e5dedad596510c33-e0/s540x810/2a9877e69b661053e7baef8aaeca88b3f1e58767.jpg" width="200px" alt="hola"></img>
+                <p:message for="imagen_cliente"/>
+
+                <p:outputLabel for="email_cliente2" value="Email:"/>
+                <p:inputText id="email_cliente2" rows="3" disabled="true" value="#{seguridadBean.cliente.email}" required="true"/>
+                <p:message for="email_cliente2"/>
+
+                <p:outputLabel for="estado_cliente" value="Estado:"/>
+                <p:inputText id="estado_cliente" rows="3" disabled="true" value="#{seguridadBean.cliente.estado}" required="true"/>
+                <p:message for="estado_cliente"/>
+
+                <p:outputLabel for="telefono_cel_cliente" value="Telefono celular:"/>
+                <p:inputText id="telefono_cel_cliente" rows="3" disabled="true" value="#{seguridadBean.cliente.telefonoCelular}" required="true"/>
+                <p:message for="telefono_cel_cliente"/>
+
+                <p:outputLabel for="telefono_fijo_cliente" value="Telefono fijo:"/>
+                <p:inputText id="telefono_fijo_cliente" rows="3" disabled="true" value="#{seguridadBean.cliente.telefonoFijo}" required="true"/>
+                <p:message for="telefono_fijo_cliente"/>
+
+                <p:outputLabel for="fecha_nacimiento" value="Fecha nacimiento:"/>
+                <p:inputText id="fecha_nacimiento" rows="3" disabled="true" value="#{seguridadBean.cliente.fechaNacimiento}" required="true"/>
+                <p:message for="fecha_nacimiento"/>
+
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+
+    <p:dialog id="dialog_editar" widgetVar="actualizar_cliente" modal="true" header="Actualizar cliente" showEffect="fade">
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nombre_admin2" value="Nombre:"/>
+                <p:inputText id="nombre_admin2" value="#{seguridadBean.cliente.nombreCompleto}" required="true"/>
+                <p:message for="nombre_admin2"/>
+
+                <p:outputLabel for="cedula_admin2" value="Cedula:"/>
+                <p:inputText id="cedula_admin2" disabled="true" value="#{seguridadBean.cliente.cedula}" required="true"/>
+                <p:message for="cedula_admin2"/>
+
+                <p:outputLabel for="email_cliente3" value="Email:"/>
+                <p:inputText id="email_cliente3" rows="3" value="#{seguridadBean.cliente.email}" required="true"/>
+                <p:message for="email_cliente3"/>
+
+                <p:outputLabel for="contra_cliente" value="Clave:"/>
+                <p:inputText id="contra_cliente" disabled="true" type="password" rows="3" value="#{seguridadBean.cliente.contrasena}" required="true"/>
+                <p:message for="contra_cliente"/>
+
+                <p:outputLabel for="telefono_cel_cliente2" value="Telefono celular:"/>
+                <p:inputText id="telefono_cel_cliente2" rows="3" value="#{seguridadBean.cliente.telefonoCelular}" required="true"/>
+                <p:message for="telefono_cel_cliente2"/>
+
+                <p:outputLabel for="telefono_fijo_cliente2" value="Telefono fijo:"/>
+                <p:inputText id="telefono_fijo_cliente2" rows="3" value="#{seguridadBean.cliente.telefonoFijo}" required="true"/>
+                <p:message for="telefono_fijo_cliente2"/>
+
+                <p:outputLabel for="fecha_nacimiento2" value="Fecha:"/>
+                <p:datePicker id="fecha_nacimiento2" value="#{seguridadBean.cliente.fechaNacimiento}" monthNavigator="true" yearNavigator="true" />
+                <p:message for="fecha_nacimiento2"/>
+
+
+                <!--                <p:outputLabel for="imagen_cliente2" value="Imagen:"/>-->
+                <!--                <p:fileUpload id="imagen_cliente2" value="#{seguridadBean.cliente.imagenPerfil}" mode="simple" skinSimple="true" required="true"/>-->
+                <!--                <p:message for="imagen_cliente2"/>-->
+
+            </h:panelGrid>
+            <p:commandButton icon="pi pi-save" action="#{seguridadBean.actualizarCliente}" value="Actualizar" update="@this"/>
+            <p:growl id="mensaje_bean" showDetail="true"/>
+        </h:form>
     </p:dialog>
 
 </h:body>
