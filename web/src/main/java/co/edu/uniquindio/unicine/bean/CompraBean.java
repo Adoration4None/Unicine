@@ -245,9 +245,10 @@ public class CompraBean implements Serializable {
     }
 
     public String finalizarCompra(){
+
         if(seleccionadas.size() == 0) mostrarError( new Exception("Debes comprar al menos una entrada") );
         if(metodoPago == null) mostrarError( new Exception("Debes seleccionar un metodo de pago") );
-        if(cupon.getEstado() != EstadoCupon.DISPONIBLE )
+        if(cupon != null && cupon.getEstado() != EstadoCupon.DISPONIBLE )
             mostrarError( new Exception("El cupon que seleccionaste no esta disponible") );
 
         compra.setEntradas(seleccionadas);
@@ -255,9 +256,8 @@ public class CompraBean implements Serializable {
         compra.setMetodoPago(metodoPago);
 
         try {
-            if(cupon != null) compra = clienteServicio.redimirCupon(cupon.getId(), compra);
-
-            clienteServicio.registrarCompra(compra);
+            compra = clienteServicio.registrarCompra(compra);
+            if(cupon != null) clienteServicio.redimirCupon(cupon.getId(), compra);
             return "/cliente/detalle-compra?faces-redirect=true&amp;b=" + compra.getId();
         } catch (Exception e) {
             mostrarError(e);

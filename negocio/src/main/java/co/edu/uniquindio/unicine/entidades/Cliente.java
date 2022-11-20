@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +27,10 @@ public class Cliente extends Persona implements Serializable {
     @Column(length = 10)
     private String telefonoFijo;
 
+    @ElementCollection
+    @Column(name = "anio")
+    private List<Integer> aniosCelebrados;
+
     // Relaciones ---------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
@@ -41,4 +46,7 @@ public class Cliente extends Persona implements Serializable {
         super(cedula, nombreCompleto, email, contrasena);
     }
 
+    public void agregarAnioCelebrado(Integer anio) {
+        aniosCelebrados.add(anio);
+    }
 }

@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 @Component
 @ViewScoped
-public class GestionCuentaBean implements Serializable {
+public class AgregarCuponBean implements Serializable {
     @Autowired
     private ClienteServicio clienteServicio;
 
@@ -26,14 +26,14 @@ public class GestionCuentaBean implements Serializable {
     private String param2;
 
     @Getter @Setter
-    private String mensaje = "Verificando su cuenta...";
+    private String mensaje = "Agregando tu nuevo cupon...";
 
     @PostConstruct
     public void init() {
         if(param1 != null && !param1.isEmpty() && param2 != null && !param2.isEmpty()) {
             try {
-                clienteServicio.activarCuenta(param1, param2);
-                mensaje = "Cuenta verificada";
+                clienteServicio.agregarCuponCorreo(param1, param2);
+                mensaje = "Cupon agregado a tu cuenta";
             } catch (Exception e) {
                 mostrarError(e);
             }

@@ -1,13 +1,14 @@
 package co.edu.uniquindio.unicine.filtros;
 
 import co.edu.uniquindio.unicine.bean.SeguridadBean;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@Component
+@Component
 public class SeguridadFiltro implements Filter {
 
     private static final String PAGINA_INICIO_CLIENTE      = "/index.xhtml";
