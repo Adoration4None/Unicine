@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.bean;
 
 import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
+import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
 @ViewScoped
 public class CiudadBean implements Serializable {
     @Autowired
-    private AdminTeatroServicio adminTeatroServicio;
+    private AdministradorServicio administradorServicio;
 
     @Getter
     @Setter
@@ -36,29 +36,24 @@ public class CiudadBean implements Serializable {
 
     private Boolean editar;
 
-    public void CiudadBean(AdminTeatroServicio adminTeatroServicio) {
-        this.adminTeatroServicio = adminTeatroServicio;
-    }
-
     @PostConstruct
     public void init() {
         editar = false;
         ciudad = new Ciudad();
-        ciudades = adminTeatroServicio.listarCiudades();
+        ciudades = administradorServicio.listarCiudades();
         ciudadesSeleccionadas = new ArrayList<>();
     }
 
     public void crearCiudad() {
         try {
             if (!editar) {
-                Ciudad city = adminTeatroServicio.crearCiudad(ciudad);
+                Ciudad city = administradorServicio.crearCiudad(ciudad);
                 ciudades.add(city);
                 ciudad = new Ciudad();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Registro de ciudad exitoso");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
-                adminTeatroServicio.actualizarCiudad(ciudad);
-                ciudades = adminTeatroServicio.listarCiudades();
+                administradorServicio.actualizarCiudad(ciudad);
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Ciudad actualizada");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
@@ -72,7 +67,7 @@ public class CiudadBean implements Serializable {
     public void eliminarCiudades() {
         try {
             for (Ciudad city : ciudadesSeleccionadas) {
-                adminTeatroServicio.eliminarCiudad(city.getId());
+                administradorServicio.eliminarCiudad(city.getId());
                 ciudades.remove(city);
             }
             ciudadesSeleccionadas.clear();
