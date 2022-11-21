@@ -13,8 +13,8 @@
         <h:form id="form_datatable">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{salaBean.botonAgregarEditar}" oncomplete="PF('crear_sala').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{salaBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{salaBean.salasSeleccionadas.size()==0}" styleClass="ui-button-danger" action="#{salaBean.eliminarSala}" update="form_datatable:datatable_crud_sala,@this"/>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{salaBean.botonAgregarEditar}" oncomplete="PF('crear_sala').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{salaBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{salaBean.salasSeleccionadas.size()==0}" styleClass="ui-button-outlined ui-button-danger" action="#{salaBean.eliminarSala}" update="form_datatable:datatable_crud_sala,@this"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -57,7 +57,7 @@
                 </p:column>
 
                 <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{salaBean.seleccionarSala(sal)}" oncomplete="PF('crear_sala').show()" update="dialog_crear"/>
+                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{salaBean.seleccionarSala(sal)}" oncomplete="PF('crear_sala').show()" update="dialog_crear"/>
                 </p:column>
 
             </p:dataTable>

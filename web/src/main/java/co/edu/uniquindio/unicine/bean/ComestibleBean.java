@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,10 +84,11 @@ public class ComestibleBean implements Serializable {
                 comestibles.remove(comestible);
             }
             comestiblesSeleccionados.clear();
+            comestibles = administradorServicio.listarConfiteria();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Comestible eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar el comestible porque está asociado a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }

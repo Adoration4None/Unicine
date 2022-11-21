@@ -90,10 +90,11 @@ public class CuponBean implements Serializable {
                 cupones.remove(cup);
             }
             cuponesSeleccionados.clear();
+            cupones = administradorServicio.listarCupones();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Cupon eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar el cupón porque está asociado a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }

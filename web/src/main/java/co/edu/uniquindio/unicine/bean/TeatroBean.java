@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,12 @@ public class TeatroBean implements Serializable {
     @Setter
     private Teatro teatro;
 
+    @Value(value="#{seguridadBean.ciudad}")
+    private Ciudad ciudad_teatro;
+
+    @Value(value="#{seguridadBean.personaIngresada}")
+    private AdministradorTeatro administradorTeatro;
+
     @Getter
     @Setter
     private List<Teatro> teatros;
@@ -41,13 +48,7 @@ public class TeatroBean implements Serializable {
     @Setter
     private List<Teatro> teatrosSeleccionados;
 
-    @Getter
-    @Setter
-    private List<Ciudad> ciudades;
-
     private Boolean editar;
-
-    private List<AdministradorTeatro> adminPrueba;
 
     public TeatroBean(AdminTeatroServicio administradorTeatroServicio) {
         this.administradorTeatroServicio = administradorTeatroServicio;
@@ -55,19 +56,17 @@ public class TeatroBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        adminPrueba = administradorServicio.listarAdministradores();
-       // adminPrueba = new AdministradorTeatro("1234", "juaan", "juaaaaan@gmail.com", "123");
         editar = false;
         teatro = new Teatro();
         teatros = administradorTeatroServicio.listarTeatros();
-        ciudades = administradorServicio.listarCiudades();
         teatrosSeleccionados = new ArrayList<>();
     }
 
     public void crearTeatro() {
         try {
             if (!editar) {
-                teatro.setAdministrador(adminPrueba.get(0));
+                teatro.setCiudad(ciudad_teatro);
+                teatro.setAdministrador(administradorTeatro);
                 Teatro t = administradorTeatroServicio.crearTeatro(teatro);
                 teatros.add(t);
                 teatro = new Teatro();
@@ -92,10 +91,11 @@ public class TeatroBean implements Serializable {
                 teatros.remove(teatro);
             }
             teatrosSeleccionados.clear();
+            teatros = administradorTeatroServicio.listarTeatros();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Teatro eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar el teatro porque está asociado a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }

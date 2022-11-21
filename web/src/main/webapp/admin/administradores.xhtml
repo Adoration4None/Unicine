@@ -13,8 +13,9 @@
         <h:form id="form_datatable">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{adminTeatroBean.botonAgregarEditar}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{adminTeatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{adminTeatroBean.administradoresSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{adminTeatroBean.eliminarAdmins}" update="form_datatable:datatable_crud_admin,@this"/>
+                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{adminTeatroBean.botonAgregarEditar}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
+                    <p:commandButton id="btn_borrar" value="#{adminTeatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{adminTeatroBean.administradoresSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger me-3" action="#{adminTeatroBean.eliminarAdmins}" update="form_datatable:datatable_crud_admin,@this"/>
+                    <p:commandButton value="Gestionar ciudades" styleClass="ui-button-outlined me-3" action="#{adminTeatroBean.gestionarCiudades}"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -44,8 +45,16 @@
                     <h:outputText value="#{admin.imagenPerfil}"/>
                 </p:column>
 
+                <p:column headerText="Estado">
+                    <h:outputText value="#{admin.estado}"/>
+                </p:column>
+
+                <p:column headerText="Ciudad">
+                    <h:outputText value="#{admin.ciudad.nombre}"/>
+                </p:column>
+
                 <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{adminTeatroBean.seleccionarAdmin(admin)}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
+                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{adminTeatroBean.seleccionarAdmin(admin)}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
                 </p:column>
 
             </p:dataTable>
@@ -63,7 +72,7 @@
                     <p:message for="cedula_admin"/>
 
                     <p:outputLabel for="contra_admin" value="Clave:"/>
-                    <p:password id="contra_admin" value="#{adminTeatroBean.administrador.contrasena}" required="true"/>
+                    <p:inputText id="contra_admin" type="password" value="#{adminTeatroBean.administrador.contrasena}" required="true"/>
                     <p:message for="contra_admin"/>
 
                     <p:outputLabel for="imagen_admin" value="Imagen:"/>
@@ -73,6 +82,20 @@
                     <p:outputLabel for="email_admin" value="Email:"/>
                     <p:inputText id="email_admin" rows="3" value="#{adminTeatroBean.administrador.email}" required="true"/>
                     <p:message for="email_admin"/>
+
+                    <p:outputLabel for="estado_admin" value="Estado:"/>
+                    <p:selectOneMenu id="estado_admin" value="#{adminTeatroBean.administrador.estado}">
+                        <f:selectItem itemLabel="Seleccione un estado" noSelectionOption="true" itemValue="#{null}"/>
+                        <f:selectItems value="#{adminTeatroBean.estados}" var="estado" itemLabel="#{estado}" itemValue="#{estado}"/>
+                    </p:selectOneMenu>
+                    <p:message for="estado_admin"/>
+
+                    <p:outputLabel for="ciudad_admin" value="Ciudad:"/>
+                    <p:selectOneMenu id="ciudad_admin" value="#{adminTeatroBean.administrador.ciudad}" converter="#{ciudadConverter}">
+                        <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true" itemValue="#{null}"/>
+                        <f:selectItems value="#{adminTeatroBean.ciudades}" var="city" itemLabel="#{city.nombre}" itemValue="#{city}"/>
+                    </p:selectOneMenu>
+                    <p:message for="ciudad_admin"/>
 
                 </h:panelGrid>
                 <p:commandButton icon="pi pi-save" action="#{adminTeatroBean.crearAdmin}" value="#{adminTeatroBean.mensaje2Crear}" update="form_datatable:datatable_crud_admin"/>

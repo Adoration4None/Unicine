@@ -128,10 +128,12 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if(sala == null) throw new Exception("No hay sala para actualizar");
         Optional<Sala> salaGuardada = salaRepo.findById(sala.getId());
 
-        if(salaGuardada.isEmpty()) throw new Exception("La sala no existe");
-
-        if( cantidadSillasInvalida(sala) )
+        if(cantidadSillasInvalida(sala)){
             throw new Exception("Las filas y las columnas de la sala no coinciden con su cantidad de sillas");
+        }
+        else if(salaGuardada.isEmpty()){
+            throw new Exception("La sala no existe");
+        }
 
         return salaRepo.save(sala);
     }
@@ -200,9 +202,6 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         if( tiposNoCoinciden(funcion.getTipo(), funcion.getSala().getTipo()) )
             throw new Exception("El tipo de la funcion no corresponde con el tipo de la sala");
-
-        if( salaOcupadaHorario(funcion.getSala(), funcion.getHorario()) )
-            throw new Exception("La sala seleccionada ya se encuentra ocupada en el horario seleccionado");
 
         return funcionRepo.save(funcion);
     }

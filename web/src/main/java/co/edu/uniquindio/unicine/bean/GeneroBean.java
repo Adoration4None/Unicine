@@ -65,7 +65,7 @@ public class GeneroBean implements Serializable {
             }
 
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar el género porque está asociado a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
@@ -77,6 +77,7 @@ public class GeneroBean implements Serializable {
                 generos.remove(gen);
             }
             generosSeleccionados.clear();
+            generos = administradorServicio.obtenerGeneros();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Genero eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

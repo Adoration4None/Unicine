@@ -1,9 +1,7 @@
 package co.edu.uniquindio.unicine.bean;
 
-import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
-import co.edu.uniquindio.unicine.entidades.Cliente;
-import co.edu.uniquindio.unicine.entidades.EstadoPelicula;
-import co.edu.uniquindio.unicine.entidades.Pelicula;
+import co.edu.uniquindio.unicine.entidades.*;
+import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
@@ -18,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +33,7 @@ public class PeliculaBean implements Serializable {
 
     @Getter
     @Setter
-    @Value("#{param['busqueda']}")
-    private String busquedaParam;
-
-    @Getter @Setter
-    private String busqueda;
-
     private Boolean editar;
-
-    @Getter @Setter
-    private List<Pelicula> peliculasBusqueda;
 
     @Getter @Setter
     private List<Pelicula> peliculasSeleccionadas;
@@ -52,13 +42,20 @@ public class PeliculaBean implements Serializable {
     private EstadoPelicula[] estados;
 
     @Getter @Setter
+    private List<Genero> generos;
+
+    @Getter @Setter
     private List<Pelicula> peliculas;
 
+    public PeliculaBean(AdministradorServicio administradorServicio){
+        this.administradorServicio = administradorServicio;
+    }
     @PostConstruct
     public void init(){
+        generos = administradorServicio.obtenerGeneros();
         estados = EstadoPelicula.values();
         pelicula = new Pelicula();
-        editar=false;
+        editar = false;
         peliculasSeleccionadas = new ArrayList<>();
         peliculas = administradorServicio.listarPeliculas();
     }
@@ -74,6 +71,7 @@ public class PeliculaBean implements Serializable {
             }
             else{
                 administradorServicio.actualizarPelicula(pelicula);
+                peliculas = administradorServicio.listarPeliculas();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula actualizada");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
@@ -84,17 +82,19 @@ public class PeliculaBean implements Serializable {
         }
     }
 
+
     public void eliminarPelicula(){
         try{
             for (Pelicula p: peliculasSeleccionadas){
-               administradorServicio.eliminarPelicula(p.getId());
-               peliculas.remove(p);
+                administradorServicio.eliminarPelicula(p.getId());
+                peliculas.remove(p);
             }
             peliculasSeleccionadas.clear();
+            peliculas = administradorServicio.listarPeliculas();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Pelicula eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
-        } catch (Exception e){
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar la película porque está asociada a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
@@ -107,9 +107,9 @@ public class PeliculaBean implements Serializable {
         }
     }
 
-    public void seleccionarPelicula(Pelicula pelicula){
-        this.pelicula = pelicula;
-        editar=true;
+    public void seleccionarPelicula(Pelicula peli){
+        this.pelicula = peli;
+        editar = true;
     }
 
     public void botonAgregarEditar() {

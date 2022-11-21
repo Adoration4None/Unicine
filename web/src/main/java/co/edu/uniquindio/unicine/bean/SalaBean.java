@@ -68,6 +68,7 @@ public class SalaBean implements Serializable {
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             } else {
                 administradorTeatroServicio.actualizarSala(sala);
+                salas = administradorTeatroServicio.listarSalas();
                 FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Sala actualizada");
                 PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
             }
@@ -85,10 +86,11 @@ public class SalaBean implements Serializable {
                 salas.remove(sal);
             }
             salasSeleccionadas.clear();
+            salas = administradorTeatroServicio.listarSalas();
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Sala eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "No se puede eliminar la sala porque está asociada a otro objeto");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         }
     }
