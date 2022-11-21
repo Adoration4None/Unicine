@@ -140,6 +140,20 @@ public class SeguridadBean implements Serializable {
         return "/index?faces-redirect=true";
     }
 
+    public void cambiarContrasena() {
+        try {
+            if(email == null || email.isEmpty())
+                mostrarError( new Exception("Ingresa un correo para restablecer tu contraseña") );
+            else {
+                clienteServicio.enviarCorreoCambioContrasena(email);
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Confirmacion", "Te hemos enviado un email de confirmacion. Revisalo para cambiar tu contraseña.");
+                PrimeFaces.current().dialog().showMessageDynamic(fm);
+            }
+        } catch (Exception e) {
+            mostrarError(e);
+        }
+    }
+
     private void mostrarError(Exception e) {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
         PrimeFaces.current().dialog().showMessageDynamic(fm);

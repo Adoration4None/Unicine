@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,9 @@ public class FuncionBean implements Serializable {
 
     @Autowired
     private AdministradorServicio administradorServicio;
+
+    @Value(value = "#{seguridadBean.ciudad.id}")
+    private Integer idCiudad;
 
     @Getter
     @Setter
@@ -66,9 +70,13 @@ public class FuncionBean implements Serializable {
         editar = false;
         funcion = new Funcion();
         peliculas = administradorServicio.listarPeliculas();
-        salas = administradorTeatroServicio.listarSalas();
+        try {
+            salas = administradorTeatroServicio.obtenerSalasCiudad(idCiudad);
+            funciones = administradorTeatroServicio.obtenerFuncionesCiudad(idCiudad);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         horarios = administradorTeatroServicio.listarHorarios();
-        funciones = administradorTeatroServicio.listarFunciones();
         funcionesSeleccionadas = new ArrayList<>();
     }
 

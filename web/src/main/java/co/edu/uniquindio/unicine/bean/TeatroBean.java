@@ -37,7 +37,7 @@ public class TeatroBean implements Serializable {
     @Value(value="#{seguridadBean.ciudad}")
     private Ciudad ciudad_teatro;
 
-    @Value(value="#{seguridadBean.personaIngresada}")
+    @Value(value="#{seguridadBean.administradorTeatro}")
     private AdministradorTeatro administradorTeatro;
 
     @Getter
@@ -58,7 +58,11 @@ public class TeatroBean implements Serializable {
     public void init() {
         editar = false;
         teatro = new Teatro();
-        teatros = administradorTeatroServicio.listarTeatros();
+        try {
+            teatros = administradorTeatroServicio.obtenerTeatrosCiudadAdmin(ciudad_teatro.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         teatrosSeleccionados = new ArrayList<>();
     }
 

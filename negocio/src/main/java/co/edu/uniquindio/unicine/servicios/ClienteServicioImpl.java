@@ -2,7 +2,6 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
-import net.bytebuddy.asm.Advice;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.jasypt.util.text.AES256TextEncryptor;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -195,6 +194,12 @@ public class ClienteServicioImpl implements ClienteServicio {
         if( !cliente.getEmail().equals(clienteGuardado.get().getEmail() ) && emailExiste(cliente.getEmail()) )
             throw new Exception("El correo que intenta actualizar ya existe");
 
+        if( !clienteGuardado.get().getContrasena().equals(cliente.getContrasena()) ) {
+            // Encriptacion de contraseña
+            StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+            cliente.setContrasena( spe.encryptPassword( cliente.getContrasena() ) );
+        }
+
         return clienteRepo.save(cliente);
     }
 
@@ -329,7 +334,7 @@ public class ClienteServicioImpl implements ClienteServicio {
                          " | Fecha y hora de la funcion: " + compra.getFuncion().getHorario().getFecha().toString() + " " + compra.getFuncion().getHorario().getHora().toString() + "\n" +
                          " || VALOR TOTAL: $" + compra.getValorTotal() + " ||      " +
                          " ----------------------- " +
-                         " Puedes verla en tu historial de compras: https://bit.ly/3s7ETPZ";
+                         " Puedes verla en tu historial de compras: http://localhost:8080/cliente/historial_compras.xhtml";
 
         emailServicio.enviarEmail("Confirmacion Compra", mensaje, cliente.getEmail());
     }
@@ -339,16 +344,46 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public boolean cambiarContrasena(String emailCliente) throws Exception {
+    public void enviarCorreoCambioContrasena(String emailCliente) throws Exception {
         Cliente cliente = clienteRepo.findByEmail(emailCliente);
+
+        if(cliente == null) throw new Exception("Cliente no encontrado");
+
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Bogota"));
+
+        String param1 = textEncryptor.encrypt( emailCliente );
+        String param2 = textEncryptor.encrypt( "" + zdt.toInstant().toEpochMilli() );
         String mensaje = "Ha solicitado cambiar su contraseña. Para hacerlo haga clic en el siguiente enlace: " +
-                         "https://bit.ly/3s7ETPZ";
+                         "http://localhost:8080/cambiar_contrasena.xhtml?p1=" + param1 + "&p2=" + param2;;
 
-        if(cliente == null){
-            throw new Exception("Cliente no encontrado");
-        }
+        emailServicio.enviarEmail("Cambio de Contraseña", mensaje, emailCliente);
+    }
 
-        return emailServicio.enviarEmail("Cambio de Contraseña", mensaje, emailCliente);
+    @Override
+    public void cambiarContrasena(String email, String fecha, String nuevaContrasena) throws Exception {
+        email = email.replaceAll(" ", "+");
+        fecha = fecha.replaceAll(" ", "+");
+
+        AES256TextEncryptor textEncryptor = new AES256TextEncryptor();
+        textEncryptor.setPassword("heisenberg");
+
+        String emailDesencriptado = textEncryptor.decrypt(email);
+        String fechaDescencriptada = textEncryptor.decrypt(fecha);
+
+        Cliente clienteEncontrado = clienteRepo.findByEmail(emailDesencriptado);
+
+        if(clienteEncontrado == null) throw new Exception("El cliente no existe");
+
+        if(nuevaContrasena == null || nuevaContrasena.isEmpty()) throw new Exception("No se ingreso una nueva contraseña");
+
+        // Encriptacion de contraseña
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        clienteEncontrado.setContrasena( spe.encryptPassword(nuevaContrasena) );
+        clienteRepo.save(clienteEncontrado);
     }
 
     @Override

@@ -2,6 +2,7 @@ package co.edu.uniquindio.unicine.servicios;
 
 import co.edu.uniquindio.unicine.entidades.*;
 import co.edu.uniquindio.unicine.repo.*;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +50,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if(administradorTeatroRepo.findById(administradorTeatroId).isPresent())
             throw new Exception("El administrador de teatro con cedula " + administradorTeatroId + " ya existe");
 
+        // Encriptacion de contraseña
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+        administradorTeatro.setContrasena( spe.encryptPassword( administradorTeatro.getContrasena() ) );
+
         // Setteo del estado inactivo para mayor seguridad
         administradorTeatro.setEstado(EstadoPersona.INACTIVO);
 
@@ -60,6 +65,12 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         Optional<AdministradorTeatro> administradorTeatroGuardado = administradorTeatroRepo.findById(administradorTeatro.getCedula());
 
         if(administradorTeatroGuardado.isEmpty()) throw new Exception("El administrador no existe");
+
+        if( !administradorTeatroGuardado.get().getContrasena().equals(administradorTeatro.getContrasena()) ) {
+            // Encriptacion de contraseña
+            StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+            administradorTeatro.setContrasena( spe.encryptPassword( administradorTeatro.getContrasena() ) );
+        }
 
         return administradorTeatroRepo.save(administradorTeatro);
     }

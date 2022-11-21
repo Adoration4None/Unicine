@@ -277,10 +277,31 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
     // Otras consultas -----------------------------------------------------------------------------------------
     @Override
+    public List<Teatro> obtenerTeatrosCiudadAdmin(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+
+        return teatroRepo.obtenerTeatrosCiudadAdmin(idCiudad);
+    }
+
+    @Override
     public List<Teatro> obtenerTeatrosCiudad(Integer idCiudad) throws Exception {
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
 
         return teatroRepo.obtenerTeatrosCiudad(idCiudad);
+    }
+
+    @Override
+    public List<Sala> obtenerSalasCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+
+        return salaRepo.obtenerSalasCiudad(idCiudad);
+    }
+
+    @Override
+    public List<Funcion> obtenerFuncionesCiudad(Integer idCiudad) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+
+        return funcionRepo.obtenerFuncionesCiudad(idCiudad);
     }
 
 }

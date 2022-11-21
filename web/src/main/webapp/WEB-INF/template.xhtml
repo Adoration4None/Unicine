@@ -149,7 +149,7 @@
                 <br/>
                 <p:outputLabel for="imagen_perfil_cliente" value="Foto de perfil:" />
                 <p:fileUpload id="imagen_perfil_cliente" listener="#{registroClienteBean.subirImagen}" mode="advanced" multiple="false" sizeLimit="10000000"
-                              validateContentType="true" accept=".gif,.jpg,.jpeg,.png" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                              fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
             </h:panelGrid>
 
             <p:commandButton value="Registrar" styleClass="boton my-3" action="#{registroClienteBean.registrarCliente}" oncomplete="PF('registro').hide()" update="@form" />
@@ -173,6 +173,7 @@
                     <span>
                         <p:outputLabel for="contrasena_login" value="Contraseña:"/>
                         <p:password id="contrasena_login" styleClass="input" value="#{seguridadBean.contrasena}"/>
+                        <p>¿Olvidaste tu contraseña? <span onclick="PF('cambiar-contrasena').show(); PF('login').hide()" class="enlace">Cambiar contraseña</span> </p>
                     </span>
 
                 </h:panelGrid>
@@ -186,6 +187,15 @@
             </h:form>
         </span>
 
+    </p:dialog>
+
+    <p:dialog widgetVar="cambiar-contrasena" header="Cambio de Contraseña" modal="true" showEffect="fade" resizable="false">
+        <h:form>
+            <p:outputLabel for="correo_cambio_contrasena" value="Confirma tu correo electronico:"/>
+            <p:inputText id="correo_cambio_contrasena" styleClass="input" value="#{seguridadBean.email}"/>
+
+            <p:commandButton styleClass="boton my-3 mx-3" value="Confirmar" action="#{seguridadBean.cambiarContrasena}" oncomplete="PF('cambiar-contrasena').hide()" update="@form" />
+        </h:form>
     </p:dialog>
 
 </h:body>

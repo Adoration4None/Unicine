@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,9 @@ public class SalaBean implements Serializable {
 
     @Autowired
     private AdminTeatroServicio administradorTeatroServicio;
+
+    @Value(value = "#{seguridadBean.ciudad.id}")
+    private Integer idCiudad;
 
     @Getter
     @Setter
@@ -52,8 +56,12 @@ public class SalaBean implements Serializable {
     public void init() {
         editar = false;
         sala = new Sala();
-        teatros = administradorTeatroServicio.listarTeatros();
-        salas = administradorTeatroServicio.listarSalas();
+        try {
+            teatros = administradorTeatroServicio.obtenerTeatrosCiudadAdmin(idCiudad);
+            salas = administradorTeatroServicio.obtenerSalasCiudad(idCiudad);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         tipos = TipoSala.values();
         salasSeleccionadas = new ArrayList<>();
     }

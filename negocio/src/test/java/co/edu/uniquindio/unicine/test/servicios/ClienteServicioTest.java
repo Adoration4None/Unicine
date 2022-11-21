@@ -267,17 +267,6 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void cambiarContrasena() {
-        try {
-            boolean resultado = clienteServicio.cambiarContrasena("nisi@icloud.ca");
-            Assertions.assertTrue(resultado);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
     public void agregarCupon() {
 
         try {

@@ -30,7 +30,9 @@ public interface ClienteServicio {
 
     Compra registrarCompra(Compra compra) throws Exception;
 
-    boolean cambiarContrasena(String emailCliente) throws Exception;
+    void enviarCorreoCambioContrasena(String emailCliente) throws Exception;
+
+    void cambiarContrasena(String email, String fecha, String nuevaContrasena) throws Exception;
 
     CuponCliente agregarCupon(String nombreCupon, Cliente cliente) throws Exception;
 

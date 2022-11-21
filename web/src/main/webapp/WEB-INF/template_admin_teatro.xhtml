@@ -63,7 +63,7 @@
                             <h:form rendered="#{seguridadBean.autenticado}">
                                 <div class="dropdown text-end mx-3 my-1">
                                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <h:graphicImage library="img" name="person.png" styleClass="rounded-circle" width="32" height="32" />
+                                        <h:graphicImage url="#{seguridadBean.administradorTeatro.foto}" styleClass="rounded-circle" width="32" height="32" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
                                         <li onclick="PF('info_admin').show()">
@@ -111,30 +111,30 @@
     <p:growl for="mensaje_admin_teatro" showDetail="true"/>
 
     <p:dialog id="dialog_info" widgetVar="info_admin" modal="true" header="Informacion del administrador" showEffect="fade">
+        <div class="d-flex align-items-center justify-content-center my-3">
+            <img src="#{adminTeatroBean.administradorTeatro.foto}" class="rounded-circle" width="150px" alt="#{adminTeatroBean.administradorTeatro.nombreCompleto}"/>
+        </div>
+
         <h:form>
             <h:panelGrid columns="3" cellpadding="5">
                 <p:outputLabel for="nombre_admin" value="Nombre:"/>
-                <p:inputText id="nombre_admin" disabled="true" value="#{adminTeatroBean.administradorTeatro.nombreCompleto}" required="true"/>
+                <p:inputText id="nombre_admin" disabled="true" value="#{adminTeatroBean.administradorTeatro.nombreCompleto}"/>
                 <p:message for="nombre_admin"/>
 
                 <p:outputLabel for="cedula_admin" value="Cedula:"/>
-                <p:inputText id="cedula_admin" disabled="true" value="#{adminTeatroBean.administradorTeatro.cedula}" required="true"/>
+                <p:inputText id="cedula_admin" disabled="true" value="#{adminTeatroBean.administradorTeatro.cedula}" />
                 <p:message for="cedula_admin"/>
 
-                <p:outputLabel for="imagen_admin" value="Imagen:"/>
-                <img jsf:id="imagen_admin" src="https://64.media.tumblr.com/2a5114c58aa7322c32e3f0191e159c35/e5dedad596510c33-e0/s540x810/2a9877e69b661053e7baef8aaeca88b3f1e58767.jpg" width="200px" alt="hola"></img>
-                <p:message for="imagen_admin"/>
-
                 <p:outputLabel for="email_admin" value="Email:"/>
-                <p:inputText id="email_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.email}" required="true"/>
+                <p:inputText id="email_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.email}" />
                 <p:message for="email_admin"/>
 
                 <p:outputLabel for="estado_admin" value="Estado:"/>
-                <p:inputText id="estado_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.estado}" required="true"/>
+                <p:inputText id="estado_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.estado}" />
                 <p:message for="estado_admin"/>
 
                 <p:outputLabel for="ciudad_admin" value="Ciudad:"/>
-                <p:inputText id="ciudad_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.ciudad.nombre}" required="true"/>
+                <p:inputText id="ciudad_admin" rows="3" disabled="true" value="#{adminTeatroBean.administradorTeatro.ciudad.nombre}" />
                 <p:message for="ciudad_admin"/>
             </h:panelGrid>
             <p:growl id="mensaje_bean" showDetail="true"/>

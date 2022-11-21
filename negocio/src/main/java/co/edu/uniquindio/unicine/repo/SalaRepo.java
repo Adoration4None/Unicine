@@ -25,4 +25,7 @@ public interface SalaRepo extends JpaRepository<Sala, Integer> {
 
     @Query("select f.pelicula from Sala s, in (s.funciones) f where s.id = :idSala and f.pelicula.estado = :estadoPelicula")
     List<Pelicula> obtenerFuncionesSalaEstado(Integer idSala, EstadoPelicula estadoPelicula);
+
+    @Query("select t.salas from Teatro t where t.ciudad.id = :idCiudad")
+    List<Sala> obtenerSalasCiudad(Integer idCiudad);
 }
