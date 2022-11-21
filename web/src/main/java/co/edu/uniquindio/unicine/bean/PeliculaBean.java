@@ -65,7 +65,7 @@ public class PeliculaBean implements Serializable {
     public void crearPelicula(){
         try {
             if(!editar){
-                pelicula.setImagen("miau");
+//                pelicula.setImagen("miau");
                 Pelicula peli = administradorServicio.crearPelicula(pelicula);
                 peliculas.add(peli);
                 pelicula = new Pelicula();

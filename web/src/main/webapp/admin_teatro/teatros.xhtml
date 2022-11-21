@@ -40,10 +40,6 @@
                     <h:outputText value="#{teatro.nombre}"/>
                 </p:column>
 
-                <p:column headerText="Imagen">
-                    <h:outputText value="#{teatro.imagen}"/>
-                </p:column>
-
                 <p:column headerText="Ciudad">
                     <h:outputText value="#{teatro.ciudad.nombre}"/>
                 </p:column>
@@ -62,10 +58,6 @@
                     <p:outputLabel for="direccion_teatro" value="Direccion:"/>
                     <p:inputText id="direccion_teatro" value="#{teatroBean.teatro.direccion}" required="true"/>
                     <p:message for="direccion_teatro"/>
-
-                    <p:outputLabel for="imagen_teatro" value="Imagen:"/>
-                    <p:fileUpload id="imagen_teatro" value="#{teatroBean.teatro.imagen}" mode="simple" skinSimple="true" required="true"/>
-                    <p:message for="imagen_teatro"/>
 
                     <p:outputLabel for="ciudad_teatro" value="Ciudad: "/>
 
