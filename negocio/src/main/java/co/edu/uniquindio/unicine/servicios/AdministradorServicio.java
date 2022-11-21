@@ -77,4 +77,6 @@ public interface AdministradorServicio {
     Ciudad actualizarCiudad(Ciudad ciudad) throws Exception;
 
     List<Ciudad> listarCiudades();
+
+    Genero obtenerGenero(Integer idGenero) throws Exception;
 }

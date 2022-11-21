@@ -303,4 +303,11 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public List<Ciudad> listarCiudades() {
         return ciudadRepo.findAll();
     }
+
+    @Override
+    public Genero obtenerGenero(Integer idGenero) throws Exception {
+        if(idGenero == null || idGenero.equals(0)) throw new Exception("ID de genero vacio");
+
+        return generoRepo.findById(idGenero).orElse(null);
+    }
 }

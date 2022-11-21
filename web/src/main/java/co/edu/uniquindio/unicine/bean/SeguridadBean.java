@@ -46,6 +46,9 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private Cliente cliente;
 
+    @Getter @Setter
+    private AdministradorTeatro administradorTeatro;
+
     // 0: Admin, 1: AdminTeatro, 2: Cliente
     @Getter @Setter
     private int tipoSesion;
@@ -93,7 +96,8 @@ public class SeguridadBean implements Serializable {
 
                 if(personaIngresada != null) {
                     tipoSesion = 1;
-                    ciudad = administradorServicio.obtenerAdministrador( personaIngresada.getCedula() ).getCiudad();
+                    administradorTeatro = (AdministradorTeatro) personaIngresada;
+                    ciudad = administradorServicio.obtenerAdministrador( administradorTeatro.getCedula() ).getCiudad();
                     autenticado = true;
 
                     return "/admin_teatro/index_admin_teatro?faces-redirect=true";

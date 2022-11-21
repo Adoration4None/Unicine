@@ -253,6 +253,12 @@ body .ui-accordion {
     color: #0A0814 !important;
 }
 
+.ui-scrollpanel.editar-pelicula {
+    height: 400px;
+    background: transparent;
+    border: transparent;
+}
+
 .precio {
     font-family: var(--bs-body-font-family);
     color: #6B8CE1;

@@ -10,55 +10,57 @@
 
 <ui:composition template="../WEB-INF/template_admin.xhtml">
     <ui:define name="content">
-        <h:form id="form_datatable">
-            <p:toolbar>
-                <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{adminTeatroBean.botonAgregarEditar}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{adminTeatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{adminTeatroBean.administradoresSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger me-3" action="#{adminTeatroBean.eliminarAdmins}" update="form_datatable:datatable_crud_admin,@this"/>
-                    <p:commandButton value="Gestionar ciudades" styleClass="ui-button-outlined me-3" action="#{adminTeatroBean.gestionarCiudades}"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+        <div class="mx-4 my-4">
+            <h:form id="form_datatable">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{adminTeatroBean.botonAgregarEditar}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
+                        <p:commandButton id="btn_borrar" value="#{adminTeatroBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{adminTeatroBean.administradoresSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger me-3" action="#{adminTeatroBean.eliminarAdmins}" update="form_datatable:datatable_crud_admin,@this"/>
+                        <p:commandButton value="Gestionar ciudades" styleClass="ui-button-outlined me-3" action="#{adminTeatroBean.gestionarCiudades}"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
 
-            <p:dataTable id="datatable_crud_admin" value="#{adminTeatroBean.administradores}" var="admin" paginator="true" rows="10" rowKey="#{admin.cedula}"
-                         paginatorPosition="bottom" rowSelectMode="add" selection="#{adminTeatroBean.administradoresSeleccionados}">
-                <p:column selectionMode="multiple" exportable="false"/>
+                <p:dataTable id="datatable_crud_admin" value="#{adminTeatroBean.administradores}" var="admin" paginator="true" rows="10" rowKey="#{admin.cedula}"
+                             paginatorPosition="bottom" rowSelectMode="add" selection="#{adminTeatroBean.administradoresSeleccionados}">
+                    <p:column selectionMode="multiple" exportable="false"/>
 
-                <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
-                <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
+                    <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
 
-                <p:column headerText="Cedula">
-                    <h:outputText value="#{admin.cedula}"/>
-                </p:column>
+                    <p:column headerText="Cedula">
+                        <h:outputText value="#{admin.cedula}"/>
+                    </p:column>
 
-                <p:column headerText="Nombre">
-                    <h:outputText value="#{admin.nombreCompleto}"/>
-                </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{admin.nombreCompleto}"/>
+                    </p:column>
 
-                <p:column headerText="Email">
-                    <h:outputText value="#{admin.email}"/>
-                </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{admin.email}"/>
+                    </p:column>
 
-                <p:column headerText="Imagen">
-                    <h:outputText value="#{admin.imagenPerfil}"/>
-                </p:column>
+                    <p:column headerText="Imagen">
+                        <img src="#{admin.foto}" alt="foto admin" width="50px" class="rounded-circle" />
+                    </p:column>
 
-                <p:column headerText="Estado">
-                    <h:outputText value="#{admin.estado}"/>
-                </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{admin.estado}"/>
+                    </p:column>
 
-                <p:column headerText="Ciudad">
-                    <h:outputText value="#{admin.ciudad.nombre}"/>
-                </p:column>
+                    <p:column headerText="Ciudad">
+                        <h:outputText value="#{admin.ciudad.nombre}, #{admin.ciudad.departamento}"/>
+                    </p:column>
 
-                <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{adminTeatroBean.seleccionarAdmin(admin)}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
-                </p:column>
+                    <p:column headerText="">
+                        <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{adminTeatroBean.seleccionarAdmin(admin)}" oncomplete="PF('crear_admin').show()" update="dialog_crear"/>
+                    </p:column>
 
-            </p:dataTable>
-        </h:form>
+                </p:dataTable>
+            </h:form>
+        </div>
 
         <p:dialog id="dialog_crear" widgetVar="crear_admin" modal="true" header="#{adminTeatroBean.mensajeCrear}" showEffect="fade">
             <h:form>
@@ -75,8 +77,9 @@
                     <p:inputText id="contra_admin" type="password" value="#{adminTeatroBean.administrador.contrasena}" required="true"/>
                     <p:message for="contra_admin"/>
 
-                    <p:outputLabel for="imagen_admin" value="Imagen:"/>
-                    <p:fileUpload id="imagen_admin" value="#{adminTeatroBean.administrador.imagenPerfil}" mode="simple" skinSimple="true" required="true"/>
+                    <p:outputLabel for="imagen_admin" value="Imagen de perfil:" />
+                    <p:fileUpload id="imagen_admin" listener="#{adminTeatroBean.subirImagen}" mode="advanced" multiple="false" sizeLimit="10000000"
+                                  fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                     <p:message for="imagen_admin"/>
 
                     <p:outputLabel for="email_admin" value="Email:"/>
@@ -93,7 +96,7 @@
                     <p:outputLabel for="ciudad_admin" value="Ciudad:"/>
                     <p:selectOneMenu id="ciudad_admin" value="#{adminTeatroBean.administrador.ciudad}" converter="#{ciudadConverter}">
                         <f:selectItem itemLabel="Seleccione una ciudad" noSelectionOption="true" itemValue="#{null}"/>
-                        <f:selectItems value="#{adminTeatroBean.ciudades}" var="city" itemLabel="#{city.nombre}" itemValue="#{city}"/>
+                        <f:selectItems value="#{adminTeatroBean.ciudades}" var="city" itemLabel="#{city.nombre}, #{city.departamento}" itemValue="#{city}"/>
                     </p:selectOneMenu>
                     <p:message for="ciudad_admin"/>
 

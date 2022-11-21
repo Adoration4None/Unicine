@@ -218,7 +218,7 @@
                             <div class="pelicula">
 
                                 <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
@@ -239,7 +239,7 @@
                         <p:carousel value="#{principalBean.peliculasPreventaCiudad}" var="pelicula" numVisible="3" numScroll="3" containerStyleClass="peliculas">
                             <div class="pelicula mx-2">
                                 <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagen}" />
+                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
