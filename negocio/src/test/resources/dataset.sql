@@ -1,9 +1,9 @@
 INSERT INTO cliente VALUES
-                        ("1223", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dictum.phasellus@aol.org", "INACTIVO", "ruta foto 1", "Oren Ingram",   null,        "344990", null),
-                        ("1235", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "diam.proin@google.couk",   "ACTIVO",   "https://memeguy.com/photos/images/just-some-random-profile-photo-on-okcupid-136668.png", "Ian Horn",      null,        null,     "7556"),
-                        ("2345", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "nisi@icloud.ca",           "INACTIVO", "https://www.ourteennetwork.com/cacheimagenes/px750-278415131.jpg", "Ivor Randolph", null,        "33322",  "7665"),
-                        ("9876", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dignissim@google.edu",     "INACTIVO", "https://i.pinimg.com/originals/d8/88/f8/d888f8242970ff9ac5ab7e8dcc3ab824.jpg", "Kirsten Reese", "1980-02-28", null,    null),
-                        ("3344", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "curabitur@google.couk",    "ACTIVO",   "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "Reagan Romero", "1991-06-27", null,    null);
+                        ("1223", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dictum.phasellus@aol.org", "INACTIVO", "Oren Ingram",   null,        "344990", null),
+                        ("1235", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "diam.proin@google.couk",   "ACTIVO",   "Ian Horn",      null,        null,     "7556"),
+                        ("2345", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "nisi@icloud.ca",           "INACTIVO", "Ivor Randolph", null,        "33322",  "7665"),
+                        ("9876", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "dignissim@google.edu",     "INACTIVO", "Kirsten Reese", "1980-02-28", null,    null),
+                        ("3344", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "curabitur@google.couk",    "ACTIVO",   "Reagan Romero", "1991-06-27", null,    null);
 
 INSERT INTO ciudad VALUES
                        (1, "Quindio", "Armenia", null),
@@ -15,18 +15,18 @@ INSERT INTO ciudad VALUES
                        (7, "Antioquia", "Armenia", null);
 
 INSERT INTO administrador_teatro VALUES
-                        ("2454", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "virginiaingram@outlook.couk", "ACTIVO",   "ruta foto 1", "Virginia Ingram", 1),
-                        ("3346", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "lewisgood@outlook.ca",        "ACTIVO",   "ruta foto 2", "Lewis Good",      2),
-                        ("9503", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "daceystanley@hotmail.net",    "INACTIVO", "ruta foto 3", "Dacey Stanley",   3),
-                        ("4508", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "samu@edmodo.edu.co",          "ACTIVO",   "ruta foto 4", "Samuel García",   4),
-                        ("7621", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "feli@ensq.edu.co",            "INACTIVO", "ruta foto 5", "Felipe Sanchez",  5);
+                        ("2454", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "virginiaingram@outlook.couk", "ACTIVO",   "Virginia Ingram", 1),
+                        ("3346", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "lewisgood@outlook.ca",        "ACTIVO",   "Lewis Good",      2),
+                        ("9503", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "daceystanley@hotmail.net",    "INACTIVO", "Dacey Stanley",   3),
+                        ("4508", "g+L0X/jC0XzDOli7UAY1oJytbqSzN/TeouaACEbw/5MYfq7Ltx8pBH8nwC/4tz8C", "samu@edmodo.edu.co",          "ACTIVO",   "Samuel García",   4),
+                        ("7621", "Ogj7nzD9LQ7sNN34L2iQGkcmBgmw28G1WKkKVrCi7ZVoNWiCZnwOCTniUEV91s1p", "feli@ensq.edu.co",            "INACTIVO", "Felipe Sanchez",  5);
 
 INSERT INTO teatro VALUES
-                       (1, "Calle 3 #5",                     "https://www.money.com.bo/wp-content/uploads/2020/09/cine.jpg", "Multiplex Unicentro",   "2454", 1),
-                       (2, "Carrera 22 #33-12",              "https://img.ecartelera.com/noticias/42700/42728-m.jpg",        "Cineplaza",             "3346", 2),
-                       (3, "Carrera 23 - 12",                "https://www.oregonlive.com/resizer/HTL5G5X0T978-f6X979beLAazbI=/1280x0/smart/advancelocal-adapter-image-uploads.s3.amazonaws.com/image.oregonlive.com/home/olive-media/width2048/img/ent_impact_tvfilm/photo/cinema-21-marquee-61a584c883868fbd.jpg", "Multicines AstorPlaza", "7621", 3),
-                       (4, "Al lado del Ara de Las Acacias", "https://img.ecartelera.com/noticias/42700/42728-m.jpg",        "Portal del Circaso",    "9503", 5),
-                       (5, "Sidney, Bogotá Cr 15 - 19",      "https://www.money.com.bo/wp-content/uploads/2020/09/cine.jpg", "Arboleda Theaters",     "4508", 4);
+                       (1, "Calle 3 #5",                     "Multiplex Unicentro",   "2454", 1),
+                       (2, "Carrera 22 #33-12",              "Cineplaza",             "3346", 2),
+                       (3, "Carrera 23 - 12",                "Multicines AstorPlaza", "7621", 3),
+                       (4, "Al lado del Ara de Las Acacias", "Portal del Circaso",    "9503", 5),
+                       (5, "Sidney, Bogotá Cr 15 - 19",      "Arboleda Theaters",     "4508", 4);
 
 INSERT INTO sala VALUES
                     -- id, # sillas, columnas, filas, numero,  tipo,   teatro

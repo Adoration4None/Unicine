@@ -51,7 +51,7 @@ public class AdminTeatroBean implements Serializable {
     public void crearAdmin() {
         try {
             if (!editar) {
-                administrador.setImagenPerfil("miau");
+//                administrador.setImagenPerfil("miau");
                 AdministradorTeatro admin = administradorServicio.crearAdministrador(administrador);
                 administradores.add(admin);
                 administrador = new AdministradorTeatro();

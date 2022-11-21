@@ -35,17 +35,13 @@ public class Persona implements Serializable {
     @Column(length = 50, nullable = false, unique = true)
     private String email;
 
-    @Lob
     @ToString.Exclude
     @Column(nullable = false)
     private String contrasena;
 
-    @Lob
-    private String imagenPerfil;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private EstadoPersona estado = EstadoPersona.INACTIVO;
+    private EstadoPersona estado;
 
     // Constructor ------------------------------------------------------------------------------------
     public Persona(String cedula, String nombreCompleto, String email, String contrasena) {

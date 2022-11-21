@@ -41,7 +41,6 @@
 
                             <h:form styleClass="w-50 ms-auto me-0">
                                 <div role="search">
-                                    <!--  aqui no me funciono ponerle el tamaño usando la clase -->
                                     <p:inputText styleClass="mx-2 busqueda"
                                                  placeholder="¿Que pelicula estas buscando?" required="true" value="#{buscarPeliculaBean.busqueda}"/>
 
@@ -59,7 +58,7 @@
                             <h:form rendered="#{seguridadBean.autenticado}">
                                 <div class="dropdown text-end mx-3 my-1">
                                     <a class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="#{seguridadBean.cliente.imagenPerfil == null ? '/resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                        <img src="#{seguridadBean.cliente.foto}"
                                              alt="mdo" width="32" height="32" class="rounded-circle" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
@@ -111,7 +110,7 @@
 
     <p:dialog widgetVar="registro" header="Registrarse" modal="true" showEffect="fade" resizable="false" rendered="#{!seguridadBean.autenticado}">
         <h:form>
-            <h:panelGrid columns="3" cellpadding="5">
+            <h:panelGrid columns="3" cellpadding="3">
                 <p:outputLabel for="nombre_cliente" value="Nombres:" />
                 <p:inputText id="nombre_cliente" styleClass="input" value="#{registroClienteBean.nombresCliente}" required="true" />
                 <p:message for="nombre_cliente" />
@@ -146,6 +145,11 @@
 
                 <p:outputLabel for="fecha_nacimiento_cliente" value="Fecha de nacimiento:" />
                 <p:datePicker id="fecha_nacimiento_cliente" yearNavigator="true" monthNavigator="true" styleClass="input" value="#{registroClienteBean.cliente.fechaNacimiento}" />
+
+                <br/>
+                <p:outputLabel for="imagen_perfil_cliente" value="Foto de perfil:" />
+                <p:fileUpload id="imagen_perfil_cliente" listener="#{registroClienteBean.subirImagen}" mode="advanced" multiple="false" sizeLimit="10000000"
+                              validateContentType="true" accept=".gif,.jpg,.jpeg,.png" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
             </h:panelGrid>
 
             <p:commandButton value="Registrar" styleClass="boton my-3" action="#{registroClienteBean.registrarCliente}" oncomplete="PF('registro').hide()" update="@form" />

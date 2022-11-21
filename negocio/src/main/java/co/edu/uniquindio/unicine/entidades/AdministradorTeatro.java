@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -13,6 +14,12 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public class AdministradorTeatro extends Persona implements Serializable {
+    // Atributo extra
+    @ElementCollection
+    @MapKeyColumn(name = "publicIdImagen")
+    @Column(name = "urlImagen")
+    @CollectionTable(name = "administrador_imagen")
+    private Map<String, String> imagenPerfil;
 
     // Relaciones -----------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "administrador")

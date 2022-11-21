@@ -42,8 +42,7 @@
                             <h:form rendered="#{seguridadBean.autenticado}">
                                 <div class="dropdown text-end mx-3 my-1">
                                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
-                                             alt="mdo" width="32" height="32" class="rounded-circle" />
+                                        <img src="#{seguridadBean.cliente.foto}" alt="mdo" width="32" height="32" class="rounded-circle" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
                                         <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
@@ -100,8 +99,7 @@
                             <h:form rendered="#{seguridadBean.autenticado}">
                                 <div class="dropdown text-end mx-3 my-1">
                                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
-                                             alt="mdo" width="32" height="32" class="rounded-circle" />
+                                        <img src="#{seguridadBean.cliente.foto}" alt="mdo" width="32" height="32" class="rounded-circle"/>
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
                                         <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
