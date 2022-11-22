@@ -90,6 +90,10 @@ public class PrincipalBean implements Serializable {
         }
     }
 
+    public void redirigir() {
+
+    }
+
     private void mostrarError(Exception e) {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
         FacesContext.getCurrentInstance().addMessage("mensaje_bean", fm);

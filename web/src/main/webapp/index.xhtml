@@ -212,8 +212,7 @@
 
                 <div class="ms-auto me-0 w-50 my-2 mt-3">
                     <p:outputLabel styleClass="texto-resaltado" for="seleccion_teatro" value="Filtrar por teatro: " />
-                    <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3 selector select-teatro"
-                                     value="#{principalBean.teatro}" converter="#{teatroConverter}">
+                    <p:selectOneMenu id="seleccion_teatro" styleClass="mx-3 selector select-teatro" value="#{principalBean.teatro}" converter="#{teatroConverter}">
                         <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
                         <f:selectItems value="#{principalBean.teatrosCiudad}" var="teatro" itemLabel="#{teatro.nombre}" itemValue="#{teatro}"/>
                         <p:ajax event="change" listener="#{principalBean.seleccionarTeatro}" update="seccion-peliculas" />
