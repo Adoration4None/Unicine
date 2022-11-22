@@ -49,6 +49,8 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private AdministradorTeatro administradorTeatro;
 
+    private Cliente cliente2;
+
     // 0: Admin, 1: AdminTeatro, 2: Cliente
     @Getter @Setter
     private int tipoSesion;
@@ -57,6 +59,17 @@ public class SeguridadBean implements Serializable {
     public void init() {
         autenticado = false;
         tipoSesion = -1;
+    }
+
+    public void actualizarCliente() {
+        try {
+            cliente = clienteServicio.actualizar(cliente);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Cliente actualizado");
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", e.getMessage());
+            PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+        }
     }
 
     public String iniciarSesionCliente() {
