@@ -258,7 +258,7 @@ public class CompraBean implements Serializable {
         try {
             compra = clienteServicio.registrarCompra(compra);
             if(cupon != null) clienteServicio.redimirCupon(cupon.getId(), compra);
-            return "/cliente/detalle-compra?faces-redirect=true&amp;b=" + compra.getId();
+            return "/cliente/detalle_compra?faces-redirect=true&amp;b=" + compra.getId();
         } catch (Exception e) {
             mostrarError(e);
         }

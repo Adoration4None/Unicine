@@ -260,6 +260,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         // Agregar el cupon a la compra
         compra.setCuponCliente(cuponRedimido);
+        compraRepo.save(compra);
 
         return compra;
     }
