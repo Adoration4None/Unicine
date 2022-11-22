@@ -7,9 +7,12 @@ import co.edu.uniquindio.unicine.entidades.Persona;
 import co.edu.uniquindio.unicine.servicios.AdminTeatroServicio;
 import co.edu.uniquindio.unicine.servicios.AdministradorServicio;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
+import co.edu.uniquindio.unicine.servicios.CloudinaryServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +20,12 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Scope("session")
@@ -30,6 +38,9 @@ public class SeguridadBean implements Serializable {
 
     @Autowired
     private AdminTeatroServicio adminTeatroServicio;
+
+    @Autowired
+    private CloudinaryServicio cloudinaryServicio;
 
     @Getter @Setter
     private boolean autenticado;
@@ -49,7 +60,7 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private AdministradorTeatro administradorTeatro;
 
-    private Cliente cliente2;
+    private Map<String, String> imagenPerfil;
 
     // 0: Admin, 1: AdminTeatro, 2: Cliente
     @Getter @Setter
@@ -59,10 +70,14 @@ public class SeguridadBean implements Serializable {
     public void init() {
         autenticado = false;
         tipoSesion = -1;
+        imagenPerfil = new HashMap<>();
     }
 
     public void actualizarCliente() {
         try {
+            if(imagenPerfil != null || !imagenPerfil.isEmpty()) {
+                cliente.setImagenPerfil(imagenPerfil);
+            }
             cliente = clienteServicio.actualizar(cliente);
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Cliente actualizado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
@@ -124,10 +139,6 @@ public class SeguridadBean implements Serializable {
         return "";
     }
 
-    public void iniciarSesionGoogle() {
-
-    }
-
     public String cerrarSesion() {
         int tipoSesion = getTipoSesion();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -165,6 +176,27 @@ public class SeguridadBean implements Serializable {
         } catch (Exception e) {
             mostrarError(e);
         }
+    }
+
+    public void actualizarImagenPerfil(FileUploadEvent event) {
+        try {
+            UploadedFile imagen = event.getFile();
+            File imagenFile = convertirUploadedFile(imagen);
+            Map resultado = cloudinaryServicio.subirImagen(imagenFile, "usuarios");
+            imagenPerfil.clear();
+            imagenPerfil.put( resultado.get("public_id").toString(), resultado.get("url").toString() );
+        } catch(Exception e) {
+            mostrarError(e);
+        }
+    }
+
+    private File convertirUploadedFile(UploadedFile imagen) throws IOException {
+        File file = new File(imagen.getFileName());
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(imagen.getContent());
+        fos.close();
+
+        return file;
     }
 
     private void mostrarError(Exception e) {

@@ -58,9 +58,11 @@ public class Pelicula implements Serializable {
 
     // Relaciones -------------------------------------------------------
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Genero> generos = new ArrayList<>();
 
     @OneToMany(mappedBy = "pelicula")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
     private List<Funcion> funciones = new ArrayList<>();
 

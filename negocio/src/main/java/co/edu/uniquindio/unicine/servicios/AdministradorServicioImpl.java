@@ -19,7 +19,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     private final CiudadRepo ciudadRepo;
 
     String EMAIL_ADMINISTRADOR = "administradorunicine@gmail.com";
-    String CONTRASENA_ADMINISTRADOR = "samuelyfelipe";
+    String CONTRASENA_ADMINISTRADOR = "8p5VH9cjZX0OMDFkpXk8PdVEzweXxmExdM4GQnd2yv8ATaRKSYsQCe0RGIdcVIJ7";
 
     public AdministradorServicioImpl(AdministradorTeatroRepo administradorTeatroRepo, PeliculaRepo peliculaRepo,
                                      ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo, GeneroRepo generoRepo, CiudadRepo ciudadRepo) {
@@ -36,8 +36,13 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if( (email == null || email.equals("")) || (contrasena == null || contrasena.equals("")) )
             throw new Exception("Datos incompletos");
 
-        if( !email.equals(EMAIL_ADMINISTRADOR) && !contrasena.equals(CONTRASENA_ADMINISTRADOR) )
-            return null;
+        if( !email.equals(EMAIL_ADMINISTRADOR) ) throw new Exception("E-mail incorrecto");
+
+        // Comprobar contraseña encriptada
+        StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
+
+        if( !spe.checkPassword(contrasena, CONTRASENA_ADMINISTRADOR ) )
+            throw new Exception("La contraseña es incorrecta");
 
         return new Persona( "1111", "Ricardo Salinas", EMAIL_ADMINISTRADOR, CONTRASENA_ADMINISTRADOR);
     }
@@ -50,14 +55,18 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if(administradorTeatroRepo.findById(administradorTeatroId).isPresent())
             throw new Exception("El administrador de teatro con cedula " + administradorTeatroId + " ya existe");
 
+        if ( emailExiste(administradorTeatro.getEmail()) )
+            throw new Exception("Ya hay un administrador con el mismo email");
+
         // Encriptacion de contraseña
         StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
         administradorTeatro.setContrasena( spe.encryptPassword( administradorTeatro.getContrasena() ) );
 
-        // Setteo del estado inactivo para mayor seguridad
-        administradorTeatro.setEstado(EstadoPersona.INACTIVO);
-
         return administradorTeatroRepo.save(administradorTeatro);
+    }
+
+    private boolean emailExiste(String email) {
+        return administradorTeatroRepo.findByEmail(email) != null;
     }
 
     @Override

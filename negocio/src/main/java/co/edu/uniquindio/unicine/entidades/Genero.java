@@ -1,6 +1,8 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Normalized;
 
 import javax.persistence.*;
@@ -27,6 +29,7 @@ public class Genero {
 
     // Relacion ----------------------------------------------------------
     @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(mappedBy = "generos")
     private List<Pelicula> peliculas = new ArrayList<>();
 }

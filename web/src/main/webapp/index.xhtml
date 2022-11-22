@@ -45,13 +45,13 @@
                                         <img src="#{seguridadBean.cliente.foto}" alt="mdo" width="32" height="32" class="rounded-circle" />
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
-                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
-<<<<<<< HEAD
+                                        <li onclick="PF('info_cliente').show()">
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion de la cuenta</a>
+                                        </li>
+                                        <li onclick="PF('editar_info_cliente').show()">
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Actualizar informacion</a>
+                                        </li>
                                         <li><a class="dropdown-item" href="/cliente/historial_compras.xhtml">Historial de compras</a></li>
-=======
-                                        <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Actualizar usuario</a></li>
-                                        <li><a class="dropdown-item" href="#">Historial de compras</a></li>
->>>>>>> 8cca5f4bea2742d2d9920c7db6a44da82bd1e1bf
                                         <li><a class="dropdown-item" href="/cliente/cupones_cliente.xhtml">Ver y agregar cupones</a></li>
                                         <li><hr /></li>
                                         <li class="dropdown-item">
@@ -108,10 +108,10 @@
                                     </a>
                                     <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
                                         <li onclick="PF('info_cliente').show()">
-                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a>
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion de la cuenta</a>
                                         </li>
                                         <li onclick="PF('editar_info_cliente').show()">
-                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Actualizar usuario</a>
+                                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">Actualizar informacion</a>
                                         </li>
                                         <li><a class="dropdown-item" href="/cliente/historial_compras.xhtml">Historial de compras</a></li>
                                         <li><a class="dropdown-item" href="/cliente/cupones_cliente.xhtml">Ver y agregar cupones</a></li>
