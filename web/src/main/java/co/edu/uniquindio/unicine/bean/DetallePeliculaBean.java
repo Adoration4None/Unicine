@@ -54,7 +54,7 @@ public class DetallePeliculaBean implements Serializable {
         if(idPelicula != null) {
             try {
                 pelicula = administradorServicio.obtenerPelicula( Integer.valueOf(idPelicula) );
-                funcionesPelicula = clienteServicio.obtenerFuncionesPelicula( Integer.valueOf(idPelicula) );
+                funcionesPelicula = clienteServicio.obtenerFuncionesPeliculaCiudad( Integer.valueOf(idPelicula), idCiudad );
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

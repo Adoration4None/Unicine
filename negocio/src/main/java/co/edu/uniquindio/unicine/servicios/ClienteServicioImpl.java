@@ -482,10 +482,11 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
-    public List<Funcion> obtenerFuncionesPelicula(Integer idPelicula) throws Exception {
+    public List<Funcion> obtenerFuncionesPeliculaCiudad(Integer idPelicula, Integer idCiudad) throws Exception {
         if(idPelicula == null || idPelicula.equals(0)) throw new Exception("ID de pelicula vacio");
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de ciudad vacio");
 
-        return funcionRepo.obtenerFuncionesPelicula(idPelicula);
+        return funcionRepo.obtenerFuncionesPeliculaCiudad(idPelicula, idCiudad);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.bean;
 
+import co.edu.uniquindio.unicine.entidades.Funcion;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.servicios.ClienteServicio;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,13 +24,13 @@ public class BuscarPeliculaBean implements Serializable {
     @Autowired
     private ClienteServicio clienteServicio;
 
-    @Value("#{param['city']}")
+    @Value(value = "#{seguridadBean.ciudad.id}")
     private String idCiudad;
 
     @Getter @Setter
     private String busqueda;
 
-    @Value("#{param['q']}") //importarlo desde el factory
+    @Value("#{param['q']}")
     @Getter @Setter
     private String busquedaParam;
 
@@ -38,19 +40,17 @@ public class BuscarPeliculaBean implements Serializable {
     @Getter @Setter
     private List<Pelicula> peliculasBusqueda;
 
-    @PostConstruct //AL INSTANCIAR EL OBJETO TAMBIEN INSTANCIA LA PELICULA
+    private List<Funcion> funcionesPelicula;
+
+    @PostConstruct
     public void init() {
-
-        if(idCiudad != null && !idCiudad.isEmpty()) {
-            try {
-                nombreCiudad = clienteServicio.obtenerCiudad( Integer.valueOf(idCiudad) ).getNombre();
-
-                if(busquedaParam != null && !busquedaParam.isEmpty()) {
-                    peliculasBusqueda = clienteServicio.buscarPeliculas(busquedaParam, Integer.valueOf(idCiudad));
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        try {
+            if(busquedaParam != null && !busquedaParam.isEmpty()) {
+                busqueda = busquedaParam;
+                peliculasBusqueda = clienteServicio.buscarPeliculas(busquedaParam, Integer.valueOf(idCiudad));
             }
+        } catch (Exception e) {
+            mostrarError(e);
         }
 
     }
@@ -63,6 +63,16 @@ public class BuscarPeliculaBean implements Serializable {
             mostrarError( new Exception("Busqueda vacia. Por favor ingrese una busqueda valida") );
 
         return "";
+    }
+
+    public List<Funcion> getFuncionesPelicula(Integer idPelicula) {
+        try {
+            return clienteServicio.obtenerFuncionesPeliculaCiudad(idPelicula, Integer.valueOf(idCiudad) );
+        } catch (Exception e) {
+            mostrarError(e);
+        }
+
+        return null;
     }
 
     private void mostrarError(Exception e) {

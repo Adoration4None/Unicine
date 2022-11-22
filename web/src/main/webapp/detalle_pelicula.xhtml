@@ -54,7 +54,7 @@
                     <div jsf:id="detalle-funciones">
 
                         <p:accordionPanel value="#{detallePeliculaBean.funcionesPelicula}" var="funcion" styleClass="w-50">
-                            <p:tab title="#{funcion.horario.fecha} | #{funcion.horario.hora}">
+                            <p:tab title="#{funcion.horario.fecha.dayOfWeek.name()}, #{funcion.horario.fecha.month.name()} #{funcion.horario.fecha.dayOfMonth}, #{funcion.horario.fecha.year}  |  #{funcion.horario.hora}">
                                 <div>
                                     <div class="mb-2">
                                         <div> <b>Teatro:</b> #{funcion.sala.teatro.nombre}</div>

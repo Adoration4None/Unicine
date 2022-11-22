@@ -20,7 +20,48 @@
     <ui:define name="content">
 
         <div class="container mt-4">
-            <p>#{buscarPeliculaBean.peliculasBusqueda}</p>
+            <h1 class="titulo my-4">Resultados encontrados para "#{buscarPeliculaBean.busqueda}"</h1>
+            <p:repeat value="#{buscarPeliculaBean.peliculasBusqueda}" var="pelicula">
+                <div class="container d-inline-flex">
+                    <div class="pelicula me-5">
+                        <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
+                            <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
+                            <h4 class="mb-1">#{pelicula.nombre}</h4>
+                            <h6 class="mt-0 mb-3">
+                                <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
+                                    <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
+                                </p:repeat>
+                            </h6>
+                        </a>
+                    </div>
+
+                    <div class="d-inline-flex">
+                        <div class="flex-column">
+                            <h2 class="texto-resaltado">Disponible en:</h2>
+
+                            <p:accordionPanel value="#{buscarPeliculaBean.getFuncionesPelicula(pelicula.id)}" var="funcion">
+                                <p:tab title="#{funcion.horario.fecha.dayOfWeek.name()}, #{funcion.horario.fecha.month.name()} #{funcion.horario.fecha.dayOfMonth}, #{funcion.horario.fecha.year}  |  #{funcion.horario.hora}">
+                                    <div>
+                                        <div class="mb-2">
+                                            <div> <b>Teatro:</b> #{funcion.sala.teatro.nombre}</div>
+                                            <div>#{funcion.sala.teatro.direccion}</div>
+                                            <div class="my-2"><b>Sala:</b> #{funcion.sala.numero}</div>
+                                            <p:chip label="#{funcion.tipo}" styleClass="text-bg-dark"/>
+                                        </div>
+                                        <div class="flex-column precio">
+                                            <h:form>
+                                                <div>
+                                                    <p:commandButton styleClass="boton my-2" value="Comprar" action="#{detallePeliculaBean.comprar(funcion)}" />
+                                                </div>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </div>
+                    </div>
+                </div>
+            </p:repeat>
         </div>
 
     </ui:define>
