@@ -113,9 +113,6 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
         if( cantidadSillasInvalida(sala) )
             throw new Exception("Las filas y las columnas de la sala no coinciden con su cantidad de sillas");
 
-        sala.getTeatro().agregarSala(sala);
-        teatroRepo.save( sala.getTeatro() );
-
         return salaRepo.save(sala);
     }
 

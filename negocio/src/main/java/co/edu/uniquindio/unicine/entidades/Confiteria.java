@@ -1,12 +1,16 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -24,13 +28,12 @@ public class Confiteria implements Serializable {
     @Column(length = 50, nullable = false, unique = true)
     private String nombre;
 
-    @Lob
-    @Column(nullable = false)
-    private String imagen;
-
-    @Column(nullable = false)
-    @PositiveOrZero
-    private Integer unidades;
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @MapKeyColumn(name = "publicIdImagen")
+    @Column(name = "urlImagen")
+    @CollectionTable(name = "comestible_imagen")
+    private Map<String, String> imagen = new HashMap<>();
 
     @Column(nullable = false)
     private Float precio;
@@ -47,13 +50,18 @@ public class Confiteria implements Serializable {
     private List<CompraConfiteria> comprasConfiteria = new ArrayList<>();
 
     // Constructor ----------------------------------------------------------
-    public Confiteria(String nombre, String imagen, Integer unidades, Float precio, String descripcion) {
+    public Confiteria(String nombre, Float precio, String descripcion) {
         this.nombre = nombre;
-        this.imagen = imagen;
-        this.unidades = unidades;
         this.precio = precio;
         this.descripcion = descripcion;
+    }
 
-        this.estado = EstadoConfiteria.DISPONIBLE;
+    public String getImagenPrincipal() {
+        if(imagen == null || imagen.isEmpty()) {
+            return "https://res.cloudinary.com/dheuspgiq/image/upload/v1669090670/unicine/fast-food_zfiwn7.png";
+        }
+
+        String primera = imagen.keySet().toArray()[0].toString();
+        return imagen.get(primera);
     }
 }

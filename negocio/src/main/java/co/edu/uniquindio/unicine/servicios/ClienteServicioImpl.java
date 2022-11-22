@@ -401,11 +401,15 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         if( cupon != null && !cuponVencido(cupon) ) {
             cuponCliente = new CuponCliente(cliente, cupon);
+
+            if(cuponClienteRepo.findByClienteAndCupon(cliente, cupon) != null) throw new Exception("Ya tienes este cupon");
             cuponClienteRepo.save(cuponCliente);
         }
         else {
             throw new Exception("El cupon no esta disponible o esta vencido");
         }
+
+
 
         return cuponCliente;
     }

@@ -95,7 +95,7 @@ public class TeatroBean implements Serializable {
                 teatros.remove(teatro);
             }
             teatrosSeleccionados.clear();
-            teatros = administradorTeatroServicio.listarTeatros();
+            teatros = administradorTeatroServicio.obtenerTeatrosCiudadAdmin(ciudad_teatro.getId());
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Teatro eliminado");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

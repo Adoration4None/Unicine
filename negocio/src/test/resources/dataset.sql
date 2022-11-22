@@ -117,11 +117,12 @@ INSERT INTO entrada VALUES
                         (7,    4,     9,     0,       8000,        null,   4);
 
 INSERT INTO confiteria VALUES
-                           (1, "Cafe helado",                                                "AGOTADO",    "https://okdiario.com/img/recetas/2016/10/25/cafe-helado-vietnamita.jpg", "Granizado de cafe",   50000, 3),
-                           (2, "Gaseosa Postobon de tamarindo con sal y limon",              "DISPONIBLE", "https://www.quericony.com/wp-content/uploads/2022/04/DSC00102-scaled.jpg", "Tamarindo michelado",  6000, 6),
-                           (3, "Brownie con azucar glass y fresas",                          "AGOTADO",    "https://iambaker.net/wp-content/uploads/2017/02/brownie-valentine-day.jpg", "Brownie especial",     5000, 47),
-                           (4, "Perro caliente con aji, papas, salsas y salchicha Ranchera", "DISPONIBLE", "https://fastlife.fastshop.com.br/wp-content/uploads/2018/07/shutterstock_306116708.jpg", "HotDog de la night",  30000, 12),
-                           (5, "Hamburguesa con papas",                                      "DISPONIBLE", "https://s-i.huffpost.com/gen/1130209/images/o-BURGERS-facebook.jpg", "Hamburguesa",         10000, 15);
+                           (1, "Cafe helado",                                                "AGOTADO",    "Granizado de cafe",    5000),
+                           (2, "Gaseosa Postobon de tamarindo con sal y limon",              "DISPONIBLE", "Tamarindo michelado",  3500),
+                           (3, "Brownie con azucar glass y fresas",                          "AGOTADO",    "Brownie especial",     5000),
+                           (4, "Perro caliente con aji, papas, salsas y salchicha Ranchera", "DISPONIBLE", "HotDog de la night",   8000),
+                           (5, "Hamburguesa con papas",                                      "DISPONIBLE", "Hamburguesa",         10000),
+                           (6, "Cubeta grande de crispetas",                                 "DISPONIBLE", "Crispetas grandes",   10000);
 
 INSERT INTO compra_confiteria VALUES
                                -- id, precio, unidades compradas, comestible, compra

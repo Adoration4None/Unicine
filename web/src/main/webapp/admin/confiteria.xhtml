@@ -10,58 +10,56 @@
 
 <ui:composition template="../WEB-INF/template_admin.xhtml">
     <ui:define name="content">
-        <h:form id="form_datatable">
-            <p:toolbar>
-                <p:toolbarGroup>
-                    <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{comestibleBean.botonAgregarEditar}" oncomplete="PF('crear_comestible').show()" update="dialog_crear"/>
-                    <p:commandButton id="btn_borrar" value="#{comestibleBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{comestibleBean.comestiblesSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger" action="#{comestibleBean.eliminarComestibles}" update="form_datatable:datatable_crud_comestible,@this"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+        <div class="container my-4">
+            <h:form id="form_datatable">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Agregar" icon="pi pi-plus" styleClass="ui-button-outlined ui-button-success me-3" action="#{comestibleBean.botonAgregarEditar}" oncomplete="PF('crear_comestible').show()" update="dialog_crear"/>
+                        <p:commandButton id="btn_borrar" value="#{comestibleBean.textoBtnBorrar}" icon="pi pi-trash" disabled="#{comestibleBean.comestiblesSeleccionados.size()==0}" styleClass="ui-button-outlined ui-button-danger" action="#{comestibleBean.eliminarComestibles}" update="form_datatable:datatable_crud_comestible,@this"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
 
-            <p:dataTable id="datatable_crud_comestible" value="#{comestibleBean.comestibles}" var="comida" paginator="true" rows="10" rowKey="#{comida.id}"
-                         paginatorPosition="bottom" rowSelectMode="add" selection="#{comestibleBean.comestiblesSeleccionados}">
-                <p:column selectionMode="multiple" exportable="false"/>
+                <p:dataTable id="datatable_crud_comestible" value="#{comestibleBean.comestibles}" var="comida" paginator="true" rows="10" rowKey="#{comida.id}"
+                             paginatorPosition="bottom" rowSelectMode="add" selection="#{comestibleBean.comestiblesSeleccionados}">
+                    <p:column selectionMode="multiple" exportable="false"/>
 
-                <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
-                <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
-                <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowSelect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowUnselect" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowSelectCheckbox" update="form_datatable:btn_borrar" />
+                    <p:ajax event="rowUnselectCheckbox" update="form_datatable:btn_borrar" />
+                    <p:ajax event="toggleSelect" update="form_datatable:btn_borrar" />
 
-                <p:column headerText="ID">
-                    <h:outputText value="#{comida.id}"/>
-                </p:column>
+                    <p:column headerText="ID">
+                        <h:outputText value="#{comida.id}"/>
+                    </p:column>
 
-                <p:column headerText="Nombre">
-                    <h:outputText value="#{comida.nombre}"/>
-                </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{comida.nombre}"/>
+                    </p:column>
 
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{comida.descripcion}"/>
-                </p:column>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{comida.descripcion}"/>
+                    </p:column>
 
-                <p:column headerText="Imagen">
-                    <h:outputText value="#{comida.imagen}"/>
-                </p:column>
+                    <p:column headerText="Imagen">
+                        <img src="#{comida.imagenPrincipal}" alt="#{comida.nombre}" width="100px" height="auto"/>
+                    </p:column>
 
-                <p:column headerText="Estado">
-                    <h:outputText value="#{comida.estado}"/>
-                </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{comida.estado}"/>
+                    </p:column>
 
-                <p:column headerText="Precio">
-                    <h:outputText value="#{comida.precio}"/>
-                </p:column>
+                    <p:column headerText="Precio">
+                        <h:outputText value="$#{comida.precio}"/>
+                    </p:column>
 
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{comida.unidades}"/>
-                </p:column>
+                    <p:column headerText="">
+                        <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{comestibleBean.seleccionarComestible(comida)}" oncomplete="PF('crear_comestible').show()" update="dialog_crear"/>
+                    </p:column>
 
-                <p:column headerText="">
-                    <p:commandButton value="Editar" styleClass="rounded-button ui-button-outlined" icon="pi pi-pencil" action="#{comestibleBean.seleccionarComestible(comida)}" oncomplete="PF('crear_comestible').show()" update="dialog_crear"/>
-                </p:column>
-
-            </p:dataTable>
-        </h:form>
+                </p:dataTable>
+            </h:form>
+        </div>
 
         <p:dialog id="dialog_crear" widgetVar="crear_comestible" modal="true" header="#{comestibleBean.mensajeCrear}" showEffect="fade">
             <h:form>
@@ -76,16 +74,13 @@
                     <p:message for="descripcion_comestible"/>
 
                     <p:outputLabel for="imagen_comestible" value="Imagen:"/>
-                    <p:fileUpload id="imagen_comestible" value="#{comestibleBean.comestible.imagen}" mode="simple" skinSimple="true" required="true"/>
+                    <p:fileUpload id="imagen_comestible" listener="#{comestibleBean.subirImagen}" mode="advanced" multiple="false" sizeLimit="10000000"
+                                  fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" required="true" />
                     <p:message for="imagen_comestible"/>
 
                     <p:outputLabel for="precio_comestible" value="Precio:"/>
                     <p:inputText id="precio_comestible" value="#{comestibleBean.comestible.precio}" required="true"/>
                     <p:message for="precio_comestible"/>
-
-                    <p:outputLabel for="unidades_comestible" value="Unidades:"/>
-                    <p:inputText id="unidades_comestible" value="#{comestibleBean.comestible.unidades}" required="true"/>
-                    <p:message for="unidades_comestible"/>
 
                     <p:outputLabel for="estado_comestible" value="Estado:"/>
                     <p:selectOneMenu id="estado_comestible" value="#{comestibleBean.comestible.estado}">

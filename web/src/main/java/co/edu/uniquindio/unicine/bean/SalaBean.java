@@ -94,7 +94,7 @@ public class SalaBean implements Serializable {
                 salas.remove(sal);
             }
             salasSeleccionadas.clear();
-            salas = administradorTeatroServicio.listarSalas();
+            salas = administradorTeatroServicio.obtenerSalasCiudad(idCiudad);
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Sala eliminada");
             PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
         } catch (Exception e) {

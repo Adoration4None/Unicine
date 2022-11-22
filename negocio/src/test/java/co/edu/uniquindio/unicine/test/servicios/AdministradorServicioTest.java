@@ -154,7 +154,7 @@ public class AdministradorServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearComestible()  {
-        Confiteria comestibleCrear = new Confiteria("Bianchi barra", "Ruta imagen 34234", 4, 0f, "");
+        Confiteria comestibleCrear = new Confiteria("Bianchi barra", 0f, "");
 
         try{
             Confiteria nueva = administradorServicio.crearComestible(comestibleCrear);
