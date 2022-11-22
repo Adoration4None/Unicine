@@ -43,7 +43,7 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
 
         AdministradorTeatro administradorTeatroEncontrado = adminTeatroRepo.findByEmail(email);
 
-        if(administradorTeatroEncontrado == null) throw new Exception("El correo ingresado no existe");
+        if(administradorTeatroEncontrado == null) return null;
 
         if( administradorTeatroEncontrado.getEstado() == EstadoPersona.INACTIVO )
             throw new Exception("Administrador inactivo");

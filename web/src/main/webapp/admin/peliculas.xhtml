@@ -108,7 +108,7 @@
                         <p:message for="estado_movie"/>
 
                         <p:outputLabel for="generos_movie" value="Generos:"/>
-                        <p:selectManyCheckbox id="generos_movie" value="#{peliculaBean.pelicula.generos}" converter="#{generoConverter}">
+                        <p:selectManyCheckbox id="generos_movie" value="#{peliculaBean.generosSeleccionados}" converter="#{generoConverter}">
                             <f:selectItems value="#{peliculaBean.generos}" var="genero" itemLabel="#{genero.nombre}" itemValue="#{genero}"/>
                         </p:selectManyCheckbox>
                         <p:message for="generos_movie"/>

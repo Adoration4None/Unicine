@@ -111,24 +111,24 @@ public class SeguridadBean implements Serializable {
 
     public String iniciarSesionAdmins() {
         try {
-            personaIngresada = administradorServicio.iniciarSesion(email, contrasena);
+            personaIngresada = adminTeatroServicio.iniciarSesion(email, contrasena);
 
             if(personaIngresada != null) {
-                tipoSesion = 0;
+                tipoSesion = 1;
+                administradorTeatro = (AdministradorTeatro) personaIngresada;
+                ciudad = administradorServicio.obtenerAdministrador( administradorTeatro.getCedula() ).getCiudad();
                 autenticado = true;
 
-                return "/admin/index_admin?faces-redirect=true";
+                return "/admin_teatro/index_admin_teatro?faces-redirect=true";
             }
             else {
-                personaIngresada = adminTeatroServicio.iniciarSesion(email, contrasena);
+                personaIngresada = administradorServicio.iniciarSesion(email, contrasena);
 
                 if(personaIngresada != null) {
-                    tipoSesion = 1;
-                    administradorTeatro = (AdministradorTeatro) personaIngresada;
-                    ciudad = administradorServicio.obtenerAdministrador( administradorTeatro.getCedula() ).getCiudad();
+                    tipoSesion = 0;
                     autenticado = true;
 
-                    return "/admin_teatro/index_admin_teatro?faces-redirect=true";
+                    return "/admin/index_admin?faces-redirect=true";
                 }
             }
 

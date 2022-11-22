@@ -31,7 +31,7 @@ public class PeliculasTeatroBean implements Serializable {
     @Value("#{param['th']}")
     private String idTeatro;
 
-    @Value("#{param['city']}")
+    @Value(value = "#{seguridadBean.ciudad.id}")
     private String idCiudad;
 
     @Getter @Setter

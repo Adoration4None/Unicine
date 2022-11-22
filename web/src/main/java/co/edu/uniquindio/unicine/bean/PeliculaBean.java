@@ -55,6 +55,9 @@ public class PeliculaBean implements Serializable {
     private List<Genero> generos;
 
     @Getter @Setter
+    private List<Genero> generosSeleccionados;
+
+    @Getter @Setter
     private List<Pelicula> peliculas;
 
     private Map<String, String> imagenPelicula;
@@ -75,10 +78,15 @@ public class PeliculaBean implements Serializable {
     public void crearPelicula(){
         try {
             if(!editar){
-                if(imagenPelicula == null) {
-                    FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Debe asignar una imagen");
+                if(imagenPelicula == null || imagenPelicula.isEmpty()) {
+                    FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar una imagen");
                     PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
                 }
+                if(generosSeleccionados == null || generosSeleccionados.isEmpty()) {
+                    FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe asignar al menos un genero");
+                    PrimeFaces.current().dialog().showMessageDynamic(facesMsg);
+                }
+                pelicula.setGeneros(generosSeleccionados);
                 pelicula.setImagen(imagenPelicula);
                 Pelicula peli = administradorServicio.crearPelicula(pelicula);
                 peliculas.add(peli);
@@ -89,6 +97,9 @@ public class PeliculaBean implements Serializable {
             else{
                 if(imagenPelicula != null && !imagenPelicula.isEmpty()) {
                     pelicula.setImagen(imagenPelicula);
+                }
+                if(generosSeleccionados != null && !generosSeleccionados.isEmpty()) {
+                    pelicula.setGeneros(generosSeleccionados);
                 }
                 administradorServicio.actualizarPelicula(pelicula);
                 peliculas = administradorServicio.listarPeliculas();
