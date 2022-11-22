@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,6 @@ public class PrincipalBean implements Serializable {
     private List<Teatro> teatrosCiudad;
 
     @Getter @Setter
-    private boolean teatroSeleccionado;
-
-    @Getter @Setter
     private boolean ciudadSeleccionada;
 
     @Getter @Setter
@@ -63,10 +61,11 @@ public class PrincipalBean implements Serializable {
     @PostConstruct
     public void init() {
         ciudades = clienteServicio.obtenerCiudades();
+        teatro = new Teatro();
 
-        imagenesPortada.add("https://images.unsplash.com/photo-1617914309185-9e63b3badfca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
-        imagenesPortada.add("https://pbs.twimg.com/media/FOiDBN7WQAEeIzx.jpg:large");
-        imagenesPortada.add("https://cinematicslant.files.wordpress.com/2017/09/blade-runner-2049-banner.jpg");
+        imagenesPortada.add("https://res.cloudinary.com/dheuspgiq/image/upload/v1669094033/unicine/banners/photo-1617914309185-9e63b3badfca_vnbfkg.avif");
+        imagenesPortada.add("https://res.cloudinary.com/dheuspgiq/image/upload/v1669094070/unicine/banners/FOiDBN7WQAEeIzx_qpn9jw.jpg");
+        imagenesPortada.add("https://res.cloudinary.com/dheuspgiq/image/upload/v1669093600/unicine/banners/5a68f3858cda2516df696f923b88493d_xxffeu.jpg");
 
         if(idCiudadParam != null && !idCiudadParam.isEmpty()) {
             ciudadSeleccionada = true;
@@ -84,9 +83,10 @@ public class PrincipalBean implements Serializable {
     }
 
     public void seleccionarTeatro() {
-        if(teatro != null) {
-            teatroSeleccionado = true;
-
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("localhost:8080/resultados_busqueda.xhtml?th=" + teatro.getId());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

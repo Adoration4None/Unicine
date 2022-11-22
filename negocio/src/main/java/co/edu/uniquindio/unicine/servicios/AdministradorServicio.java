@@ -79,4 +79,6 @@ public interface AdministradorServicio {
     List<Ciudad> listarCiudades();
 
     Genero obtenerGenero(Integer idGenero) throws Exception;
+
+    List<Confiteria> obtenerConfiteria();
 }

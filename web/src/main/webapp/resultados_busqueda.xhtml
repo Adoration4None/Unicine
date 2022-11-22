@@ -25,7 +25,9 @@
                 <div class="container d-inline-flex">
                     <div class="pelicula me-5">
                         <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
-                            <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
+                            <div class="d-flex align-items-center justify-content-center">
+                                <p:graphicImage styleClass="img-fluid rounded-2 w-100 my-2 shadow" url="#{pelicula.imagenPrincipal}" />
+                            </div>
                             <h4 class="mb-1">#{pelicula.nombre}</h4>
                             <h6 class="mt-0 mb-3">
                                 <p:repeat value="#{pelicula.nombresGeneros}" var="genero">

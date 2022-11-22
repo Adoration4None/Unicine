@@ -91,7 +91,7 @@ public class CompraBean implements Serializable {
         matriz = new ArrayList<>();
         comprasConfiteria = new ArrayList<>();
         compra = new Compra();
-        confiteria = administradorServicio.listarConfiteria();
+        confiteria = administradorServicio.obtenerConfiteria();
         cupon = new CuponCliente();
 
         unidadesCompradas = 0;

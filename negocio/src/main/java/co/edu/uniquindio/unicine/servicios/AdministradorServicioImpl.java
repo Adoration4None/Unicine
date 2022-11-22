@@ -330,4 +330,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         return generoRepo.findById(idGenero).orElse(null);
     }
+
+    @Override
+    public List<Confiteria> obtenerConfiteria() {
+        return confiteriaRepo.obtenerConfiteria();
+    }
 }

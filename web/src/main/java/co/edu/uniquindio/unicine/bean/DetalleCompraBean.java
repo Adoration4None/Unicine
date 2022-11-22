@@ -26,10 +26,13 @@ public class DetalleCompraBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        try {
-            compra = clienteServicio.obtenerCompra(idCompra);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if(idCompra != null) {
+            try {
+                compra = clienteServicio.obtenerCompra(idCompra);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 }

@@ -171,7 +171,7 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://techplanet.today/storage/posts/2022/07/26/97/Q7ewZp0yYuOJGFijwUJRDsFu5BjtFqQ7kItkb8RW.jpg" alt="cover banner" width="100%" height="100%"/>
+                        <img src="https://res.cloudinary.com/dheuspgiq/image/upload/v1669094002/unicine/banners/blade-runner-2049-banner_bpdvkx.jpg" alt="cover banner" width="100%" height="100%"/>
 
                         <div class="container">
                             <div class="carousel-caption">
@@ -203,11 +203,10 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-
         </div>
 
 
-        <div jsf:id="seccion-peliculas" class="#{seguridadBean.ciudad  == null || principalBean.teatroSeleccionado == true ? 'oculto' : ''}" >
+        <div jsf:id="seccion-peliculas" class="#{seguridadBean.ciudad  == null ? 'oculto' : ''}" >
 
             <div jsf:id="peliculas" class="container">
 
@@ -228,7 +227,10 @@
                             <div class="pelicula">
 
                                 <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <p:graphicImage styleClass="img-fluid rounded-2 w-100 my-2 shadow" url="#{pelicula.imagenPrincipal}" />
+                                    </div>
+
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
@@ -248,8 +250,12 @@
                     <div jsf:id="peliculas-preventa">
                         <p:carousel value="#{principalBean.peliculasPreventaCiudad}" var="pelicula" numVisible="3" numScroll="3" containerStyleClass="peliculas">
                             <div class="pelicula mx-2">
+
                                 <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
-                                    <p:graphicImage styleClass="img-fluid rounded-2 w-75 my-2 shadow-lg" url="#{pelicula.imagenPrincipal}" />
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <p:graphicImage styleClass="img-fluid rounded-2 w-100 my-2 shadow" url="#{pelicula.imagenPrincipal}" />
+                                    </div>
+
                                     <h4 class="mb-1">#{pelicula.nombre}</h4>
                                     <h6 class="mt-0 mb-3">
                                         <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
@@ -265,6 +271,7 @@
             </div>
 
         </div>
+
     </ui:define>
 </ui:composition>
 </html>
