@@ -84,7 +84,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         String mensaje = "¡Unicine te desea un feliz cumpleaños! Disfrutalo con un cupon de regalo " +
                 "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
+                "https://unicine-sf.herokuapp.com/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Cumpleaños - 15% Descuento", mensaje, cliente.getEmail());
     }
@@ -137,7 +137,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 
         String mensaje = "¡Hola, " + cliente.getNombreCompleto() + "! Acaba de crear su cuenta en Unicine. " +
                 "Antes de hacer uso de nuestros servicios, por favor confirme su correo electronico a traves del siguiente enlace: " +
-                "http://localhost:8080/activar_cuenta.xhtml?p1=" + param1 + "&p2=" + param2;
+                "https://unicine-sf.herokuapp.com/activar_cuenta.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Confirmacion E-mail Unicine", mensaje, cliente.getEmail());
     }
@@ -152,7 +152,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         String mensaje = "¡Disfruta ahora mismo un cupon de bienvenida totalmente gratis " +
                 "con el que puedes obtener un 15% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
+                "https://unicine-sf.herokuapp.com/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Bienvenida - 15% Descuento", mensaje, cliente.getEmail());
     }
@@ -317,7 +317,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         String mensaje = "Felicidades por tu primera compra! Para que sigas disfrutando del mejor cine te hemos enviado un cupon de regalo " +
                 "con el que puedes obtener un 10% de descuento del valor total de cualquier compra! " +
                 "Recibelo a traves del siguiente enlace: " +
-                "http://localhost:8080/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
+                "https://unicine-sf.herokuapp.com/agregar_cupon.xhtml?p1=" + param1 + "&p2=" + param2;
 
         emailServicio.enviarEmail("Cupon de Regalo - 10% Descuento", mensaje, cliente.getEmail());
     }
@@ -335,7 +335,7 @@ public class ClienteServicioImpl implements ClienteServicio {
                          " | Fecha y hora de la funcion: " + compra.getFuncion().getHorario().getFecha().toString() + " " + compra.getFuncion().getHorario().getHora().toString() + "\n" +
                          " || VALOR TOTAL: $" + compra.getValorTotal() + " ||      " +
                          " ----------------------- " +
-                         " Puedes verla en tu historial de compras: http://localhost:8080/cliente/historial_compras.xhtml";
+                         " Puedes verla en tu historial de compras: https://unicine-sf.herokuapp.com/cliente/historial_compras.xhtml";
 
         emailServicio.enviarEmail("Confirmacion Compra", mensaje, cliente.getEmail());
     }
@@ -359,7 +359,7 @@ public class ClienteServicioImpl implements ClienteServicio {
         String param1 = textEncryptor.encrypt( emailCliente );
         String param2 = textEncryptor.encrypt( "" + zdt.toInstant().toEpochMilli() );
         String mensaje = "Ha solicitado cambiar su contraseña. Para hacerlo haga clic en el siguiente enlace: " +
-                         "http://localhost:8080/cambiar_contrasena.xhtml?p1=" + param1 + "&p2=" + param2;;
+                         "https://unicine-sf.herokuapp.com/cambiar_contrasena.xhtml?p1=" + param1 + "&p2=" + param2;;
 
         emailServicio.enviarEmail("Cambio de Contraseña", mensaje, emailCliente);
     }
