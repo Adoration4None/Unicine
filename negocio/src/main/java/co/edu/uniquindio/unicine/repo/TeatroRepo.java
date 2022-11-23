@@ -16,6 +16,9 @@ public interface TeatroRepo extends JpaRepository<Teatro, Integer> {
     @Query("select distinct f.sala.teatro from Funcion f where f.sala.teatro.ciudad.id = :idCiudad")
     List<Teatro> obtenerTeatrosCiudad(Integer idCiudad);
 
+    @Query("select distinct f.sala.teatro from Funcion f where f.sala.teatro.ciudad.id = :idCiudad and f.pelicula.id = :idPelicula and f.pelicula.estado <> 'NO_DISPONIBLE'")
+    List<Teatro> obtenerTeatrosPelicula(Integer idCiudad, Integer idPelicula);
+
     @Query("select c.teatros from Ciudad c where c.id = :idCiudad")
     List<Teatro> obtenerTeatrosCiudadAdmin(Integer idCiudad);
 }

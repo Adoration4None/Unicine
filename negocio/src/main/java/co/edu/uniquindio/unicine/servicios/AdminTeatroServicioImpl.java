@@ -288,6 +288,14 @@ public class AdminTeatroServicioImpl implements AdminTeatroServicio {
     }
 
     @Override
+    public List<Teatro> obtenerTeatrosCiudadPelicula(Integer idCiudad, Integer idPelicula) throws Exception {
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+        if(idPelicula == null || idPelicula.equals(0)) throw new Exception("ID de la pelicula vacio");
+
+        return teatroRepo.obtenerTeatrosCiudad(idCiudad);
+    }
+
+    @Override
     public List<Sala> obtenerSalasCiudad(Integer idCiudad) throws Exception {
         if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,8 +25,6 @@ public class PeliculasTeatroBean implements Serializable {
     private AdminTeatroServicio adminTeatroServicio;
 
     @Autowired
-    private ClienteServicio clienteServicio;
-
     private AdministradorServicio administradorServicio;
 
     @Value("#{param['th']}")
@@ -37,13 +36,15 @@ public class PeliculasTeatroBean implements Serializable {
     @Getter @Setter
     private Teatro teatro;
 
-    private List<Pelicula> peliculasTeatro;
+    @Getter @Setter
+    private List<Pelicula> peliculasTeatro = new ArrayList<>();
 
     @PostConstruct
     public void init() {
         if(idTeatro != null && !idTeatro.isEmpty()) {
             try {
                 teatro = adminTeatroServicio.obtenerTeatro( Integer.valueOf(idTeatro) );
+                peliculasTeatro = administradorServicio.obtenerPeliculasTeatroCiudad( Integer.valueOf(idTeatro), Integer.valueOf(idCiudad) );
 
             } catch (Exception e) {
                 throw new RuntimeException(e);

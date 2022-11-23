@@ -449,13 +449,22 @@ public class ClienteServicioImpl implements ClienteServicio {
     }
 
     @Override
+    public List<Funcion> obtenerFuncionesPeliculaCiudadTeatro(Integer idPelicula, Integer idCiudad, Integer idTeatro) throws Exception {
+        if(idPelicula == null || idPelicula.equals(0)) throw new Exception("ID de la pelicula vacio");
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
+        if(idTeatro == null || idTeatro.equals(0)) throw new Exception("ID del teatro vacio");
+
+        return funcionRepo.obtenerFuncionesPeliculaCiudadTeatro(idPelicula, idCiudad, idTeatro);
+    }
+
+    @Override
     public List<Ciudad> obtenerCiudades() {
         return ciudadRepo.obtenerCiudades();
     }
 
     @Override
     public Ciudad obtenerCiudad(Integer idCiudad) throws Exception {
-        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("id de la ciudad vacio");
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de la ciudad vacio");
         return ciudadRepo.findById(idCiudad).orElse(null);
     }
 

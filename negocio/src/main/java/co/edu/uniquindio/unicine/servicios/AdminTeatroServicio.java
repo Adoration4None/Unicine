@@ -59,6 +59,8 @@ public interface AdminTeatroServicio {
 
     List<Teatro> obtenerTeatrosCiudad(Integer idCiudad) throws Exception;
 
+    List<Teatro> obtenerTeatrosCiudadPelicula(Integer idCiudad, Integer idPelicula) throws Exception;
+
     List<Sala> obtenerSalasCiudad(Integer idCiudad) throws Exception;
 
     List<Funcion> obtenerFuncionesCiudad(Integer idCiudad) throws Exception;

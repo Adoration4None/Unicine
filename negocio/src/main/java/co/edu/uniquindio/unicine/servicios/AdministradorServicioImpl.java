@@ -18,9 +18,6 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     private final GeneroRepo generoRepo;
     private final CiudadRepo ciudadRepo;
 
-    String EMAIL_ADMINISTRADOR = "administradorunicine@gmail.com";
-    String CONTRASENA_ADMINISTRADOR = "8p5VH9cjZX0OMDFkpXk8PdVEzweXxmExdM4GQnd2yv8ATaRKSYsQCe0RGIdcVIJ7";
-
     public AdministradorServicioImpl(AdministradorTeatroRepo administradorTeatroRepo, PeliculaRepo peliculaRepo,
                                      ConfiteriaRepo confiteriaRepo, CuponRepo cuponRepo, GeneroRepo generoRepo, CiudadRepo ciudadRepo) {
         this.administradorTeatroRepo = administradorTeatroRepo;
@@ -36,15 +33,15 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if( (email == null || email.equals("")) || (contrasena == null || contrasena.equals("")) )
             throw new Exception("Datos incompletos");
 
-        if( !email.equals(EMAIL_ADMINISTRADOR) ) throw new Exception("E-mail incorrecto");
+        if( !email.equals(AdminData.EMAIL_ADMINISTRADOR) ) throw new Exception("E-mail incorrecto");
 
         // Comprobar contraseña encriptada
         StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
 
-        if( !spe.checkPassword(contrasena, CONTRASENA_ADMINISTRADOR ) )
+        if( !spe.checkPassword(contrasena, AdminData.CONTRASENA_ADMINISTRADOR ) )
             throw new Exception("La contraseña es incorrecta");
 
-        return new Persona( "1111", "Ricardo Salinas", EMAIL_ADMINISTRADOR, CONTRASENA_ADMINISTRADOR);
+        return new Persona( "1111", "Ricardo Salinas", AdminData.EMAIL_ADMINISTRADOR, AdminData.CONTRASENA_ADMINISTRADOR);
     }
 
     // Gestionar administradores de teatros ----------------------------------------------------------------------
@@ -334,5 +331,13 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     @Override
     public List<Confiteria> obtenerConfiteria() {
         return confiteriaRepo.obtenerConfiteria();
+    }
+
+    @Override
+    public List<Pelicula> obtenerPeliculasTeatroCiudad(Integer idTeatro, Integer idCiudad) throws Exception {
+        if(idTeatro == null || idTeatro.equals(0)) throw new Exception("ID de teatro vacio");
+        if(idCiudad == null || idCiudad.equals(0)) throw new Exception("ID de ciudad vacio");
+
+        return peliculaRepo.obtenerPeliculasTeatroCiudad(idTeatro, idCiudad);
     }
 }

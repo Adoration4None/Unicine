@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface PeliculaRepo extends JpaRepository<Pelicula, Integer> {
 
-
+    @Query("select f.pelicula from Funcion f where f.sala.teatro.id = :idTeatro and f.sala.teatro.ciudad.id = :idCiudad and f.pelicula.estado <> 'NO_DISPONIBLE'")
+    List<Pelicula> obtenerPeliculasTeatroCiudad(Integer idTeatro, Integer idCiudad);
 }

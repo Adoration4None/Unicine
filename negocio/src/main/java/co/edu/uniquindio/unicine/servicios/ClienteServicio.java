@@ -57,4 +57,6 @@ public interface ClienteServicio {
     Compra obtenerCompra(Integer idCompra) throws Exception;
 
     boolean cuponVencido(Cupon cupon);
+
+    List<Funcion> obtenerFuncionesPeliculaCiudadTeatro(Integer idPelicula, Integer idCiudad, Integer idTeatro) throws Exception;
 }

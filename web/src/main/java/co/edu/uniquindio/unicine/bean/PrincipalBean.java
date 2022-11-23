@@ -84,14 +84,10 @@ public class PrincipalBean implements Serializable {
 
     public void seleccionarTeatro() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("localhost:8080/resultados_busqueda.xhtml?th=" + teatro.getId());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/peliculas_teatro.xhtml?th=" + teatro.getId());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void redirigir() {
-
     }
 
     private void mostrarError(Exception e) {

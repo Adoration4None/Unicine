@@ -81,4 +81,6 @@ public interface AdministradorServicio {
     Genero obtenerGenero(Integer idGenero) throws Exception;
 
     List<Confiteria> obtenerConfiteria();
+
+    List<Pelicula> obtenerPeliculasTeatroCiudad(Integer idTeatro, Integer idCiudad) throws Exception;
 }
