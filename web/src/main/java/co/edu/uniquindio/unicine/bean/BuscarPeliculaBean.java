@@ -40,7 +40,6 @@ public class BuscarPeliculaBean implements Serializable {
     @Getter @Setter
     private List<Pelicula> peliculasBusqueda;
 
-    private List<Funcion> funcionesPelicula;
 
     @PostConstruct
     public void init() {
