@@ -117,22 +117,6 @@ public class AdminTeatroServicioTest {
     }
 
     // Gestionar salas ----------------------------------------------------------------------------------------
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crearSala() throws Exception {
-        Teatro teatro = teatroRepo.findById(3).orElse(null);
-
-        if(teatro != null) {
-            Sala salaCrear = new Sala(2, TipoSala.SALA_XD, teatro);
-
-            try{
-                Sala nueva = adminTeatroServicio.crearSala(salaCrear);
-                Assertions.assertNotNull(nueva);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     //CLEAN
     @Test
@@ -186,37 +170,6 @@ public class AdminTeatroServicioTest {
     }
 
     // Gestionar funciones ------------------------------------------------------------------------------------
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void crearFuncion() {
-        Pelicula pelicula = peliculaRepo.findById("Taxi Driver").orElse(null);
-        Sala sala = salaRepo.findById(1).orElse(null);
-        Horario horario = horarioRepo.findById(1).orElse(null);
-
-        Funcion funcionCrear = new Funcion(TipoFuncion.FUNCION_XD, 34F, pelicula, sala, horario);
-
-        try{
-            Funcion nueva = adminTeatroServicio.crearFuncion(funcionCrear);
-            Assertions.assertNotNull(nueva);
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    //CLEAN
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizarFuncion() {
-        try {
-            Funcion funcionActualizar = adminTeatroServicio.obtenerFuncion(3);
-            funcionActualizar.setPrecio(50000F);
-
-            Funcion funcionActualizada = adminTeatroServicio.actualizarFuncion(funcionActualizar);
-            Assertions.assertEquals(50000F, funcionActualizada.getPrecio());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     //CLEAN
     @Test

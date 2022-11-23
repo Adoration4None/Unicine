@@ -95,25 +95,11 @@ public class AdministradorServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void crearPelicula() {
-        Pelicula peliculaCrear = new Pelicula("Bocadillo", "ruta imagen 21321", "ruta trailer 23123123", "", "", EstadoPelicula.ESTRENO);
+        Pelicula peliculaCrear = new Pelicula("Bocadillo", "ruta trailer 23123123", "", "", EstadoPelicula.ESTRENO);
         try{
             Pelicula nueva = administradorServicio.crearPelicula(peliculaCrear);
             Assertions.assertNotNull(nueva);
         } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void actualizarPelicula() {
-        try {
-            Pelicula peliculaActualizar = administradorServicio.obtenerPelicula(4);
-            peliculaActualizar.setImagen("ruta imagen 56");
-
-            Pelicula peliculaActualizada = administradorServicio.actualizarPelicula(peliculaActualizar);
-            Assertions.assertEquals("ruta imagen 56", peliculaActualizada.getImagen());
-        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

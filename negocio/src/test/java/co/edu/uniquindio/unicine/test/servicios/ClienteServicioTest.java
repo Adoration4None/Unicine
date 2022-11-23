@@ -72,20 +72,6 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void activarCuenta() {
-        Cliente cliente = Cliente.builder().cedula("99775").nombreCompleto("Fernando Perez").email("fer.perez@mail.com").contrasena("0987654321").build();
-
-        try {
-            clienteServicio.registrar(cliente);
-            Cliente activado = clienteServicio.activarCuenta(cliente);
-            Assertions.assertNotNull(activado);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
     public void eliminar() {
         try {
             clienteServicio.eliminar("2345");
@@ -158,101 +144,6 @@ public class ClienteServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
-    public void buscarFunciones() {
-        try {
-            List<Funcion> funcionesEncontradas = clienteServicio.buscarPeliculas("a", 1);
-            Assertions.assertNotNull(funcionesEncontradas);
-            funcionesEncontradas.forEach(System.out::println);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void iniciarCompra() {
-        Funcion funcion = funcionRepo.findById(5).orElse(null);
-
-        try {
-            Cliente cliente = clienteServicio.obtener("3344");
-            Compra nuevaCompra = clienteServicio.iniciarCompra(cliente, funcion);
-
-            Assertions.assertNotNull(nuevaCompra);
-            System.out.println(nuevaCompra.getId());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void asignarAsientosCompra() {
-        Entrada entrada1 = entradaRepo.findById(6).orElse(null);
-        Entrada entrada2 = entradaRepo.findById(7).orElse(null);
-        List<Entrada> entradas = new ArrayList<>();
-        entradas.add(entrada1);
-        entradas.add(entrada2);
-
-        Compra compraInicial = compraRepo.findById(1).orElse(null);
-
-        try {
-            Compra compra = clienteServicio.asignarAsientosCompra(compraInicial, entradas);
-            Assertions.assertEquals(entradas, compra.getEntradas());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void comprarConfiteria() {
-        Compra compraInicial = compraRepo.findById(2).orElse(null);
-
-        Confiteria comestible1 = confiteriaRepo.findById(2).orElse(null);
-        Confiteria comestible2 = confiteriaRepo.findById(4).orElse(null);
-
-        CompraConfiteria comestibleComprado1 = new CompraConfiteria();
-        CompraConfiteria comestibleComprado2 = new CompraConfiteria();
-        List<CompraConfiteria> confiteriaComprada = new ArrayList<>();
-
-        if(comestible1 != null && comestible2 != null && compraInicial != null) {
-            comestibleComprado1.setComestible(comestible1);
-            comestibleComprado1.setCompra(compraInicial);
-
-            comestibleComprado2.setComestible(comestible2);
-            comestibleComprado2.setCompra(compraInicial);
-
-            confiteriaComprada.add(comestibleComprado1);
-            confiteriaComprada.add(comestibleComprado2);
-        }
-
-        try {
-            Compra compra = clienteServicio.comprarConfiteria(compraInicial, confiteriaComprada);
-            Assertions.assertEquals(confiteriaComprada, compra.getComprasConfiteria());
-            System.out.println(compra.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void elegirMetodoPago() {
-        Compra compraInicial = compraRepo.findById(2).orElse(null);
-
-        try {
-            Compra compra = clienteServicio.elegirMetodoPago(compraInicial, MetodoPago.EFECTY);
-            Assertions.assertEquals(MetodoPago.EFECTY, compra.getMetodoPago());
-            System.out.println(compra.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
     public void finalizarCompra() {
         Compra compraInicial = compraRepo.findById(5).orElse(null);
 
@@ -276,21 +167,6 @@ public class ClienteServicioTest {
             Assertions.assertTrue(cliente.getCuponesCliente().contains(cuponCliente));
             cliente.getCuponesCliente().forEach(System.out::println);
             System.out.println( cuponCliente.getCliente().getNombreCompleto() );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtenerFuncionesCiudad() throws Exception {
-        Ciudad ciudad = ciudadRepo.findById(1).orElse(null);
-        try {
-            if(ciudad != null){
-                List<Funcion> funciones = clienteServicio.filtrarFuncionesCiudad(ciudad.getId());
-                Assertions.assertEquals(3, funciones.size());
-                funciones.forEach(System.out::println);
-            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
