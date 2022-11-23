@@ -18,12 +18,4 @@ public class TeatroTest {
     @Autowired
     private TeatroRepo teatroRepo;
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtenerTeatrosCiudad() {
-        List<Teatro> teatrosArmenia = teatroRepo.obtenerTeatrosCiudad("Armenia");
-
-        teatrosArmenia.forEach(System.out::println);
-        Assertions.assertEquals(1, teatrosArmenia.size());
-    }
 }

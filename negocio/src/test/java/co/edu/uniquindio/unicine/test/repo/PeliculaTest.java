@@ -1,6 +1,5 @@
 package co.edu.uniquindio.unicine.test.repo;
 
-import co.edu.uniquindio.unicine.dto.FuncionDTO;
 import co.edu.uniquindio.unicine.entidades.Pelicula;
 import co.edu.uniquindio.unicine.repo.PeliculaRepo;
 import org.junit.jupiter.api.Assertions;
@@ -18,15 +17,5 @@ public class PeliculaTest {
 
     @Autowired
     private PeliculaRepo peliculaRepo;
-
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void obtenerFunciones() {
-        List<FuncionDTO> funciones = peliculaRepo.obtenerFunciones("One Piece Film: Red");
-
-        Assertions.assertNotNull(funciones);
-        funciones.forEach(System.out::println);
-        Assertions.assertEquals(1, funciones.size());
-    }
 
 }
