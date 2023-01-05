@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">#{buscarPeliculaBean.busqueda}</ui:define>
+
+    <ui:define name="content">
+
+        <div class="container mt-4">
+            <h1 class="titulo my-4">Resultados encontrados para "#{buscarPeliculaBean.busqueda}"</h1>
+            <p:repeat value="#{buscarPeliculaBean.peliculasBusqueda}" var="pelicula">
+                <div class="container d-inline-flex">
+                    <div class="pelicula me-5">
+                        <a href="detalle_pelicula.xhtml?mov=#{pelicula.id}" class="texto text-decoration-none">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <p:graphicImage styleClass="img-fluid rounded-2 w-100 my-2 shadow" url="#{pelicula.imagenPrincipal}" />
+                            </div>
+                            <h4 class="mb-1">#{pelicula.nombre}</h4>
+                            <h6 class="mt-0 mb-3">
+                                <p:repeat value="#{pelicula.nombresGeneros}" var="genero">
+                                    <p:chip label="#{genero}" styleClass="me-2 text-bg-dark"/>
+                                </p:repeat>
+                            </h6>
+                        </a>
+                    </div>
+
+                    <div class="d-inline-flex">
+                        <div class="flex-column">
+                            <h2 class="texto-resaltado">Disponible en:</h2>
+
+                            <p:accordionPanel value="#{buscarPeliculaBean.getFuncionesPelicula(pelicula.id)}" var="funcion">
+                                <p:tab title="#{funcion.horario.fecha.dayOfWeek.name()}, #{funcion.horario.fecha.month.name()} #{funcion.horario.fecha.dayOfMonth}, #{funcion.horario.fecha.year}  |  #{funcion.horario.hora}">
+                                    <div>
+                                        <div class="mb-2">
+                                            <div> <b>Teatro:</b> #{funcion.sala.teatro.nombre}</div>
+                                            <div>#{funcion.sala.teatro.direccion}</div>
+                                            <div class="my-2"><b>Sala:</b> #{funcion.sala.numero}</div>
+                                            <p:chip label="#{funcion.tipo}" styleClass="text-bg-dark"/>
+                                        </div>
+                                        <div class="flex-column precio">
+                                            <h:form>
+                                                <div>
+                                                    <p:commandButton styleClass="boton my-2" value="Comprar" action="#{detallePeliculaBean.comprar(funcion)}" />
+                                                </div>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </div>
+                    </div>
+                </div>
+            </p:repeat>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</h:head>
+</html>

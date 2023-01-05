@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="styles.css" library="css" />
+    <h:outputStylesheet name="carousel.css" library="css" />
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+
+    <title>Admin | <ui:insert name="title"> </ui:insert></title>
+</h:head>
+
+<h:body>
+    <header>
+        <ui:insert name="header">
+            <nav>
+                <div jsf:id="navegacion" class="navegacion">
+                    <div class="container-fluid">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
+                            <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="../admin/index_admin.xhtml" class="nav-link px-2 link-dark">
+                                        <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <ul class="nav col-12 col-lg-auto justify-content-center align-items-center">
+                                <li>
+                                    <a href="../admin/confiteria.xhtml" class="nav-link text-secondary texto-barra-admin">
+                                        <h:graphicImage library="img" name="fast-food.png" styleClass="bi d-block mx-auto mb-1 icono-admin" />
+                                        Gestionar confiteria
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../admin/peliculas.xhtml" class="nav-link text-secondary texto-barra-admin">
+                                        <h:graphicImage library="img" name="film.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
+                                        Gestionar peliculas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../admin/administradores.xhtml" class="nav-link text-secondary texto-barra-admin">
+                                        <h:graphicImage library="img" name="people.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
+                                        Gestionar administradores
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../admin/cupones.xhtml" class="nav-link text-secondary texto-barra-admin">
+                                        <h:graphicImage library="img" name="read.png" styleClass="bi d-block mx-auto mb-1 icono-admin" value="Gestionar peliculas" />
+                                        Gestionar cupones
+                                    </a>
+                                </li>
+                                <li class="mx-3">
+                                    <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" />
+                                </li>
+                            </ul>
+
+                            <h:form rendered="#{seguridadBean.autenticado}">
+                                <div class="dropdown text-end mx-3 my-1">
+                                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <h:graphicImage library="img" name="person.png" styleClass="rounded-circle" width="32" height="32" />
+                                    </a>
+                                    <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px" style="background: rgba(10, 8, 20, 0.9);">
+                                        <li class="dropdown-item">
+                                            <i class="pi pi-power-off" />
+                                            <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </ui:insert>
+    </header>
+
+
+    <div id="contenido">
+        <ui:insert name="content"> </ui:insert>
+    </div>
+
+
+    <p:separator styleClass="mt-5" />
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <h:graphicImage library="img" name="logo.png" width="30px" />
+                </a>
+                <span class="mb-3 mb-md-0 text-muted">&copy; Unicine, 2022</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-twitter"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-facebook"/> </a></li>
+                <li class="ms-3"><a class="text-muted" href="#"> <i class="pi pi-instagram"/> </a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <p:growl for="mensaje_admin" showDetail="true"/>
+</h:body>
+</html>
