@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,10 +46,12 @@ public class Sala implements Serializable {
     // Relaciones ----------------------------------------------------------------
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
+    @JsonIgnore
     private List<Funcion> funciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "sala")
     @ToString.Exclude
+    @JsonIgnore
     private List<Entrada> entradas = new ArrayList<>();
 
     @ManyToOne

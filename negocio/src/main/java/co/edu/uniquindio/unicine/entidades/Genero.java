@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -29,6 +30,7 @@ public class Genero {
 
     // Relacion ----------------------------------------------------------
     @ToString.Exclude
+    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(mappedBy = "generos")
     private List<Pelicula> peliculas = new ArrayList<>();

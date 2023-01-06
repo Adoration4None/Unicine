@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Ciudad implements Serializable {
     // Relaciones ------------------------------------------------------------
     @OneToMany(mappedBy = "ciudad")
     @ToString.Exclude
+    @JsonIgnore
     private List<Teatro> teatros = new ArrayList<>();
 
     @OneToOne

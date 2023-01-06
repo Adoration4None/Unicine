@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -27,6 +28,7 @@ public class AdministradorTeatro extends Persona implements Serializable {
     // Relaciones -----------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "administrador")
     @ToString.Exclude
+    @JsonIgnore
     private List<Teatro> teatros = new ArrayList<>();
 
     @OneToOne

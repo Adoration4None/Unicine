@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -35,6 +36,7 @@ public class Compra implements Serializable {
 
     @OneToMany(mappedBy = "compra")
     @ToString.Exclude
+    @JsonIgnore
     private List<CompraConfiteria> comprasConfiteria = new ArrayList<>();
 
     @OneToOne
@@ -47,6 +49,7 @@ public class Compra implements Serializable {
     @OneToMany(mappedBy = "compra")
     @NonNull
     @ToString.Exclude
+    @JsonIgnore
     private List<Entrada> entradas = new ArrayList<>();
 
     // Constructor --------------------------------------------------------------------------------------

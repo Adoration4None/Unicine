@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -44,10 +45,12 @@ public class Cliente extends Persona implements Serializable {
     // Relaciones ---------------------------------------------------------------------------------------
     @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
+    @JsonIgnore
     private List<Compra> compras = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
     @ToString.Exclude
+    @JsonIgnore
     private List<CuponCliente> cuponesCliente = new ArrayList<>();
 
     // Constructor --------------------------------------------------------------------------------------

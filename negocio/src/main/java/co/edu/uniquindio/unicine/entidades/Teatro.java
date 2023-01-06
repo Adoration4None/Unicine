@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,6 +41,7 @@ public class Teatro implements Serializable {
 
     @OneToMany(mappedBy = "teatro")
     @ToString.Exclude
+    @JsonIgnore
     private List<Sala> salas = new ArrayList<>();
 
     // Metodos ----------------------------------------------------------------------

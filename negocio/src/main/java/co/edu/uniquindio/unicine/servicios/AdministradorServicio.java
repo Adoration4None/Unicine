@@ -44,6 +44,8 @@ public interface AdministradorServicio {
 
     List<Confiteria> listarConfiteria();
 
+    List<Confiteria> obtenerConfiteria();
+
 
     // Gestionar cupones ----------------------------------------------------------------------------------------
     Cupon crearCupon(Cupon cupon) throws Exception;
@@ -59,6 +61,8 @@ public interface AdministradorServicio {
 
     // Opciones de genero de pelicula -------------------------------------------------------------------------
     Genero crearGenero(Genero genero) throws Exception;
+
+    Genero obtenerGenero(Integer idGenero) throws Exception;
 
     Genero actualizarGenero(Genero genero) throws Exception;
 
@@ -78,9 +82,7 @@ public interface AdministradorServicio {
 
     List<Ciudad> listarCiudades();
 
-    Genero obtenerGenero(Integer idGenero) throws Exception;
 
-    List<Confiteria> obtenerConfiteria();
-
+    // Otras funcionalidades ----------------------------------------------------------------------------------
     List<Pelicula> obtenerPeliculasTeatroCiudad(Integer idTeatro, Integer idCiudad) throws Exception;
 }

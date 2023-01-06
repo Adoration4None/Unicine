@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Funcion implements Serializable {
     // Relaciones -----------------------------------------------------------------
     @OneToMany(mappedBy = "funcion")
     @ToString.Exclude
+    @JsonIgnore
     private List<Compra> compras = new ArrayList<>();
 
     @ManyToOne

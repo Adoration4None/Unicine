@@ -1,5 +1,7 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -54,6 +56,7 @@ public class Pelicula implements Serializable {
     @MapKeyColumn(name = "publicIdImagen")
     @Column(name = "urlImagen")
     @CollectionTable(name = "pelicula_imagen")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<String, String> imagen = new HashMap<>();
 
     // Relaciones -------------------------------------------------------
@@ -64,10 +67,12 @@ public class Pelicula implements Serializable {
     @OneToMany(mappedBy = "pelicula")
     @LazyCollection(LazyCollectionOption.FALSE)
     @ToString.Exclude
+    @JsonIgnore
     private List<Funcion> funciones = new ArrayList<>();
 
     // Metodos ---------------------------------------------------------
 
+    @JsonIgnore
     public List<String> getNombresGeneros() {
         List<String> nombres = new ArrayList<>();
         generos.forEach( (g) -> nombres.add(g.getNombre()) );
@@ -75,6 +80,7 @@ public class Pelicula implements Serializable {
         return nombres;
     }
 
+    @JsonIgnore
     public String getImagenPrincipal() {
         if(imagen == null || imagen.isEmpty()) {
             return "https://res.cloudinary.com/dheuspgiq/image/upload/v1668993640/unicine/film_bbmiy0.png";

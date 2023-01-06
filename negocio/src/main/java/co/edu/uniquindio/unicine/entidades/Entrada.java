@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,10 +36,12 @@ public class Entrada implements Serializable {
     // Relaciones -------------------------------------------------------------------------------------------
     @ManyToOne
     @ToString.Exclude
+    @JsonIgnore
     private Sala sala;
 
     @ManyToOne
     @ToString.Exclude
+    @JsonIgnore
     private Compra compra;
 
     @Builder
