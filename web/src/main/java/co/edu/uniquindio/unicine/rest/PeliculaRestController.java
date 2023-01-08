@@ -16,6 +16,7 @@ public class PeliculaRestController {
     @Autowired
     private AdministradorServicio administradorServicio;
 
+
     @GetMapping
     public List<Pelicula> listarPeliculas() {
         return administradorServicio.listarPeliculas();

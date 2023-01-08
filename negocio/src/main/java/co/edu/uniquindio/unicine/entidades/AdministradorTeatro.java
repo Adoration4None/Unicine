@@ -39,6 +39,7 @@ public class AdministradorTeatro extends Persona implements Serializable {
         super(cedula, nombreCompleto, email, contrasena);
     }
 
+    @JsonIgnore
     public String getFoto() {
         if(imagenPerfil == null || imagenPerfil.isEmpty()) {
             return "https://res.cloudinary.com/dheuspgiq/image/upload/v1668978850/unicine/person_p5oatx.png";

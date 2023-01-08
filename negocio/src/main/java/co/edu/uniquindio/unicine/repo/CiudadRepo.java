@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unicine.repo;
 
+import co.edu.uniquindio.unicine.entidades.AdministradorTeatro;
 import co.edu.uniquindio.unicine.entidades.Ciudad;
 import co.edu.uniquindio.unicine.entidades.Sala;
 import co.edu.uniquindio.unicine.entidades.Teatro;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
 
@@ -20,4 +22,6 @@ public interface CiudadRepo extends JpaRepository<Ciudad, Integer> {
     List<Ciudad> obtenerCiudades();
 
     Ciudad findByNombreAndDepartamento(String nombre, String departamento);
+
+    Optional<Object> findByAdministrador(AdministradorTeatro administrador);
 }

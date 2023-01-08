@@ -55,6 +55,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if ( emailExiste(administradorTeatro.getEmail()) )
             throw new Exception("Ya hay un administrador con el mismo email");
 
+        if( administradorTeatroRepo.findByCiudad(administradorTeatro.getCiudad()).isPresent() )
+            throw new Exception("Ya existe un administrador para la ciudad " + administradorTeatro.getCiudad().getNombre() );
+
         // Encriptacion de contraseña
         StrongPasswordEncryptor spe = new StrongPasswordEncryptor();
         administradorTeatro.setContrasena( spe.encryptPassword( administradorTeatro.getContrasena() ) );
@@ -280,8 +283,12 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     @Override
     public Ciudad crearCiudad(Ciudad ciudad) throws Exception {
         if(ciudad == null) throw new Exception("No hay ciudad para crear");
+
         if( ciudadRepo.findByNombreAndDepartamento(ciudad.getNombre(), ciudad.getDepartamento()) != null )
             throw new Exception("La ciudad ya existe");
+
+        if( ciudadRepo.findByAdministrador(ciudad.getAdministrador()).isPresent() )
+            throw new Exception("El administrador con cedula " + ciudad.getAdministrador().getCedula() + " ya esta asignado para otra ciudad" );
 
         return ciudadRepo.save(ciudad);
     }

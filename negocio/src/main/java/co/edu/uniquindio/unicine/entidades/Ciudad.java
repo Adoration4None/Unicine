@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unicine.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ public class Ciudad implements Serializable {
     private List<Teatro> teatros = new ArrayList<>();
 
     @OneToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private AdministradorTeatro administrador;
 
 }

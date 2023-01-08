@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdministradorTeatroRepo extends JpaRepository<AdministradorTeatro, String> {
     AdministradorTeatro findByEmailAndContrasena(String email, String contrasena);
@@ -15,4 +16,5 @@ public interface AdministradorTeatroRepo extends JpaRepository<AdministradorTeat
     @Query("select a from AdministradorTeatro a where a.email = :email")
     AdministradorTeatro findByEmail(String email);
 
+    Optional<Object> findByCiudad(Ciudad ciudad);
 }
