@@ -287,9 +287,6 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if( ciudadRepo.findByNombreAndDepartamento(ciudad.getNombre(), ciudad.getDepartamento()) != null )
             throw new Exception("La ciudad ya existe");
 
-        if( ciudadRepo.findByAdministrador(ciudad.getAdministrador()).isPresent() )
-            throw new Exception("El administrador con cedula " + ciudad.getAdministrador().getCedula() + " ya esta asignado para otra ciudad" );
-
         return ciudadRepo.save(ciudad);
     }
 
