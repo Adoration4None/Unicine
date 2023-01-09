@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../WEB-INF/template_admin.xhtml">
+    <ui:define name="title">Unicine</ui:define>
+
+    <ui:define name="content">
+        <div class="container my-5">
+            <div class="my-5">
+                <h1 class="texto-resaltado text-center">Bienvenido, #{seguridadBean.personaIngresada.nombreCompleto}</h1>
+                <h2 class="texto text-center">¿Que vas a hacer?</h2>
+            </div>
+
+            <div class="d-flex justify-content-center my-3">
+                <div class="login-admin mx-3 mb-2 p-4 col-4">
+                    <a href="confiteria.xhtml" class="text-decoration-none texto-resaltado text-center">
+                        <h:graphicImage library="img" name="fast-food.png" styleClass="bi d-block mx-auto mb-1 icono-admin-index" />
+                        Gestionar Confiteria
+                    </a>
+                </div>
+                <div class="login-admin mx-3 mb-2 p-4 col-4">
+                    <a href="peliculas.xhtml" class="text-decoration-none texto-resaltado text-center">
+                        <p:graphicImage library="img" name="film.png" styleClass="bi d-block mx-auto mb-1 icono-admin-index" />
+                        Gestionar Peliculas
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center my-3">
+                <div class="login-admin mx-3 p-4 col-4">
+                    <a href="administradores.xhtml" class="text-decoration-none texto-resaltado text-center">
+                        <p:graphicImage library="img" name="people.png" styleClass="bi d-block mx-auto mb-1 icono-admin-index" />
+                        Gestionar Administradores
+                    </a>
+                </div>
+                <div class="login-admin mx-3 p-4 col-4">
+                    <a href="cupones.xhtml" class="text-decoration-none texto-resaltado text-center">
+                        <p:graphicImage library="img" name="read.png" styleClass="bi d-block mx-auto mb-1 icono-admin-index" />
+                        Gestionar Cupones
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

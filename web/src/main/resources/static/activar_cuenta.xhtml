@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">Activar Cuenta</ui:define>
+
+    <ui:define name="header">
+        <nav>
+            <div jsf:id="navegacion" class="#{seguridadBean.ciudad == null ? 'oculto' : 'navegacion'}">
+                <div class="container-fluid">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mx-lg-5">
+                        <ul class="nav col-12 col-lg-auto me-auto justify-content-center align-items-center">
+                            <li>
+                                <a href="/webappdadBean.ciudad.id}" class="nav-link px-2 link-dark">
+                                    <h:graphicImage library="img" name="logo2.png" styleClass="img-logo" />
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav col-12 col-lg-auto justify-content-center">
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('registro').show()" value="Registrarse"/> </li>
+                            <li class="mx-1 my-1"> <p:commandButton rendered="#{!seguridadBean.autenticado}" styleClass="boton-texto-resaltado" onclick="PF('login').show()" value="Iniciar Sesion"/> </li>
+                            <li class="mx-1 my-1"> <h:outputLabel rendered="#{seguridadBean.autenticado}" styleClass="nombre-sesion" value="#{seguridadBean.personaIngresada.nombreCompleto}" /> </li>
+                        </ul>
+
+                        <h:form rendered="#{seguridadBean.autenticado}">
+                            <div class="dropdown text-end mx-3 my-1">
+                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="#{seguridadBean.cliente.imagenPerfil == null ? 'resources/img/person.png' : seguridadBean.cliente.imagenPerfil}"
+                                         alt="mdo" width="32" height="32" class="rounded-circle" />
+                                </a>
+                                <ul class="dropdown-menu text-small dropdown-menu-dark gap-1 p-2 rounded-3 mx-0 border-0 shadow opciones">
+                                    <li><a class="dropdown-item d-flex gap-2 align-items-center" href="#">Informacion del usuario</a></li>
+                                    <li><a class="dropdown-item" href="#">Historial de compras</a></li>
+                                    <li><a class="dropdown-item" href="#">Ver y agregar cupones</a></li>
+                                    <li><hr /></li>
+                                    <li class="dropdown-item">
+                                        <i class="pi pi-power-off" />
+                                        <p:commandButton value="Cerrar sesion" action="#{seguridadBean.cerrarSesion}" styleClass="logout"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="login-admin mt-5">
+                <div class="d-flex flex-nowrap flex-column align-items-center justify-content-center">
+                    <h:graphicImage library="img" name="logo2.png" styleClass="my-1" />
+                    <h1 class="texto-resaltado mt-2 text-center">#{gestionCuentaBean.mensaje}</h1>
+                    <h:graphicImage library="img" name="check.png" width="75" />
+
+                    <h:form styleClass="mb-4">
+                        <p:commandLink value="Volver a la pagina de inicio" styleClass="logout"
+                                         action="#{gestionCuentaBean.redirigir}" />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

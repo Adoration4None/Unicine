@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../WEB-INF/template.xhtml">
+    <ui:define name="title">Compra</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1 class="titulo mt-3">Completa tu compra</h1>
+
+            <div class="login-admin py-4 my-3">
+                <h2 class="texto-resaltado my-4">Selecciona los asientos que deseas ocupar</h2>
+                <p:repeat value="#{compraBean.matriz}" var="fila">
+                    <div class="fila-matriz" >
+                        <p:repeat value="#{fila}" var="entrada">
+                            <div class="casilla-asiento d-inline-block" >
+                                <h:form>
+                                    <p:selectBooleanButton styleClass="my-sm-1" onLabel="#{entrada.filaAsiento}-#{entrada.columnaAsiento}" offLabel="#{entrada.filaAsiento}-#{entrada.columnaAsiento}"/>
+                                    <p:ajax event="click" listener="#{compraBean.guadarSilla(entrada.filaAsiento, entrada.columnaAsiento)}" update="resumen-compra" />
+                                </h:form>
+                            </div>
+                        </p:repeat>
+                    </div>
+                </p:repeat>
+            </div>
+
+            <div class="login-admin my-3">
+                <h2 class="texto-resaltado my-4">Agrega algo para comer</h2>
+                <p:carousel value="#{compraBean.confiteria}" var="comestible" numVisible="3" numScroll="3" containerStyleClass="confiteria" styleClass="w-75">
+                    <div class="comestible mx-2 flex-column">
+                        <h:form>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <p:graphicImage styleClass="rounded-2 imagen-snack mb-2 shadow-lg" url="#{comestible.imagenPrincipal}" />
+                            </div>
+
+                            <div>
+                                <h4 class="mb-1 mx-2">#{comestible.nombre}</h4>
+                                <h6 class="mb-1 mx-2">#{comestible.descripcion}</h6>
+                                <h:outputText value="#{comestible.precio}" styleClass="precio mx-2 mt-3">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                            </div>
+
+                            <div class="text-center align-items-end">
+                                <div class="d-inline-flex">
+                                    <p:commandButton icon="pi pi-minus" styleClass="rounded-button ui-button-outlined" action="#{compraBean.quitarComestible(comestible)}" update="cantidad,resumen-compra" />
+                                    <p jsf:id="cantidad" class="ms-3 me-3 mt-2">#{compraBean.unidadesCompradas}</p>
+                                    <p:commandButton icon="pi pi-plus" styleClass="rounded-button ui-button-outlined" action="#{compraBean.agregarComestible(comestible)}" update="cantidad, resumen-compra" />
+                                </div>
+                            </div>
+                        </h:form>
+
+                    </div>
+                </p:carousel>
+            </div>
+
+            <div jsf:id="resumen-compra" class="login-admin my-3">
+                <h2 class="texto-resaltado my-4">Resumen</h2>
+
+                <div class="container">
+                    <h:outputLabel for="entradas-resumen" styleClass="texto" value="Entradas compradas: #{compraBean.seleccionadas.size().toString()}" />
+                    <p:dataTable id="entradas-resumen" var="entrada" value="#{compraBean.seleccionadas}" styleClass="w-75" stripedRows="true">
+                        <p:column headerText="Ubicacion asiento">
+                            <h:outputText value="Fila #{entrada.filaAsiento}, Silla #{entrada.columnaAsiento}" />
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="$#{entrada.precioBase}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo de sala">
+                            <h:outputText value="#{entrada.sala.tipo}" />
+                        </p:column>
+
+                        <p:column headerText="Recargo por tipo de sala">
+                            <h:outputText value="$#{entrada.recargo}" />
+                        </p:column>
+
+                        <p:column headerText="Total">
+                            <h:outputText value="$#{entrada.precio}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p class="texto"><strong>Total entradas:</strong> $#{compraBean.valorTotalEntradas}</p>
+                </div>
+
+                <hr />
+
+                <div class="container">
+                    <h:outputLabel for="confiteria-resumen" styleClass="texto" value="Confiteria comprada:" />
+                    <p:dataTable id="confiteria-resumen" var="compraConfiteria" value="#{compraBean.comprasConfiteria}" styleClass="w-75" stripedRows="true">
+                        <p:column headerText="Comestible">
+                            <h:outputText value="#{compraConfiteria.comestible.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="$#{compraConfiteria.precio}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{compraConfiteria.unidadesCompradas}" />
+                        </p:column>
+
+                        <p:column headerText="Total">
+                            <h:outputText value="$#{compraConfiteria.unidadesCompradas * compraConfiteria.precio}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p class="texto"><strong>Total confiteria:</strong> $#{compraBean.valorTotalConfiteria}</p>
+                </div>
+
+                <div>
+                    <p class="texto-resaltado"><strong>Valor total:</strong> $#{compraBean.valorTotal}</p>
+                </div>
+
+            </div>
+
+            <div jsf:id="completar-compra" class="login-admin my-3 p-4">
+                <h:form>
+                    <div class="container flex-column my-3 mx-3">
+                        <div class="align-items-center text-center">
+                            <h3 class="texto text-center">Metodo de pago</h3>
+                        </div>
+                        <div>
+                            <p:selectOneMenu id="seleccion_metodo_pago" styleClass="mx-3 selector select-metodo-pago"
+                                             value="#{compraBean.metodoPago}">
+                                <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                                <f:selectItems value="#{compraBean.metodosPago}" var="metodoPago" itemLabel="#{metodoPago.toString()}" itemValue="#{metodoPago}"/>
+                                <p:ajax event="change" listener="#{compraBean.seleccionarMetodoPago}" update="completar-compra" />
+                            </p:selectOneMenu>
+                        </div>
+
+                    </div>
+
+                    <div class="container flex-column my-3 mx-3">
+                        <div class="align-items-center text-center">
+                            <h3 class="texto text-center">Redimir cupon</h3>
+                        </div>
+                        <div>
+                            <p:selectOneMenu id="seleccion_cupon" styleClass="mx-3 selector select-cupon"
+                                             value="#{compraBean.cupon}" converter="#{cuponClienteConverter}">
+                                <f:selectItem itemLabel="..." noSelectionOption="true" itemValue="#{null}" />
+                                <f:selectItems value="#{compraBean.cuponesCliente}" var="cuponCliente" itemLabel="#{cuponCliente.cupon.nombre}: -#{cuponCliente.cupon.porcentajeDescuento}%" itemValue="#{cuponCliente}"/>
+                                <p:ajax event="change" listener="#{compraBean.asignarCupon}" update="completar-compra,resumen-compra" />
+                            </p:selectOneMenu>
+                        </div>
+
+                    </div>
+
+                    <div class="container my-3 mx-3 align-items-center justify-content-center">
+                        <p:commandButton value="Finalizar Compra" styleClass="boton ms-4" action="#{compraBean.finalizarCompra}" />
+                    </div>
+                </h:form>
+
+            </div>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+
+</html>
